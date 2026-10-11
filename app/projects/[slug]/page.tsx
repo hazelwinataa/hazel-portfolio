@@ -127,6 +127,106 @@ type GalleryDescription = {
 };
 
 const visualDescriptions: Record<string, GalleryDescription> = {
+  "sparc-categorical-eda.webp": {
+    title: "SPARC 2026 — Customer, geography and category exploration",
+    caption: "Original team presentation, page 8. The EDA reviews customer IDs, district distributions, incomplete financing categories, product preferences and transaction dates.",
+    details: [
+      "A reported 266,927 distinct customer IDs were found in transaction-level data; repeated IDs can reflect genuine customer histories.",
+      "Several categorical fields have sparse values, while some demographic attributes have imbalanced or unknown categories."
+    ],
+    originalScreenshot: true,
+    sourceLabel: "Original SPARC 2026 team slide — EDA"
+  },
+  "sparc-deduplication.webp": {
+    title: "SPARC 2026 — Exact duplicates and customer-ID checks",
+    caption: "Original team presentation, page 9. Documents record-level deduplication and rules for nontransactional identifiers.",
+    details: [
+      "2,341 exact duplicate rows were removed (319,978 to 317,637).",
+      "Blank customer IDs and aggregate TOTAL records were flagged as nontransactional; genuine multiple purchases by a customer are a distinct issue."
+    ],
+    originalScreenshot: true,
+    sourceLabel: "Original SPARC 2026 team slide — Preprocessing"
+  },
+  "sparc-age-validation.webp": {
+    title: "SPARC 2026 — Demographic and age validation",
+    caption: "Original team presentation, page 10. Documents anomalous ages, unknown gender entries and recalculation of age from birth-date records.",
+    details: [
+      "The presentation describes a plausible age range of 17–90 years after birth-date checking.",
+      "Unexpected ages and unknown demographic categories were treated as data-quality flags, not automatically accepted as valid measurements."
+    ],
+    originalScreenshot: true,
+    sourceLabel: "Original SPARC 2026 team slide — Data quality"
+  },
+  "sparc-geographic-audit.webp": {
+    title: "SPARC 2026 — Geographic cardinality and inconsistent formats",
+    caption: "Original team presentation, page 11. The audit covers high-cardinality areas, mixed data types and inconsistent spellings.",
+    details: [
+      "Over 1,700 Kelurahan categories and 621 Kecamatan categories were reported.",
+      "Rare values and inconsistent district names can create sparse or fragmented analytical groups."
+    ],
+    originalScreenshot: true,
+    sourceLabel: "Original SPARC 2026 team slide — Geographic EDA"
+  },
+  "sparc-geographic-cleaning.webp": {
+    title: "SPARC 2026 — Cleaning geographic categories",
+    caption: "Original team presentation, page 12. Describes the team’s district-normalization and low-frequency-grouping decisions.",
+    details: [
+      "Standardized Kecamatan with uppercase text, punctuation cleanup and normalized whitespace.",
+      "Grouped districts represented by five or fewer transactions into OTHER; removed Kelurahan, postal code and broader Wilayah from the selected features."
+    ],
+    originalScreenshot: true,
+    sourceLabel: "Original SPARC 2026 team slide — Preprocessing"
+  },
+  "sparc-financing-cleaning.webp": {
+    title: "SPARC 2026 — Monetary formatting and price distribution",
+    caption: "Original team presentation, page 15. Reviews skewed OTR prices and conversion of mixed down-payment formats into numerical values.",
+    details: [
+      "Monetary text containing Rp, spaces and thousand separators was standardized before numerical analysis.",
+      "OTR prices showed right skew; zeros and exceptional values required investigation rather than indiscriminate deletion."
+    ],
+    originalScreenshot: true,
+    sourceLabel: "Original SPARC 2026 team slide — Financial EDA"
+  },
+  "sparc-dp-otr-validation.webp": {
+    title: "SPARC 2026 — Down-payment versus OTR consistency check",
+    caption: "Original team presentation, page 16. Demonstrates a ratio-based business rule for checking inconsistent financing records.",
+    details: [
+      "The team reported 65,103 credit records with DP exceeding OTR and no equivalent cases among cash transactions in the tabulated audit.",
+      "The slides document excluding those records. The underlying financing-field meanings would need formal verification before adopting this rule elsewhere."
+    ],
+    originalScreenshot: true,
+    sourceLabel: "Original SPARC 2026 team slide — Validation rule"
+  },
+  "sparc-missing-value-audit.webp": {
+    title: "SPARC 2026 — Residual missing-value assessment",
+    caption: "Original team presentation, page 19. Summarizes remaining missingness after several cleaning steps.",
+    details: [
+      "The presentation shows approximately 96% missingness for Tgl Cetak and DLR Group at the audited stage.",
+      "The audit helps distinguish fields suitable for meaningful descriptive analysis from fields requiring additional data recovery."
+    ],
+    originalScreenshot: true,
+    sourceLabel: "Original SPARC 2026 team slide — Missingness"
+  },
+  "sparc-outlier-review.webp": {
+    title: "SPARC 2026 — Business-informed outlier treatment",
+    caption: "Original team presentation, page 20. Explains why financial-value outliers are investigated using business logic rather than dropped by statistical threshold alone.",
+    details: [
+      "Potentially valid high-value vehicles and financing arrangements can appear as statistical outliers.",
+      "The described approach combines plausibility checks, ratio comparisons and log transformation for skewed prices."
+    ],
+    originalScreenshot: true,
+    sourceLabel: "Original SPARC 2026 team slide — Outlier EDA"
+  },
+  "sparc-customer-repeat-definition.webp": {
+    title: "SPARC 2026 — Customer-level repeat activity definition",
+    caption: "Original team presentation, page 21. Groups chronologically ordered customer transactions and describes a retrospective repeat-customer flag.",
+    details: [
+      "A customer with more than one recorded transaction is identified as a historical repeat customer.",
+      "For a future-oriented prediction task, outcomes must instead be defined after a fixed observation cutoff to prevent temporal leakage."
+    ],
+    originalScreenshot: true,
+    sourceLabel: "Original SPARC 2026 team slide — Customer analytics"
+  },
   "model-cv-precision.svg": {
     title: "Bank Marketing — six-model precision comparison",
     caption: "Results chart recreated from the baseline five-fold cross-validation table in the original group notebook (cell 137).",
@@ -408,7 +508,7 @@ export default async function ProjectDetailPage({
           <TextSection title="Dataset" value={project.dataset} />
           <ListSection title="Data preprocessing" items={project.preprocessing} />
           <ListSection title="Feature engineering" items={project.featureEngineering} />
-          <ListSection title="Methodology & experiments" items={project.methodology} />
+          <ListSection title={project.slug === "customer-repeat-order" ? "EDA & preprocessing methodology" : "Methodology & experiments"} items={project.methodology} />
           <ListSection title="Models" items={project.models} />
           <ListSection title="Evaluation metrics" items={project.evaluationMetrics} />
           <ListSection title="Documented results" items={project.results} />

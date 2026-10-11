@@ -583,66 +583,132 @@
   {
     "id": "8",
     "slug": "customer-repeat-order",
-    "title": "Customer Repeat-Order Prediction",
-    "year": null,
-    "projectType": "",
-    "status": "",
+    "title": "SPARC 2026 Finalist — Customer Repeat-Order Analytics",
+    "year": 2026,
+    "projectType": "SPARC 2026 Data Science Competition — Finalist (3-member team)",
+    "status": "Finalist — SPARC 2026",
     "grade": "",
     "featured": true,
     "roleTags": [
-      "Business Analytics",
       "Data Analyst",
-      "Data Science"
+      "Data Science",
+      "Business Analytics"
     ],
     "courseTags": [
       "Competition / Independent Project"
     ],
     "domainTags": [
-      "Classification",
-      "Business Analytics"
+      "Exploratory Data Analysis",
+      "Data Cleaning",
+      "Customer Analytics",
+      "Competition"
     ],
-    "description": "Repeat-order prediction and retention-oriented customer analytics using more than 318,000 vehicle-financing transactions.",
-    "problemStatement": "Estimate the likelihood of a customer placing another financing order using transaction, customer, product, dealer, geographic, and temporal variables.",
-    "businessContext": "Repeat-order prediction can support customer retention analysis, lead prioritization, and decisions about customer engagement.",
-    "dataset": "Vehicle-financing transaction data with financing attributes, demographics, dealer, product, region, and temporal behavior fields.",
-    "datasetSize": "318K+ vehicle-financing transactions",
+    "description": "SPARC 2026 finalist entry by a three-person team, centered on exploratory analysis and data preparation of 319,978 vehicle-sales transactions. Investigated duplicates, inconsistent customer records, demographic anomalies, geographic categories, product information and financing-data quality.",
+    "problemStatement": "Explore historical vehicle sales and financing records to understand customer-transaction patterns and prepare trustworthy data for repeat-order analysis and customer follow-up prioritization.",
+    "businessContext": "Competition: SPARC 2026. Team: Anang Tantowi, Hazel Novero Winata and Junico (team name: Trio Tunggal). The team reached the finalist stage. This public case study intentionally presents EDA and preprocessing work, rather than predictive-model scores, source code or purported commercial outcomes.",
+    "dataset": "Historical vehicle-sales / financing transactions described in the team presentation: 319,978 initial transaction rows and 28 features spanning customer identifiers and demographics, motorbike products, dealers and geography, prices and financing details, payment methods, and dates. One row represents one transaction, not one unique customer; the EDA reports 266,927 distinct Customer_ID values.",
+    "datasetSize": "319,978 initial transactions · 28 features · 266,927 customer IDs (reported) · 317,637 rows after exact deduplication",
     "preprocessing": [
-      "Prepared transaction-level information for predictive modeling; detailed cleaning rules require source verification"
+      "Identified and removed 2,341 fully duplicated rows (319,978 → 317,637). Crucially, distinct transactions from the same customer were not treated as duplicate records because repeat activity is central to the study.",
+      "Validated customer identifiers against the documented CUST-XXXX format, excluding blank identifiers and aggregate TOTAL records that do not represent actual individual transactions.",
+      "Standardized payment-method codes (1 = cash; 2 = credit) and examined Finance Company values, including the special N category, before interpreting financing-related fields.",
+      "Audited malformed ages, with recorded values reaching 1,230 years. The presentation describes recomputing age from birth dates and retaining plausible ages from 17 to 90, rather than trusting unvalidated numeric age fields.",
+      "Assessed high-cardinality and inconsistent geographical fields. Removed Kelurahan, Kode POS and Wilayah from the selected feature set; retained Kecamatan after uppercase normalization, punctuation/space cleanup, and grouping categories with five or fewer records into OTHER.",
+      "Normalized dealer-area naming (including PPU = Penajam Paser Utara), treated numeric-looking dealer identifiers as categories, and reviewed the distribution of seven primary dealer regions.",
+      "Standardized vehicle-product categories such as Type Series, Segment, motorcycle model codes and colors; reviewed manufacturing-year values and filtered implausible years as described in the slides.",
+      "Converted heterogeneous money strings (such as Rp 2.056.000 and unformatted numbers) into numeric down-payment and installment fields; documented the derived fields dp_aktual_clean and cicilan_clean.",
+      "Compared cleaned down payments with On-the-Road (OTR) prices through dp_ratio = dp_aktual_clean / OTR. The slides report 65,103 credit transactions where down payment exceeded the vehicle price; these were flagged and excluded under the team’s documented business rule.",
+      "Reviewed tenor values and missingness. The presentation describes restricting selected financing records to tenors of 1–3 and identifying constant payment-method categories after filtering.",
+      "Rechecked residual missingness, notably Tgl Cetak and DLR Group at approximately 96% each in a later processing stage, before deciding which fields were usable for downstream analysis.",
+      "Reviewed statistical outliers in OTR, down payment and installment amounts using domain checks rather than indiscriminate deletion; the team presentation describes log transforming skewed price information."
     ],
     "featureEngineering": [
-      "Examined financing, demographic, dealer, product, regional, and time-related predictors"
+      "Geographical category normalization and rare-category consolidation for Kecamatan to reduce inconsistent labels and sparsity.",
+      "Numeric extraction of monetary values and a down-payment-to-vehicle-price ratio for transaction validation.",
+      "Categorical correction for dealer identifiers, motorbike product codes and sales-location labels.",
+      "Chronological customer-transaction grouping to distinguish one-time from repeat customers in a retrospective analysis; the presentation defines a repeat customer as one with more than one recorded transaction."
     ],
     "methodology": [
-      "Developed repeat-order classification experiments",
-      "Explored gradient-boosted tree models for retention-oriented prediction"
+      "Data understanding: distinguished transaction records from unique customers, mapped the 28 original fields and checked sample distributions of age, payment method, vehicle price, dealership and product categories.",
+      "Numerical EDA: reviewed ranges, central tendency, right-skewed prices, zero values, age anomalies and unusual financial amounts requiring business validation.",
+      "Categorical EDA: explored customer identifiers, gender/other demographic attributes, geography, dealer regions, vehicle series, segment, color and credit-related categories.",
+      "Data quality audit: checked exact duplicates, invalid identifiers, inconsistent types and text, long-tailed geographic labels, hidden missing values, financing mismatches, and anomalous dates.",
+      "Preprocessing documentation: explained deduplication, normalization, targeted filtering, value-type conversion, category grouping, ratio checks and missingness reviews through original presentation slides.",
+      "Competition presentation: organized the findings and preprocessing decisions into a team case study that reached the finalist stage of SPARC 2026."
     ],
-    "models": [
-      "XGBoost",
-      "LightGBM"
-    ],
+    "models": [],
     "technologies": [
       "Python",
-      "XGBoost",
-      "LightGBM"
+      "Pandas",
+      "Exploratory Data Analysis",
+      "Data Preprocessing",
+      "Data Quality Auditing"
     ],
     "evaluationMetrics": [],
     "results": [],
     "insights": [
-      "The project connects transaction-level prediction with potential retention and customer-prioritization use cases."
+      "The distinction between records and unique customers matters: 319,978 transactions correspond to a reported 266,927 distinct customer identifiers, so repeated customer IDs should not be dropped as if they were exact duplicate rows.",
+      "The data-quality audit identified 2,341 exact duplicate rows as well as more subtle anomalies involving age, customer identifiers, dates and monetary fields.",
+      "Geographic dimensions include numerous rare values and spelling variants. Retaining the most useful granularity while consolidating rare districts helps make descriptive segmentation more interpretable.",
+      "Vehicle prices were positively skewed; zeros and very high monetary values needed context-sensitive checks rather than automatic outlier removal.",
+      "The down-payment-to-OTR validation found concentrated inconsistencies in credit records, emphasizing the importance of testing business rules before interpreting financing patterns.",
+      "High missingness in some operational columns and imbalanced demographic categories called for cautious interpretation and further source-data checks.",
+      "A retrospective repeat-customer flag based on all recorded transactions describes historical repeat activity; prospective prediction would require a separate observation window and future outcome window to prevent temporal leakage."
     ],
-    "businessImpact": "Potential application: rank customers for targeted follow-up or retention strategies; no measured uplift is claimed.",
-    "challenges": [],
+    "businessImpact": "Achieved finalist recognition at SPARC 2026 as part of a three-person team. The documented EDA and preprocessing work builds a clearer picture of transaction quality and customer behavior for a potential follow-up prioritization workflow; no quantified marketing uplift or predictive-model performance is claimed.",
+    "challenges": [
+      "Distinguishing genuine repeated customer purchases from erroneous duplicate transaction rows.",
+      "Reconciling high-cardinality district labels and inconsistent formats across dealer and geographic attributes.",
+      "Handling implausible ages, nonstandard monetary strings, extensive missingness and inconsistent financing records without making unsupported assumptions.",
+      "Maintaining a meaningful customer-level analytical view from transaction-level records."
+    ],
     "limitations": [
-      "Prediction metrics, label horizon, and any business uplift have not been verified in the supplied inventory."
+      "Numbers and cleaning rules in this case study are sourced from the team’s competition slide deck; the underlying customer-level dataset and code were not provided for an independent reproduction of the calculations.",
+      "The deck documents exclusion rules for unusual down-payment ratios and certain tenor values. These rules should be validated against the original data dictionary and finance-business definitions before reuse.",
+      "A full-history repeat flag is retrospective and would not by itself constitute leakage-free prospective repeat-order prediction.",
+      "No model training metrics, comparative prediction results, raw dataset or source-code repository are displayed, consistent with the scope selected for this public portfolio case study.",
+      "The source PDF also contains unrelated slides about Vision Transformers; only the relevant SPARC EDA/preprocessing slides are used here."
     ],
     "futureImprovements": [
-      "Add the verified target definition, leakage checks, validation strategy, and comparison metrics."
+      "Confirm disputed monetary and customer-identifier semantics with a formal data dictionary before applying irreversible filtering.",
+      "Document stage-by-stage row retention and field-level missingness alongside the existing cleaning decisions.",
+      "Validate temporal customer histories using a clearly specified historical observation period and a later repeat-order outcome period.",
+      "Monitor category consistency and data-quality rules across new monthly transaction batches."
     ],
     "githubUrl": "",
     "demoUrl": "",
     "reportUrl": "",
-    "image": "",
-    "gallery": []
+    "image": "/images/customer-repeat-order/sparc-eda-overview.webp",
+    "gallery": [
+      "/images/customer-repeat-order/sparc-categorical-eda.webp",
+      "/images/customer-repeat-order/sparc-deduplication.webp",
+      "/images/customer-repeat-order/sparc-age-validation.webp",
+      "/images/customer-repeat-order/sparc-geographic-audit.webp",
+      "/images/customer-repeat-order/sparc-geographic-cleaning.webp",
+      "/images/customer-repeat-order/sparc-financing-cleaning.webp",
+      "/images/customer-repeat-order/sparc-dp-otr-validation.webp",
+      "/images/customer-repeat-order/sparc-missing-value-audit.webp",
+      "/images/customer-repeat-order/sparc-outlier-review.webp",
+      "/images/customer-repeat-order/sparc-customer-repeat-definition.webp"
+    ],
+    "highlights": [
+      {
+        "value": "FINALIST",
+        "label": "SPARC 2026 Data Science Competition"
+      },
+      {
+        "value": "319,978",
+        "label": "source transactions"
+      },
+      {
+        "value": "2,341",
+        "label": "exact duplicates detected"
+      },
+      {
+        "value": "3",
+        "label": "team members"
+      }
+    ]
   },
   {
     "id": "9",
