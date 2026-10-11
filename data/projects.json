@@ -226,7 +226,7 @@
       "Use cost-sensitive evaluation and outreach simulation to assess campaign value without asserting hypothetical savings as measured outcomes.",
       "Add probability calibration and temporal validation against later bank marketing periods."
     ],
-    "githubUrl": "",
+    "githubUrl": "https://github.com/hazelwinataa/bank-marketing-campaign-classification",
     "demoUrl": "",
     "reportUrl": "",
     "image": "/images/bank-marketing/model-cv-precision.svg",
