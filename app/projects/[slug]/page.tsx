@@ -127,6 +127,97 @@ type GalleryDescription = {
 };
 
 const visualDescriptions: Record<string, GalleryDescription> = {
+  "eda-target-distribution.webp": {
+    title: "Kaggle notebook — transported target distribution",
+    caption: "Original Jupyter output, cell 8. The 8,693 training labels are nearly balanced: 4,378 True and 4,315 False.",
+    details: ["A count chart and percentage chart describe the binary target before feature engineering."],
+    originalScreenshot: true,
+    sourceLabel: "Original EDA output"
+  },
+  "eda-categorical-patterns.webp": {
+    title: "Kaggle notebook — categorical response patterns",
+    caption: "Original notebook output, cell 9. Transported proportions across HomePlanet, CryoSleep, Destination and VIP.",
+    details: ["Charts are descriptive associations from competition data, not causal business findings."],
+    originalScreenshot: true,
+    sourceLabel: "Original EDA output"
+  },
+  "eda-numerical-patterns.webp": {
+    title: "Kaggle notebook — numeric attribute distributions",
+    caption: "Original notebook output, cell 10. Age and five expense columns grouped by Transported label.",
+    details: ["Spending differences motivate engineered total and ratio features."],
+    originalScreenshot: true,
+    sourceLabel: "Original EDA output"
+  },
+  "cv-model-comparison.svg": {
+    title: "Baseline versus optimized cross-validation",
+    caption: "Replotted strictly from recorded MLflow output in the uploaded notebook: 5-fold mean accuracy for three baseline and three tuned models.",
+    details: ["XGBoost optimized CV = 0.81261; LightGBM = 0.81146; Logistic Regression = 0.79305.", "CV results are not the Kaggle public leaderboard score."],
+    originalScreenshot: false,
+    sourceLabel: "Notebook-derived comparison chart"
+  },
+  "kaggle-public-submission.webp": {
+    title: "Kaggle public leaderboard — submission",
+    caption: "Original Kaggle submissions screenshot showing a successful submission and public score 0.79401.",
+    details: ["The screenshot does not independently identify which model artifact or notebook revision generated the submission."],
+    originalScreenshot: true,
+    sourceLabel: "Original Kaggle screenshot"
+  },
+  "optuna-parameter-results.webp": {
+    title: "Optuna tuning parameters and retraining",
+    caption: "Original screenshot of notebook logs showing an optimized XGBoost CV score and LightGBM CV score alongside retraining confirmations.",
+    details: ["Scores belong to the notebook tuning run, not to AWS endpoint inference."],
+    originalScreenshot: true,
+    sourceLabel: "Original notebook output screenshot"
+  },
+  "mlflow-experiment-runs.webp": {
+    title: "MLflow experiment dashboard",
+    caption: "Original MLflow screenshot with baseline and optimized run groups for the spaceship-titanic-demo experiment.",
+    details: ["Six main model runs are documented; child trials appear separately when expanding optimization runs."],
+    originalScreenshot: true,
+    sourceLabel: "Original MLflow screenshot"
+  },
+  "streamlit-local-prediction.webp": {
+    title: "Local Streamlit inference interface",
+    caption: "Original localhost Streamlit screenshot with a displayed Transported = True prediction.",
+    details: ["Demonstrates a local interactive predictor; it is separate from the EC2-hosted cloud demonstration."],
+    originalScreenshot: true,
+    sourceLabel: "Original local Streamlit screenshot"
+  },
+  "sagemaker-training-optuna.webp": {
+    title: "AWS SageMaker Notebook — tuning execution",
+    caption: "Original AWS SageMaker notebook terminal screenshot showing completed Logistic Regression optimization and model files being saved.",
+    details: ["Final recorded CV accuracy is approximately 0.7927 from this distinct AWS run."],
+    originalScreenshot: true,
+    sourceLabel: "Original cloud execution screenshot (cropped)"
+  },
+  "sagemaker-endpoint-inservice.webp": {
+    title: "AWS SageMaker Endpoint — InService",
+    caption: "Original AWS console screenshot from May 19, 2026, showing an inference endpoint in InService status.",
+    details: ["The original AWS account ID and ARN were hidden in the public portfolio copy.", "This is historical evidence, not a current availability claim."],
+    originalScreenshot: true,
+    sourceLabel: "Original AWS screenshot (redacted)"
+  },
+  "aws-ec2-instance.webp": {
+    title: "Amazon EC2 instance — running during test",
+    caption: "Original EC2 console screenshot showing the application server instance running and passing status checks.",
+    details: ["The identity, instance identifiers and public network details were redacted."],
+    originalScreenshot: true,
+    sourceLabel: "Original AWS screenshot (redacted)"
+  },
+  "cloud-streamlit-form.webp": {
+    title: "EC2-hosted Streamlit passenger input",
+    caption: "Original screenshot of the cloud-hosted Streamlit application sending passenger features to SageMaker.",
+    details: ["Shows the frontend portion of a cloud inference workflow."],
+    originalScreenshot: true,
+    sourceLabel: "Original cloud Streamlit screenshot"
+  },
+  "cloud-sagemaker-prediction.webp": {
+    title: "SageMaker inference response in Streamlit",
+    caption: "Original EC2 Streamlit output after model invocation; Transported = True, with class-1 probability around 0.7407.",
+    details: ["This single demonstrated output is not a claim of production accuracy or uptime."],
+    originalScreenshot: true,
+    sourceLabel: "Original cloud inference screenshot"
+  },
   "sparc-categorical-eda.webp": {
     title: "SPARC 2026 — Customer, geography and category exploration",
     caption: "Original team presentation, page 8. The EDA reviews customer IDs, district distributions, incomplete financing categories, product preferences and transaction dates.",

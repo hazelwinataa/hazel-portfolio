@@ -511,10 +511,10 @@
   {
     "id": "7",
     "slug": "spaceship-titanic-kaggle",
-    "title": "Kaggle Spaceship Titanic Classification",
-    "year": null,
-    "projectType": "",
-    "status": "",
+    "title": "Spaceship Titanic — Kaggle Classification & Model Experiments",
+    "year": 2026,
+    "projectType": "Kaggle Getting Started Competition · Individual modeling notebook",
+    "status": "Notebook, Kaggle submission and experiment outputs documented",
     "grade": "",
     "featured": false,
     "roleTags": [
@@ -529,22 +529,32 @@
       "Classification",
       "MLOps"
     ],
-    "description": "Kaggle Spaceship Titanic classification using engineered passenger features, multiple classifiers, and Optuna tuning.",
-    "problemStatement": "Predict whether each passenger was transported, using tabular passenger features and supervised machine learning.",
-    "businessContext": "This is a Kaggle classification exercise demonstrating feature engineering, model selection, and validation rather than a business deployment.",
-    "dataset": "Kaggle Spaceship Titanic passenger classification data.",
-    "datasetSize": "",
+    "description": "Built passenger-classification experiments for Kaggle Spaceship Titanic using EDA, feature engineering, Logistic Regression, XGBoost and LightGBM, with Optuna and 5-fold CV. Logged a 0.81261 optimized XGBoost CV mean and documented a separate 0.79401 Kaggle public submission.",
+    "problemStatement": "Predict whether a passenger was transported to another dimension using passenger, accommodation, demographic and onboard-spending attributes.",
+    "businessContext": "Educational tabular-ML competition used to demonstrate repeatable exploratory analysis, feature development, cross-validation and model selection; leaderboard performance is a separate evaluation from local CV.",
+    "dataset": "Kaggle Spaceship Titanic public training split, 8,693 rows × 14 original columns (including Transported). The public competition supplies separate unlabeled test data; it was not uploaded here.",
+    "datasetSize": "8,693 labeled passengers · 14 initial columns · 4,378 transported / 4,315 not transported · 27 model features after engineering and selection",
     "preprocessing": [
-      "Prepared categorical and numerical features for classification",
-      "Handled missingness through engineered indicators where appropriate"
+      "Audited dtypes and missingness in age, cabin, home planet, destination, cryosleep, VIP and expenditure columns; retained the binary Transported target.",
+      "Derived additional fields first, then filled missing categories with Unknown and numeric values with column medians.",
+      "Converted selected categorical inputs to numeric codes with LabelEncoder; assembled 27 selected predictor columns.",
+      "Performed an 80:20 stratified split (6,954 train / 1,739 validation) for baseline classification comparisons.",
+      "Used 5-fold StratifiedKFold cross-validation for model optimization and MLflow experiment metrics."
     ],
     "featureEngineering": [
-      "Derived features from cabin information, passenger groups, family details, spending, age, and missingness indicators"
+      "Parsed Cabin into Deck, Cabin_num and Side.",
+      "Extracted passenger Group from PassengerId and engineered Group_size and Solo indicators.",
+      "Derived name-based family counts (Family_size), plus first/last names for intermediate analysis.",
+      "Created TotalSpending, spending flags and individual spending-to-total ratios from five onboard services.",
+      "Engineered Age_group plus missingness indicators for Age and CryoSleep."
     ],
     "methodology": [
-      "Compared Logistic Regression, XGBoost, and LightGBM",
-      "Used cross-validation for model assessment",
-      "Applied Optuna to tune hyperparameters"
+      "Visualized class balance, Transported proportions across four categorical attributes, and distributions of six numeric attributes.",
+      "Benchmarked Logistic Regression, XGBoost and LightGBM on a held-out stratified validation set.",
+      "Tuned model hyperparameters using Optuna with 30 trials per algorithm and 5-fold cross-validation.",
+      "Logged baseline and optimized model runs in MLflow, including CV metrics and saved models.",
+      "Used XGBoost as the MLflow Model Registry @champion by optimized CV mean accuracy, while a separate notebook submission cell explicitly predicted using lr_final (Logistic Regression).",
+      "Documented Kaggle public leaderboard score separately from the notebook cross-validation experiment."
     ],
     "models": [
       "Logistic Regression",
@@ -554,31 +564,87 @@
     "technologies": [
       "Python",
       "Pandas",
+      "NumPy",
       "Scikit-learn",
       "XGBoost",
       "LightGBM",
-      "Optuna"
+      "Optuna",
+      "MLflow",
+      "Matplotlib",
+      "Seaborn",
+      "Jupyter",
+      "Kaggle"
     ],
     "evaluationMetrics": [
-      "Cross-validation accuracy"
+      "Kaggle public leaderboard accuracy (submission evidence)",
+      "Stratified hold-out validation accuracy",
+      "5-fold CV mean accuracy",
+      "5-fold CV standard deviation"
     ],
     "results": [
-      "Reported XGBoost cross-validation accuracy: approximately 81.26%; this is a validation metric, not a verified public leaderboard score."
+      "Kaggle screenshot: public score = 0.79401 for a successful submission; the screenshot does not establish which saved notebook revision generated the submission.",
+      "Original notebook baseline hold-out validation accuracy: LightGBM 0.81081, XGBoost 0.79931, Logistic Regression 0.76998.",
+      "Recorded optimized MLflow 5-fold CV mean accuracy: XGBoost 0.81261, LightGBM 0.81146, Logistic Regression 0.79305.",
+      "Original notebook: 8,693 labeled samples, 6,954 training and 1,739 validation, with 27 selected engineered model features.",
+      "Notebook registered the optimized XGBoost model as MLflow Model Registry version 3 under the champion alias; Kaggle submission code separately calls lr_final.predict(X_test)."
     ],
     "insights": [
-      "Feature engineering investigated passenger relationships and spending patterns beyond raw columns."
+      "Raw target classes are close to balanced (4,378 True and 4,315 False); EDA therefore provides a different starting point from strongly imbalanced problems.",
+      "Accommodation, spending, passenger group and cryosleep information are transformed into more useful model-ready features.",
+      "A Kaggle public score and cross-validation accuracy answer different evaluation questions and should not be directly described as the same outcome.",
+      "Notebook implementation details matter: registry champion is XGBoost, but the submission code uses a Logistic Regression estimator."
     ],
-    "businessImpact": "",
-    "challenges": [],
+    "businessImpact": "Evidence of competition-ready EDA, feature engineering and ML evaluation. No real-world deployment outcome or business ROI is claimed.",
+    "challenges": [
+      "Categorical and numeric missingness across mixed passenger attributes.",
+      "Ensuring training/inference feature encodings remain consistent.",
+      "Separating candidate-model CV, competition submission and deployment outcomes."
+    ],
     "limitations": [
-      "A cross-validation accuracy value does not by itself establish leaderboard or real-world generalization performance."
+      "Preprocessing is fitted on the full labeled dataset before the split and CV; fitted transforms and grouped/family-derived frequencies should be audited for potential leakage.",
+      "LabelEncoder is refitted independently on Kaggle test data, creating a possible category-code mismatch. A persisted train-fitted preprocessor is preferable.",
+      "Kaggle leaderboard screenshot reports 0.79401 but does not independently identify the exact notebook revision or estimator used.",
+      "Optimized CV scores, hold-out accuracy and Kaggle public score belong to distinct evaluations; no private leaderboard score was provided.",
+      "No independent rerun of the notebook was performed as part of portfolio documentation."
     ],
-    "futureImprovements": [],
-    "githubUrl": "",
+    "futureImprovements": [
+      "Build a fitted end-to-end Pipeline/ColumnTransformer with consistent train/test categorical encoding and data leakage controls.",
+      "Group-aware validation for passengers who share related cabin/group/family information.",
+      "Compare the chosen Kaggle submission estimator with the highest-CV model on a consistent hold-out benchmark."
+    ],
+    "githubUrl": "https://github.com/hazelwinataa/spaceship-titanic-deployment",
     "demoUrl": "",
     "reportUrl": "",
-    "image": "",
-    "gallery": []
+    "image": "/images/spaceship-titanic/eda-target-distribution.webp",
+    "gallery": [
+      "/images/spaceship-titanic/eda-target-distribution.webp",
+      "/images/spaceship-titanic/eda-categorical-patterns.webp",
+      "/images/spaceship-titanic/eda-numerical-patterns.webp",
+      "/images/spaceship-titanic/cv-model-comparison.svg",
+      "/images/spaceship-titanic/kaggle-public-submission.webp",
+      "/images/spaceship-titanic/optuna-parameter-results.webp"
+    ],
+    "highlights": [
+      {
+        "value": "8,693",
+        "label": "labeled passengers"
+      },
+      {
+        "value": "0.79401",
+        "label": "Kaggle public score"
+      },
+      {
+        "value": "0.81261",
+        "label": "optimized XGBoost CV accuracy"
+      },
+      {
+        "value": "3",
+        "label": "model families"
+      }
+    ],
+    "relatedProjects": [
+      "spaceship-titanic-mlops"
+    ]
   },
   {
     "id": "8",
@@ -1508,10 +1574,10 @@
   {
     "id": "19",
     "slug": "spaceship-titanic-mlops",
-    "title": "Spaceship Titanic MLOps Pipeline",
-    "year": null,
-    "projectType": "",
-    "status": "",
+    "title": "Spaceship Titanic — MLflow & AWS Cloud Deployment",
+    "year": 2026,
+    "projectType": "Machine Learning Operations and Model Deployment coursework",
+    "status": "Original local, MLflow, AWS SageMaker Endpoint and EC2 Streamlit evidence documented",
     "grade": "",
     "featured": true,
     "roleTags": [
@@ -1526,24 +1592,28 @@
       "MLOps",
       "Classification"
     ],
-    "description": "Machine-learning lifecycle workflow for Spaceship Titanic covering feature preparation, Optuna tuning, MLflow Registry, and Streamlit inference.",
-    "problemStatement": "Organize experiment tracking, best-model selection, model packaging, and inference around a tabular classification use case.",
-    "businessContext": "A reproducibility and model-serving exercise demonstrating common MLOps practices.",
-    "dataset": "Kaggle Spaceship Titanic passenger classification dataset.",
-    "datasetSize": "",
+    "description": "Demonstrated a complete educational MLOps workflow for Spaceship Titanic: Optuna tuning, nested MLflow runs, Model Registry champion selection, local Streamlit inference, SageMaker endpoint deployment and an EC2-hosted Streamlit interface calling the endpoint.",
+    "problemStatement": "Organize training experiments, model versioning and model-serving demonstrations around a reproducible passenger Transported classifier; show both local and cloud inference interfaces.",
+    "businessContext": "Academic proof of concept for experiment tracking and model serving. Historical screenshots show SageMaker Endpoint and AWS EC2 deployment, but no current public availability or production monitoring is claimed.",
+    "dataset": "Kaggle Spaceship Titanic training dataset (8,693 labeled records); experiments reuse passenger and onboard-spending attributes. Distinct local Logistic Regression apps and cloud demonstrations are documented as separate implementations.",
+    "datasetSize": "8,693 labeled passengers · binary Transported target · multiple saved experiment/deployment workflows",
     "preprocessing": [
-      "Used a dedicated feature-engineering pipeline",
-      "Prepared training and inference transformations for reuse"
+      "Modeling notebook derives cabin, family/group, spend and missingness features before training and model tracking.",
+      "Local Logistic Regression repository uses dedicated preprocessing modules and serialization for a Streamlit prediction interface.",
+      "Cloud screenshots document form-field inference payloads sent from an EC2-hosted application to a SageMaker endpoint."
     ],
     "featureEngineering": [
-      "Reused passenger-level engineered features from Spaceship Titanic modeling"
+      "Cabin deck/number/side, group size, solo travel, family size, total spending, spending ratios, age bins and missingness indicators in the experiment notebook.",
+      "An inference payload maps passenger fields, onboard service expenses and flags to the cloud prediction request."
     ],
     "methodology": [
-      "Compared baseline models and tuned candidates",
-      "Used MLflow for experiment tracking",
-      "Tracked model candidates with MLflow Model Registry and champion selection",
-      "Serialized trained models for deployment",
-      "Connected a Streamlit frontend to prediction logic"
+      "Recorded baseline and optimized Logistic Regression, XGBoost and LightGBM runs in MLflow; 30 Optuna trials per optimized model with nested child runs.",
+      "Selected the highest recorded optimized 5-fold CV mean accuracy for MLflow Model Registry champion; original notebook registers XGBoost v3.",
+      "Executed local Streamlit UI inference, with a screenshot of Transported = True as functional evidence.",
+      "Ran Logistic Regression tuning in an AWS SageMaker Notebook environment, with separate recorded CV accuracy of approximately 0.7927 in the SageMaker terminal screenshot.",
+      "Documented a SageMaker inference endpoint with InService status in May 2026, based on original AWS console screenshot.",
+      "Deployed an interactive Streamlit form to an AWS EC2 instance and captured a live invocation payload plus response (Transported True, probability ~0.7407 for class 1) in original screenshots.",
+      "Maintained source code for a local deployment implementation in an existing public GitHub repository; the uploaded materials do not independently contain all scripts that created the historical cloud endpoint."
     ],
     "models": [
       "Logistic Regression",
@@ -1552,29 +1622,92 @@
     ],
     "technologies": [
       "Python",
-      "MLflow",
+      "Pandas",
+      "Scikit-learn",
+      "XGBoost",
+      "LightGBM",
       "Optuna",
+      "MLflow",
+      "Model Registry",
       "Streamlit",
-      "Scikit-learn"
+      "Amazon SageMaker",
+      "Amazon EC2",
+      "AWS"
     ],
     "evaluationMetrics": [
-      "Experiment-level model metrics tracked through MLflow; exact values require verification"
+      "5-fold CV accuracy for local model experiments",
+      "SageMaker Notebook tuning CV accuracy (separate run)",
+      "Cloud inference response / class probability",
+      "SageMaker endpoint health (historical InService)"
     ],
-    "results": [],
+    "results": [
+      "Experiment notebook and MLflow screenshot document six main baseline/optimized model runs plus nested hyperparameter trials.",
+      "Optimized MLflow 5-fold CV accuracy: XGBoost 0.81261, LightGBM 0.81146, Logistic Regression 0.79305; registered XGBoost as v3 @champion.",
+      "SageMaker Notebook tuning screenshot separately records Logistic Regression best CV accuracy approximately 0.7927; it is not the same as the notebook MLflow run.",
+      "Original AWS console screenshot shows a SageMaker Endpoint in InService on May 19, 2026.",
+      "AWS EC2 + Streamlit screenshots show interactive payload delivery to SageMaker and successful Transported = True prediction with class-1 probability approximately 0.7407.",
+      "Local Streamlit screenshot shows successful Transported = True inference; no current live endpoint URL has been verified."
+    ],
     "insights": [
-      "A registry-based champion workflow creates an explicit path between experimentation and model serving."
+      "MLflow and Optuna provide searchable experiments and an auditable route from tuning to an explicitly registered champion.",
+      "Using SageMaker Endpoint separates model serving from the EC2-hosted Streamlit presentation layer.",
+      "Screenshots establish historical functioning inference, not continuous availability or validated production SLA.",
+      "Cloud SageMaker Logistic Regression CV, local experiment CV and Kaggle leaderboard scores are different evaluation tracks."
     ],
-    "businessImpact": "",
-    "challenges": [],
+    "businessImpact": "Educational demonstration of model lifecycle tooling, AWS inference hosting and browser-based predictions; no real-world service reliability, commercial benefit or deployment uptime is asserted.",
+    "challenges": [
+      "Structuring model tracking and promotion across baseline/optimized runs.",
+      "Combining form inputs, cloud inference requests and user-facing prediction output.",
+      "Maintaining privacy when sharing AWS account/endpoint screenshots."
+    ],
     "limitations": [
-      "No public demo URL, production monitoring results, or independently verified accuracy are supplied for the deployment workflow."
+      "The SageMaker Endpoint and EC2 instance were demonstrably active in historical screenshots; their present-day status and any public URL have not been verified.",
+      "The existing public source repository covers a local Logistic Regression / Streamlit variant and should not be presented as full source for the historically deployed cloud stack.",
+      "The uploaded notebook fits preprocessing outside cross-validation and independently on Kaggle test data; a shared saved training-time preprocessing pipeline would be preferable.",
+      "Evidence images are cropped/redacted to avoid exposing AWS account IDs, IAM identity, IP addresses and endpoint ARNs.",
+      "No independent latency, security, real-world stability or automated CI/CD evaluation was provided."
     ],
-    "futureImprovements": [],
-    "githubUrl": "",
+    "futureImprovements": [
+      "Create a single reproducible containerized inference stack with version-locked model and preprocessor artifacts.",
+      "Add unit tests and inference contract checks for the EC2–SageMaker request/response interface.",
+      "Document IAM roles, least-privilege configuration and an automated infrastructure cleanup checklist without publishing credentials."
+    ],
+    "githubUrl": "https://github.com/hazelwinataa/spaceship-titanic-deployment",
     "demoUrl": "",
     "reportUrl": "",
-    "image": "",
-    "gallery": []
+    "image": "/images/spaceship-titanic/mlflow-experiment-runs.webp",
+    "gallery": [
+      "/images/spaceship-titanic/mlflow-experiment-runs.webp",
+      "/images/spaceship-titanic/cv-model-comparison.svg",
+      "/images/spaceship-titanic/optuna-parameter-results.webp",
+      "/images/spaceship-titanic/streamlit-local-prediction.webp",
+      "/images/spaceship-titanic/sagemaker-training-optuna.webp",
+      "/images/spaceship-titanic/sagemaker-endpoint-inservice.webp",
+      "/images/spaceship-titanic/aws-ec2-instance.webp",
+      "/images/spaceship-titanic/cloud-streamlit-form.webp",
+      "/images/spaceship-titanic/cloud-sagemaker-prediction.webp"
+    ],
+    "highlights": [
+      {
+        "value": "6",
+        "label": "main MLflow runs"
+      },
+      {
+        "value": "0.81261",
+        "label": "XGBoost CV mean"
+      },
+      {
+        "value": "AWS",
+        "label": "SageMaker + EC2 proof"
+      },
+      {
+        "value": "True",
+        "label": "cloud inference demonstrated"
+      }
+    ],
+    "relatedProjects": [
+      "spaceship-titanic-kaggle"
+    ]
   },
   {
     "id": "20",
