@@ -127,6 +127,56 @@ type GalleryDescription = {
 };
 
 const visualDescriptions: Record<string, GalleryDescription> = {
+  "credit-mlflow-runs.webp": {
+    title: "MLflow — recorded credit-score training runs",
+    caption: "Original academic evidence, PDF page 1. MLflow run listing for Credit Score Local Training Pipeline.",
+    details: ["The UI records runs by model and feature-set configuration, supporting experiment traceability.", "Original screenshot cropped to avoid exposing browser or server address information; application output is unaltered."],
+    originalScreenshot: true,
+    sourceLabel: "Original academic report screenshot",
+  },
+  "credit-mlflow-best.webp": {
+    title: "MLflow — FINAL BEST MODEL",
+    caption: "Original academic evidence, PDF page 2. Final model tracking screen with XGBoost and Original + Loan Flags.",
+    details: ["Shows recorded metrics and parameters; the 0.6878 macro F1 figure on this page comes from the local evaluation artifacts.", "Original screenshot cropped to avoid exposing browser or server address information; application output is unaltered."],
+    originalScreenshot: true,
+    sourceLabel: "Original academic report screenshot",
+  },
+  "credit-sagemaker-training.webp": {
+    title: "AWS SageMaker — notebook training",
+    caption: "Original academic evidence, PDF page 14. Training and tuning run within an AWS SageMaker Notebook environment.",
+    details: ["Shows Logistic Regression, Random Forest, XGBoost and LightGBM training. This is not evidence of a live SageMaker inference endpoint.", "Original screenshot cropped to avoid exposing browser or server address information; application output is unaltered."],
+    originalScreenshot: true,
+    sourceLabel: "Original academic report screenshot",
+  },
+  "credit-ec2-standard.webp": {
+    title: "AWS EC2 Streamlit — Standard prediction",
+    caption: "Original academic evidence, PDF page 25. Streamlit running on AWS EC2 returned the Standard credit-score label.",
+    details: ["One of three demonstrated prediction cases; saved screenshot is historical, not a claim of current EC2 availability.", "Original screenshot cropped to avoid exposing browser or server address information; application output is unaltered."],
+    originalScreenshot: true,
+    sourceLabel: "Original academic report screenshot",
+  },
+  "credit-ec2-good.webp": {
+    title: "AWS EC2 Streamlit — Good prediction",
+    caption: "Original academic evidence, PDF page 27. Streamlit running on AWS EC2 returned the Good credit-score label.",
+    details: ["The case tests the Good branch of the deployed three-class model.", "Original screenshot cropped to avoid exposing browser or server address information; application output is unaltered."],
+    originalScreenshot: true,
+    sourceLabel: "Original academic report screenshot",
+  },
+  "credit-ec2-poor.webp": {
+    title: "AWS EC2 Streamlit — Poor prediction",
+    caption: "Original academic evidence, PDF page 29. Streamlit running on AWS EC2 returned the Poor credit-score label.",
+    details: ["Completes the Good / Standard / Poor output-case evidence for the EC2 deployment.", "Original screenshot cropped to avoid exposing browser or server address information; application output is unaltered."],
+    originalScreenshot: true,
+    sourceLabel: "Original academic report screenshot",
+  },
+  "credit-ec2-healthcheck.webp": {
+    title: "AWS EC2 — Streamlit process and health check",
+    caption: "Original academic evidence, PDF page 30. Console demonstrates Streamlit service on port 8501 and a successful health check.",
+    details: ["Supports that Streamlit ran on EC2 during the documented test; it does not prove ongoing 24/7 availability.", "Original screenshot cropped to avoid exposing browser or server address information; application output is unaltered."],
+    originalScreenshot: true,
+    sourceLabel: "Original academic report screenshot",
+  },
+
   "local-model-comparison.svg": {
     title: "Credit Score Deployment — Local eight-model comparison",
     caption:

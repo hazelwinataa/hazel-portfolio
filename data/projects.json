@@ -1215,7 +1215,7 @@
     "title": "Credit Score Deployment Pipeline",
     "year": 2026,
     "projectType": "Individual academic final project — Model Deployment",
-    "status": "Local pipeline and Streamlit source documented; AWS stage pending verification",
+    "status": "Completed local MLOps pipeline; AWS SageMaker training and EC2 Streamlit deployment documented",
     "grade": "",
     "featured": true,
     "roleTags": [
@@ -1231,9 +1231,9 @@
       "Cloud",
       "Classification"
     ],
-    "description": "Designed a retrainable, object-oriented credit-score classification workflow with group-aware model evaluation, MLflow experiment logging, serialized inference, and a Streamlit interface. Across 8 recorded local candidates, XGBoost with Original + Loan Flags achieved 0.6878 macro F1 and 70.81% accuracy.",
-    "problemStatement": "Transition a multiclass credit-score modeling study into a reproducible local ML pipeline, log controlled experiments, save the selected model, and expose predictions through an interactive interface; document cloud work separately when verified.",
-    "businessContext": "Demonstrates an academic MLOps delivery workflow for translating credit-risk experiments into reusable source modules, tracked evaluation, and end-user inference. It is not a validated lending or production risk-scoring system.",
+    "description": "Built an object-oriented credit-score ML pipeline with grouped model comparison, MLflow tracking and Streamlit inference, then executed training in AWS SageMaker Notebook and deployed Streamlit on AWS EC2. Across 8 recorded local candidates, XGBoost with Original + Loan Flags achieved 0.6878 macro F1 and 70.81% accuracy.",
+    "problemStatement": "Develop a reproducible multiclass credit-score pipeline with local training, MLflow-based experiment tracking and Streamlit inference; demonstrate cloud training on AWS SageMaker Notebook and externally accessible Streamlit deployment on AWS EC2.",
+    "businessContext": "Academic proof of a local-to-cloud MLOps workflow: grouped experiments and tracked model evaluation, application-layer inference, AWS-based execution, and browser-accessible demonstration. This educational prototype is not a validated lending or production risk-scoring system.",
     "dataset": "Credit-score customer-month data (data_C.csv) with three target classes: Good, Poor, Standard. Local pipeline reports 25,000 raw records / 29 columns, 25,000 cleaned records / 28 columns, and 25,000 engineered records / 44 columns. Raw dataset is not published because it contains customer identifiers.",
     "datasetSize": "25,000 original records · 29 source columns · 44 engineered columns · 3 classes",
     "preprocessing": [
@@ -1254,7 +1254,9 @@
       "Implemented MLflow logging for model parameters, cross-validation scores, evaluation metrics, per-model reports and serialized model artifacts.",
       "Saved a Joblib inference bundle with the selected pipeline, class label encoder, feature configuration, best parameters and evaluation metrics.",
       "Implemented predict_local.py for CLI-based inference and deployment/streamlit_app.py for an interactive user-facing prediction form with optional class probabilities.",
-      "AWS work is documented as a planned next stage only; no successful SageMaker training or cloud endpoint is claimed."
+      "Ran training and tuning workflows in AWS SageMaker Notebook, as evidenced by screenshots of both feature sets, model comparison and final artifact/inference checks.",
+      "Attempted SageMaker Endpoint configuration; AWS Academy Learner Lab explicitly denied sagemaker:CreateEndpointConfig, so no SageMaker inference endpoint was created.",
+      "Deployed the Streamlit prediction application to an AWS EC2 instance via public IPv4 and port 8501; the original evidence document shows the service running, server health check, and browser prediction tests for all three labels."
     ],
     "models": [
       "Logistic Regression",
@@ -1273,7 +1275,10 @@
       "LightGBM",
       "MLflow",
       "Streamlit",
-      "Joblib"
+      "Joblib",
+      "Amazon SageMaker Notebook",
+      "Amazon EC2",
+      "AWS Academy Learner Lab"
     ],
     "evaluationMetrics": [
       "Macro F1-score (primary)",
@@ -1290,39 +1295,55 @@
       "Compared 8 classifier and feature-set combinations; selected XGBoost with Original + Loan Flags from the recorded evaluation results.",
       "Selected candidate recorded evaluation macro F1 = 0.6878, accuracy = 70.81%, balanced accuracy = 70.13%, and multiclass OvR macro ROC-AUC = 0.8586.",
       "Recorded best grouped cross-validation macro F1 = 0.6852 for the selected XGBoost configuration.",
-      "Supplied reusable local pipeline classes, training/inference entry points, MLflow logging code, Streamlit form source and serialized model artifact."
+      "Supplied reusable local pipeline classes, training/inference entry points, MLflow logging code, Streamlit form source and serialized model artifact.",
+      "Original MLflow screenshots in the submitted report show Credit Score Local Training Pipeline experiment runs and the FINAL BEST MODEL run.",
+      "AWS SageMaker Notebook screenshots show both model/feature-set training workflows and their recorded model comparison artifacts; cloud-specific model scores are not separately quoted here.",
+      "AWS EC2 Streamlit screenshots show successful externally accessed predictions for Standard, Good and Poor, alongside server health-check and EC2 execution evidence.",
+      "SageMaker Endpoint was attempted but blocked by AWS Academy Learner Lab IAM policy (AccessDeniedException for sagemaker:CreateEndpointConfig); EC2 was used for the demonstrated cloud application instead."
     ],
     "insights": [
       "Across the eight saved local results, XGBoost with Original + Loan Flags has the highest recorded evaluation macro F1.",
       "Feature-set selection and customer-grouped splitting are important because monthly customer records may be repeated.",
       "The separation into cleaning, feature engineering, preprocessing, training, evaluation and inference classes supports clearer local retraining and debugging.",
-      "The original modeling notebook and local deployment pipeline use different cleaning logic and therefore report different row counts and scores."
+      "The original modeling notebook and local deployment pipeline use different cleaning logic and therefore report different row counts and scores.",
+      "The project demonstrates two distinct AWS surfaces: SageMaker Notebook for training workflow execution and EC2 for web application hosting.",
+      "Infrastructure permissions shaped the deployment choice: EC2 hosted Streamlit when AWS Academy restrictions prevented SageMaker Endpoint configuration."
     ],
     "businessImpact": "Academic demonstration of reproducible training, experiment auditability and accessible credit-score inference; deployment and decision thresholds would need independent validation, security reviews and regulatory/fairness analysis for real financial use.",
     "challenges": [
       "Separating heterogeneous feature preprocessing and model-specific hyperparameter optimization in reusable Python classes.",
       "Handling repeated customer-month observations through group-aware model splits and cross-validation.",
-      "Connecting local MLflow experiment output and a serialized model artifact to an interactive inference form."
+      "Connecting local MLflow experiment output and a serialized model artifact to an interactive inference form.",
+      "Running training workflows in SageMaker Notebook and exposing a Streamlit application on EC2, including port 8501 and service health checks.",
+      "Working around a documented explicit IAM deny on the SageMaker Endpoint configuration API within AWS Academy Learner Lab."
     ],
     "limitations": [
       "The local saved artifact scores (macro F1 0.6878 / accuracy 70.81%) are from the pipeline output and differ from the separate exploratory modeling study (macro F1 0.6898 / accuracy 70.79%).",
       "The final artifact is selected by test-set macro F1 from eight candidates; this is exploratory and not an unbiased final held-out estimate.",
       "Customer-history repairs run on the full input table before the group split; preprocessing should be reviewed for leakage risks before production use.",
-      "MLflow tracking source exists, but no original MLflow screenshot or live MLflow UI evidence was provided in this batch.",
-      "Streamlit application code was supplied, but no live public URL or visual test cases for each class were provided.",
-      "The supplied AWS note only describes planned SageMaker/endpoint work; AWS training, deployment and endpoint availability have not been verified."
+      "Cloud training and EC2 inference are supported by historical screenshots from the submitted 31-page evidence PDF, but an always-online EC2 demo URL or current instance uptime is not verified.",
+      "SageMaker Endpoint inference was not completed because AWS Academy Learner Lab returned AccessDeniedException for CreateEndpointConfig; cloud application hosting was implemented with EC2 instead.",
+      "Local evaluation scores should not be represented as independently recalculated cloud performance; the AWS screenshots are evidence of workflow execution and example inference results."
     ],
     "futureImprovements": [
-      "Verify local inference and save screenshots of prediction examples for Good, Poor and Standard.",
-      "Provide original MLflow screenshots and, when completed, verified AWS training/endpoint scripts plus endpoint test evidence.",
-      "Refactor full-dataset customer-based cleaning into train-fitted transformations where necessary and use independent holdout testing for final model selection."
+      "Refactor full-dataset customer-based cleaning into train-fitted transformations where necessary and use independent holdout testing for final model selection.",
+      "If future IAM permissions allow, implement SageMaker Endpoint deployment with authenticated inference and dedicated end-to-end tests.",
+      "Make EC2 application hosting reproducible with secure HTTPS, managed secrets, infrastructure-as-code and reliable uptime monitoring.",
+      "Add a separate untouched customer-group holdout and train-fitted cleaning to strengthen unbiased evaluation and leakage prevention."
     ],
     "githubUrl": "",
     "demoUrl": "",
     "reportUrl": "",
     "image": "/images/credit-score-deployment/local-model-comparison.svg",
     "gallery": [
-      "/images/credit-score-deployment/local-model-comparison.svg"
+      "/images/credit-score-deployment/local-model-comparison.svg",
+      "/images/credit-score-deployment/credit-mlflow-runs.webp",
+      "/images/credit-score-deployment/credit-mlflow-best.webp",
+      "/images/credit-score-deployment/credit-sagemaker-training.webp",
+      "/images/credit-score-deployment/credit-ec2-standard.webp",
+      "/images/credit-score-deployment/credit-ec2-good.webp",
+      "/images/credit-score-deployment/credit-ec2-poor.webp",
+      "/images/credit-score-deployment/credit-ec2-healthcheck.webp"
     ],
     "relatedProjects": [
       "credit-score-prediction"
@@ -1330,23 +1351,23 @@
     "highlights": [
       {
         "value": "8",
-        "label": "Candidate configurations",
-        "note": "4 models × 2 feature sets"
+        "label": "Model candidates",
+        "note": "4 classifiers × 2 feature sets"
       },
       {
         "value": "0.6878",
-        "label": "Macro F1 (local pipeline)",
-        "note": "Reported evaluation result"
+        "label": "Local macro F1",
+        "note": "Recorded evaluation result"
       },
       {
-        "value": "70.81%",
-        "label": "Accuracy (local pipeline)",
-        "note": "Not independently re-tested"
+        "value": "AWS EC2",
+        "label": "Cloud Streamlit demo",
+        "note": "Good · Standard · Poor tested"
       },
       {
-        "value": "OOP",
-        "label": "Retrainable modules",
-        "note": "MLflow + Streamlit source"
+        "value": "MLflow",
+        "label": "Tracked experiments",
+        "note": "Local runs + SageMaker notebook evidence"
       }
     ]
   },
