@@ -127,6 +127,36 @@ type GalleryDescription = {
 };
 
 const visualDescriptions: Record<string, GalleryDescription> = {
+  "asa-clustering-slide.webp": {
+    title: "ASA DataFest 2026 — Patient Clustering Analysis",
+    caption: "Original final-team presentation, page 4. The slide compares the five interpreted patient segments through disease groups and a social-risk-versus-encounter-complexity map.",
+    details: [
+      "The five named segments are the final team presentation's interpretation, not independently validated clinical risk strata.",
+      "Team Bismillah advanced to the finalist stage, as reported by the participant."
+    ],
+    originalScreenshot: true,
+    sourceLabel: "Original finalist team slide — clustering only"
+  },
+  "asa-journey-map.webp": {
+    title: "Patient Risk Journey Map — social risk and encounter visibility",
+    caption: "Detail cropped from the original team slide. The x-axis shows average encounters per patient; the y-axis represents the team's derived average social-risk score, allowing low-utilization and complex-journey groups to be compared.",
+    details: [
+      "The Hidden High Risk interpretation highlights high social-risk signals with relatively low observed encounter volume.",
+      "The descriptive chart suggests screening hypotheses; it is not a validated clinical prediction or an individual patient's risk assessment."
+    ],
+    originalScreenshot: true,
+    sourceLabel: "Original team slide — journey-map crop"
+  },
+  "asa-disease-cluster-bars.webp": {
+    title: "Top five disease groups within each presented cluster",
+    caption: "Detail cropped from the original finalist slide. The grouped bars summarize disease-group frequencies associated with each patient segment.",
+    details: [
+      "General check-up encounters are prominent in some groups, demonstrating why utilization frequency alone is not a clinical-risk label.",
+      "Percentages reflect the chart's within-cluster disease-record breakdown and should not be mistaken for proportions of distinct patients."
+    ],
+    originalScreenshot: true,
+    sourceLabel: "Original team slide — diagnosis-group crop"
+  },
   "eda-target-distribution.webp": {
     title: "Kaggle notebook — transported target distribution",
     caption: "Original Jupyter output, cell 8. The 8,693 training labels are nearly balanced: 4,378 True and 4,315 False.",

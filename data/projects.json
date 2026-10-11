@@ -860,10 +860,10 @@
   {
     "id": "10",
     "slug": "patient-risk-journey",
-    "title": "Large-Scale Patient Risk Journey Clustering",
-    "year": null,
-    "projectType": "",
-    "status": "",
+    "title": "ASA DataFest 2026 Finalist — Patient Risk Journey Clustering",
+    "year": 2026,
+    "projectType": "ASA DataFest BINUS 2026 · Team Bismillah · Competition finalist",
+    "status": "Finalist — Patient Clustering Analysis (team presentation)",
     "grade": "",
     "featured": true,
     "roleTags": [
@@ -876,57 +876,124 @@
     ],
     "domainTags": [
       "Clustering",
-      "Business Analytics"
+      "Healthcare Analytics",
+      "Patient Segmentation"
     ],
-    "description": "Large-scale patient journey segmentation across 1,210,243 healthcare records from 57,386 patients.",
-    "problemStatement": "Transform longitudinal healthcare records into patient-level features and explore segments representing different patient journey patterns.",
-    "businessContext": "Patient segmentation can help structure exploratory risk-journey analysis and support research into service utilization and support needs.",
-    "dataset": "Healthcare journey data consisting of 1,210,243 records linked to 57,386 patients.",
-    "datasetSize": "1,210,243 healthcare records; 57,386 patients",
+    "description": "Competition finalist case study focused on large-scale healthcare data integration and patient clustering: 7,675,801 original encounters, 9,313,853 merged records, and 57,386 patient profiles with 22 engineered features. Analyzed five social-risk and patient-journey segments, including a potentially under-screened high-risk group.",
+    "problemStatement": "How can millions of encounters, diagnosis records and social-determinant responses be transformed into patient-level segments that reveal different care journeys and groups warranting closer screening? The portfolio case study focuses solely on the patient-clustering portion of the team presentation.",
+    "businessContext": "ASA DataFest BINUS 2026, Team Bismillah. The submitted presentation interprets five exploratory patient segments by clinical/operational journey complexity and social determinants of health. This analysis is a nonclinical, descriptive segmentation study, not a validated diagnostic or triage system.",
+    "dataset": "Seven linked healthcare source tables: encounters, patients, diagnosis, departments, providers, social_determinants, and TIGER census geographic codes. The saved notebook starts from 7,675,801 encounter records, then expands to 9,313,853 rows after sequential left joins. One-to-many diagnosis and social-response joins can increase row counts; the 9.31 million joined rows are not 9.31 million unique patients or independent visits.",
+    "datasetSize": "7,675,801 base encounters → 9,313,853 joined rows → 1,275,948 rows with social-determinant coverage → 1,210,243 clustering records → 57,386 distinct patient profiles × 22 features",
     "preprocessing": [
-      "Cleaned healthcare records and prepared patient-level data"
+      "Loaded seven source CSV tables into Pandas and made separate working copies: patients, encounters, diagnosis, departments, providers, social_determinants and tigercensuscodes.",
+      "Normalized the join keys as strings: trimmed whitespace, stripped accidental trailing .0 suffixes, replaced placeholder nulls with NaN and prepared CensusBlockGroupFipsCode/GEOID for geographic joining.",
+      "Verified foreign-key matching before joining. For example, patient join coverage was 7,353,621 of 7,675,801 encounter rows, while only 83,359 encounter keys initially matched a social-determinants record.",
+      "Performed sequential left joins: encounters + patients (7,675,801 rows), + diagnosis (8,099,023), + departments and providers, + TIGER geographic reference, + social determinants (9,313,853). Checked row counts and shapes at each step.",
+      "Audited nulls and repeated EncounterKey records after the social determinant join, then narrowed the merged table to 1,275,948 rows containing social-response information.",
+      "Removed rows with missing essential patient, disease-group and social-response fields, retaining 1,210,243 records for the clustering preparation.",
+      "Mapped DisplayName + AnswerText pairs to a custom ordinal social RiskScore (0/1/2 where applicable); maintained an is_missing indicator for noninterpretable or missing responses.",
+      "Filled 223,813 missing social RiskScore entries using their respective Domain mean values, keeping the originally missing-response flag for downstream analysis."
     ],
     "featureEngineering": [
-      "Engineered patient journey and social-determinant features"
+      "Converted encounter/social-response rows to one patient per row using PatientDurableKey as the patient-level index.",
+      "Pivoted mean RiskScore into eleven domain features including stress, social connections, physical activity, food insecurity, housing stability, financial strain, transportation needs and depression.",
+      "Aggregated eleven patient-level risk and journey indicators: average/max/min/std social risk; question count and diversity; domain diversity; unique encounter count; unique disease-group count; missing rate; and missing count.",
+      "Joined domain scores and journey indicators into a 57,386 × 22 patient-feature matrix; missing engineered values were filled before StandardScaler transformation.",
+      "Used total_encounters and unique_diseases to visualize journey complexity, while composite social-risk scores described relative differences in screening responses."
     ],
     "methodology": [
-      "Built patient-level profiles from longitudinal information",
-      "Evaluated K-Means clustering using silhouette analysis",
-      "Selected a five-cluster solution and visualized a Patient Risk Journey Map"
+      "Analyzed the clustering-only workflow from healthcare data integration to five interpretive patient groups, excluding the separate readmission and physician-shortage topics in the team presentation.",
+      "Standardized 22 heterogeneous patient features with StandardScaler before computing distances for K-Means.",
+      "Compared K-Means candidates k=2 through k=8 using inertia (elbow method) and sampled silhouette evaluation (up to 5,000 patient profiles).",
+      "The saved selection table records the highest silhouette coefficient at k=5 (0.327972) versus k=4 (0.325479), motivating the five-segment solution used in the final team slide.",
+      "Profiled groups by social-determinant domains, encounter counts, number of disease groups and disease-category distribution; used PCA as an exploratory two-dimensional clustering visualization.",
+      "Presented the final five-segment Patient Risk Journey Map, contrasting encounter visibility with relative social risk and annotated disease profiles, as shown in the team presentation.",
+      "Preserved the five cluster names and numbered labels exactly as presented: Cluster 1 Low Risk, Cluster 0 Moderate, Cluster 2 High Complexity, Cluster 3 Psychosocial High Risk, Cluster 4 Hidden High Risk."
     ],
     "models": [
-      "K-Means"
+      "K-Means (unsupervised patient segmentation)"
     ],
     "technologies": [
       "Python",
       "Pandas",
+      "NumPy",
       "Scikit-learn",
-      "K-Means"
+      "K-Means",
+      "StandardScaler",
+      "PCA",
+      "Matplotlib",
+      "Seaborn",
+      "Jupyter"
     ],
     "evaluationMetrics": [
-      "Silhouette score"
+      "Elbow / K-Means inertia (candidate k=2–8)",
+      "Sampled silhouette coefficient (up to 5,000 profiles)",
+      "Cluster-level descriptive social-risk and journey profiles"
     ],
     "results": [
-      "Selected K-Means with k=5",
-      "Produced a Patient Risk Journey Map using the resulting patient segments"
+      "Original encounter table: 7,675,801 rows. Sequential data integration produced 9,313,853 joined rows, including row growth caused by one-to-many joins.",
+      "Social-determinant screening filter retained 1,275,948 rows; required-field cleaning retained 1,210,243 clustering records.",
+      "Patient-level feature engineering produced 57,386 unique patient profiles represented by 22 clustering features.",
+      "K-Means candidate evaluation (k=2–8) recorded its highest sampled silhouette coefficient at k=5: 0.327972.",
+      "Final competition presentation described five segments: Low Risk (1), Moderate (0), High Complexity (2), Psychosocial High Risk (3), and Hidden High Risk (4).",
+      "The competition team reached the finalist stage, as reported by the project participant; the patient-clustering map was included in the final team presentation."
     ],
     "insights": [
-      "Combining journey-level and social-determinant features allows patient segmentation to examine more than a single encounter."
+      "Cluster 1 (Low Risk): comparatively low recorded social/clinical risk and a simple documented healthcare journey; mainly suggested for preventive-care discussion.",
+      "Cluster 0 (Moderate): average relative risk with many general check-ups; exploratory opportunity for early monitoring and lifestyle support.",
+      "Cluster 2 (High Complexity): frequent encounters and multiple disease groups, suggesting a more complex care journey and a potential need for coordinated follow-up.",
+      "Cluster 3 (Psychosocial High Risk): elevated stress and social/financial burdens with mental-health disease patterns; suggests an integrated clinical-and-social perspective.",
+      "Cluster 4 (Hidden High Risk): elevated derived social-risk signals despite low encounter visibility; a hypothesis for possible under-screening, not proof that every member is clinically high risk.",
+      "The presentation's central message is that encounter utilization alone does not establish patient risk; social determinants and screening coverage add useful descriptive context."
     ],
-    "businessImpact": "Potential application: support exploratory patient-population analysis and service planning; no clinical outcome improvement is claimed.",
-    "challenges": [],
+    "businessImpact": "Translated a multi-million-row healthcare integration workflow into interpretable population-level segmentation for the ASA DataFest finalist presentation. The proposed use is to inform further screening, outreach planning and care-coordination research; patient-level clinical benefit or causal impact has not been demonstrated.",
+    "challenges": [
+      "Managing joins across seven heterogeneous healthcare tables while monitoring one-to-many row amplification and inconsistent key representations.",
+      "Reducing millions of encounter and social-response rows to a consistent patient-level unit of analysis without mistaking join-expanded rows for independent patients.",
+      "Handling numerous sparse or uninterpretable social-survey answers and making the rule-based social-risk encoding auditable.",
+      "Comparing cluster count candidates efficiently for 57,386 rows with 22 features while keeping results interpretable to nontechnical stakeholders."
+    ],
     "limitations": [
-      "Clusters are descriptive; they do not establish individual clinical risk or causal relationships.",
-      "Cluster-level statistics and full silhouette values require verification before publication."
+      "This is unsupervised exploratory segmentation. The custom social-risk mapping and mean imputation are heuristic, not clinically calibrated or externally validated risk scores.",
+      "The original clustering notebook contains a saved output showing only labels 0–3 even though the code specifies best_k=5; five labels and group descriptions are therefore grounded in the final presentation and prior project discussion, not treated as validated per-cluster counts from that cached cell.",
+      "Joining diagnosis and social-response tables increases row counts through one-to-many relationships; neither 9,313,853 joined rows nor 1,210,243 records represent unique patients.",
+      "Zero-filled missing domain aggregates and domain-mean risk imputations may affect cluster distances and interpretability.",
+      "Claims about hidden high risk, psychosocial burden and under-screening are descriptive screening hypotheses, not diagnoses, causal explanations or evidence of clinical outcomes.",
+      "Competition finalist status is reported by the project participant; the presentation supplied here does not itself include an official finalist confirmation."
     ],
     "futureImprovements": [
-      "Add verified cluster profiles and assess segmentation stability across samples and time."
+      "Rerun the final k=5 segmentation end-to-end and save a consistent five-cluster profile table, counts and labeled outputs for independent verification.",
+      "Audit and document one-to-many join cardinality and examine the sensitivity of cluster memberships to risk-score coding, imputation and domain coverage.",
+      "Test stability of patient segments across alternative time windows and evaluate them with domain experts before any clinical application."
     ],
     "githubUrl": "",
     "demoUrl": "",
     "reportUrl": "",
-    "image": "",
-    "gallery": []
+    "image": "/images/patient-risk-journey/asa-clustering-slide.webp",
+    "gallery": [
+      "/images/patient-risk-journey/asa-clustering-slide.webp",
+      "/images/patient-risk-journey/asa-journey-map.webp",
+      "/images/patient-risk-journey/asa-disease-cluster-bars.webp"
+    ],
+    "highlights": [
+      {
+        "value": "FINALIST",
+        "label": "ASA DataFest BINUS 2026"
+      },
+      {
+        "value": "9.31M",
+        "label": "merged healthcare rows"
+      },
+      {
+        "value": "57,386",
+        "label": "patient-level profiles"
+      },
+      {
+        "value": "5",
+        "label": "final team-presented segments"
+      }
+    ],
+    "relatedProjects": []
   },
   {
     "id": "11",
