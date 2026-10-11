@@ -104,7 +104,7 @@
       "Add calibrated class probabilities, group-wise error analysis, model explainability, and fairness checks before any production-oriented use.",
       "Document separate Streamlit / MLflow / AWS deployment evidence once the implementation files are provided."
     ],
-    "githubUrl": "",
+    "githubUrl": "https://github.com/hazelwinataa/credit-score-prediction",
     "demoUrl": "",
     "reportUrl": "",
     "image": "/images/credit-score/model-f1-comparison.svg",
