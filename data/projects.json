@@ -121,8 +121,8 @@
     "slug": "bank-marketing-campaign",
     "title": "Bank Marketing Campaign Classification",
     "year": null,
-    "projectType": "Group Project",
-    "status": "",
+    "projectType": "Group academic final project — Machine Learning (LA09, 4 contributors)",
+    "status": "Completed group modeling experiment; notebook and poster verified",
     "grade": "A",
     "featured": true,
     "roleTags": [
@@ -137,55 +137,123 @@
       "Classification",
       "Business Analytics"
     ],
-    "description": "Predicting bank term-deposit subscriptions from 41,188 customer records through supervised classification and model comparison.",
-    "problemStatement": "Predict whether a bank customer will subscribe to a term deposit, so marketing outreach can be evaluated using data-driven response predictions.",
-    "businessContext": "This is a campaign-response modeling problem relevant to targeting, customer prioritization, and marketing resource allocation.",
-    "dataset": "Bank marketing data containing customer-level attributes and a target indicating term-deposit subscription.",
-    "datasetSize": "41,188 customer records",
+    "description": "Collaborative classification study of 41,188 bank campaign records, comparing six models and class-imbalance strategies to prioritize likely term-deposit subscribers. Tuned Logistic Regression recorded 0.6979 cross-validated positive-class precision; held-out positive-class precision was approximately 0.67.",
+    "problemStatement": "Predict whether a bank customer will subscribe to a term deposit (yes/no), with the modeling objective centered on precision for the positive (yes) class to support selective telemarketing outreach.",
+    "businessContext": "The academic team examined how campaign response prediction could guide prospect prioritization and call-center resource allocation. The study reports exploratory metrics and does not claim a measured increase in real-world conversion or cost savings.",
+    "dataset": "Bank Marketing — bank-additional-full.csv from the public Bank Marketing dataset linked in the original group notebook. The source has 41,188 rows and 21 variables: demographics, prior/current contact attributes, macroeconomic context, and binary response target y. The modeling notebook retained 40,184 rows and 20 columns after dropping default, removing duplicates, and filtering missing housing/loan fields.",
+    "datasetSize": "41,188 initial customer-contact records · 40,184 cleaned · 8,037 test observations · yes: 4,532 (11.28%) / no: 35,652 (88.72%) after cleaning",
     "preprocessing": [
-      "Encoded categorical variables for machine-learning models",
-      "Investigated imbalanced target classes",
-      "Applied resampling techniques as part of the experiment workflow"
+      "Converted categorical unknown markers to missing values; inspected six affected columns (job, marital, education, default, housing, loan).",
+      "Dropped the default feature following the group’s recorded chi-square investigation, removed 14 duplicated records, filled selected categorical unknown values as others, and removed observations missing housing or loan.",
+      "Encoded categorical features using one-hot encoding for selected fields and binary encoding for job, education, month and day_of_week through ColumnTransformer.",
+      "Created an 80/20 train–test split with random_state=100; the original notebook did not specify stratification for this split.",
+      "Excluded duration from the predictive feature set because call duration is not available before a telemarketing contact concludes."
     ],
-    "featureEngineering": [],
+    "featureEngineering": [
+      "Constructed a categorical encoding pipeline combining OneHotEncoder and category_encoders.BinaryEncoder.",
+      "Compared training configurations without resampling, with RandomOverSampler and with RandomUnderSampler inside modeling pipelines.",
+      "Examined logistic regression coefficient magnitudes of transformed predictors; encoded month and contact features were prominent in the notebook output."
+    ],
     "methodology": [
-      "Compared Logistic Regression, KNN, Decision Tree, Random Forest, XGBoost, and SVM",
-      "Used stratified 5-fold cross-validation",
-      "Performed hyperparameter tuning and comparative evaluation"
+      "Conducted exploratory data analysis of target prevalence, employment-related macroeconomic attributes, previous contacts, job categories, marital status, education and communication channels.",
+      "Benchmarked Logistic Regression, KNN, Decision Tree, Random Forest, XGBoost and SVM with five-fold StratifiedKFold cross-validation, using positive-class precision as the benchmark score.",
+      "Compared baseline, random oversampling and random undersampling approaches within pipelines to assess the effect of imbalance handling on precision.",
+      "Selected Logistic Regression as the precision-oriented candidate, then ran RandomizedSearchCV with 100 parameter candidates × 5 CV folds (500 fits) on the training set.",
+      "Evaluated the tuned classifier on a held-out test set (8,037 rows) with per-class precision, recall, F1 and accuracy; inspected coefficients for encoded feature interpretation.",
+      "Preserved original group notebook output and figures; figures in this case study include original notebook plots and a chart derived directly from its recorded CV scores."
     ],
     "models": [
       "Logistic Regression",
-      "KNN",
+      "K-Nearest Neighbors",
       "Decision Tree",
       "Random Forest",
       "XGBoost",
-      "SVM"
+      "Support Vector Machine (SVM)"
     ],
     "technologies": [
       "Python",
+      "Pandas",
+      "NumPy",
       "Scikit-learn",
-      "XGBoost"
+      "XGBoost",
+      "category_encoders",
+      "imbalanced-learn",
+      "SciPy",
+      "Matplotlib",
+      "Seaborn",
+      "Jupyter Notebook"
     ],
     "evaluationMetrics": [
-      "Cross-validation-based classification evaluation; exact reported metrics require verification"
+      "Positive-class precision (primary)",
+      "Stratified 5-fold CV mean precision and standard deviation",
+      "Classification report",
+      "Recall and F1-score for subscriber (yes)",
+      "Test accuracy",
+      "Precision comparison with resampling"
     ],
-    "results": [],
+    "results": [
+      "Cleaned 41,188 original observations to 40,184 rows; target yes: 4,532 (11.28%), no: 35,652 (88.72%).",
+      "Six-model baseline five-fold CV precision ranking: Logistic Regression 0.6826, SVM 0.6391, XGBoost 0.5891, Random Forest 0.5507, KNN 0.5218, Decision Tree 0.3049 (from the notebook benchmark output).",
+      "Tuning Logistic Regression with RandomizedSearchCV increased mean cross-validated positive-class precision from 0.6826 to 0.6979 (+1.53 percentage points across the recorded experiments).",
+      "Tuned Logistic Regression test report: 8,037 samples (905 yes / 7,132 no); yes-class precision ≈ 0.67, recall ≈ 0.18, F1 ≈ 0.28, and overall accuracy ≈ 0.90.",
+      "Baseline comparisons included RandomOverSampler and RandomUnderSampler; neither resampled Logistic Regression configuration achieved the recorded no-resampling precision.",
+      "Original notebook visualizations analyze customer contact channels, jobs and demographic patterns; group poster documents the four collaborators."
+    ],
     "insights": [
-      "Model comparison and class-imbalance handling were central to evaluating campaign-response predictions."
+      "Precision is relevant for reducing unsuccessful outreach among predicted positives; however, at 0.18 recall the tuned model identifies only about 18% of actual subscribers, limiting campaign coverage.",
+      "The post-cleaning target is strongly imbalanced: about 11.28% yes, so 90% overall accuracy alone is not sufficient to judge value for finding subscribers.",
+      "Original EDA found higher observed conversion among certain contact channels and customer categories, but those associations are descriptive rather than evidence of causal uplift.",
+      "Call duration was analyzed for historical patterns but excluded from model inputs, consistent with trying to score customers before a call.",
+      "The group’s poster provides a shorter result summary; the more precise tuned CV metric (0.6979) comes from the final notebook output."
     ],
-    "businessImpact": "Potential application: prioritize customers with a higher predicted likelihood of subscribing, subject to business and model validation.",
-    "challenges": [],
+    "businessImpact": "Academic prototype for ranking potential term-deposit prospects and discussing telemarketing efficiency. No production pilot, observed ROI, or realized bank conversion uplift is claimed.",
+    "challenges": [
+      "Managing unknown categorical values, duplicate bank contacts and differing data types in the preprocessing pipeline.",
+      "Balancing outreach precision against low positive-class recall under substantial class imbalance.",
+      "Comparing resampling strategies and six classifiers before selecting a precision-oriented approach."
+    ],
     "limitations": [
-      "No verified model-specific scores or deployment results are included in the project inventory."
+      "The result is group work by four students; individual technical contributions were not specified, so no exclusive ownership is claimed.",
+      "At the recorded operating threshold, test recall for the yes class is approximately 0.18 despite 0.67 precision: most true subscribers would not be identified.",
+      "Some cleaning and exploratory feature selection were conducted before the train–test split; the feature-selection step and preprocessing should be audited for potential leakage and reworked as train-fitted steps for production evaluation.",
+      "Several optimization runs in the notebook emit convergence warnings, and no reproducibility run has been performed in this packaging step.",
+      "No real campaign A/B test, production deployment, calibrated uplift model or realized telemarketing cost reduction was provided.",
+      "The group poster uses a different rounded CV precision snapshot from the final saved notebook; this case study uses the final notebook outputs."
     ],
     "futureImprovements": [
-      "Add the documented baseline-versus-tuned comparison and any available confusion matrix."
+      "Tune decision thresholds according to business contact capacity and compare precision-recall curves, average precision and captured-positive volume.",
+      "Run nested or fully train-fitted preprocessing/feature selection with a stratified held-out test and reproducible random seeds.",
+      "Use cost-sensitive evaluation and outreach simulation to assess campaign value without asserting hypothetical savings as measured outcomes.",
+      "Add probability calibration and temporal validation against later bank marketing periods."
     ],
     "githubUrl": "",
     "demoUrl": "",
     "reportUrl": "",
-    "image": "",
-    "gallery": []
+    "image": "/images/bank-marketing/model-cv-precision.svg",
+    "gallery": [
+      "/images/bank-marketing/model-cv-precision.svg",
+      "/images/bank-marketing/tuning-precision.svg",
+      "/images/bank-marketing/original-contact-distribution.webp",
+      "/images/bank-marketing/original-job-distribution.webp"
+    ],
+    "highlights": [
+      {
+        "value": "41,188",
+        "label": "original records"
+      },
+      {
+        "value": "6",
+        "label": "algorithms compared"
+      },
+      {
+        "value": "69.79%",
+        "label": "tuned CV precision"
+      },
+      {
+        "value": "4",
+        "label": "group contributors"
+      }
+    ]
   },
   {
     "id": "3",

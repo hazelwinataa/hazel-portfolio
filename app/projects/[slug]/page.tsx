@@ -127,6 +127,47 @@ type GalleryDescription = {
 };
 
 const visualDescriptions: Record<string, GalleryDescription> = {
+  "model-cv-precision.svg": {
+    title: "Bank Marketing — six-model precision comparison",
+    caption: "Results chart recreated from the baseline five-fold cross-validation table in the original group notebook (cell 137).",
+    details: [
+      "Mean positive-class precision is the optimized benchmark metric, not overall classification accuracy.",
+      "Logistic Regression records the highest baseline mean CV precision at 0.6826, followed by SVM at 0.6391.",
+      "These are no-resampling baseline results, prior to Logistic Regression hyperparameter tuning.",
+    ],
+    originalScreenshot: false,
+    sourceLabel: "Notebook-derived evaluation visualization",
+  },
+  "tuning-precision.svg": {
+    title: "Bank Marketing — baseline versus tuned Logistic Regression",
+    caption: "Comparison derived from the notebook's saved RandomizedSearchCV output (cells 150–151).",
+    details: [
+      "The mean CV positive-class precision improved from 0.6826 to 0.6979 (+1.53 percentage points).",
+      "On the 8,037-row test set, the tuned model reported approximately 0.67 yes-class precision but only 0.18 recall; those are distinct evaluation quantities.",
+    ],
+    originalScreenshot: false,
+    sourceLabel: "Notebook-derived tuning metrics chart",
+  },
+  "original-contact-distribution.webp": {
+    title: "Bank Marketing — contact method distribution",
+    caption: "Original pie chart preserved from the group's Jupyter notebook output (cell 114).",
+    details: [
+      "Exploratory chart of cellular versus telephone contacts in the cleaned bank marketing dataset.",
+      "Observed channel associations do not establish a causal improvement in conversion outcomes.",
+    ],
+    originalScreenshot: true,
+    sourceLabel: "Original group notebook chart",
+  },
+  "original-job-distribution.webp": {
+    title: "Bank Marketing — customer occupation distribution",
+    caption: "Original plot preserved from the group's Jupyter notebook output (cell 83).",
+    details: [
+      "Shows the observed customer occupation composition that the group considered during exploratory analysis.",
+      "These descriptive counts are not a substitute for model evaluation or business impact measurement.",
+    ],
+    originalScreenshot: true,
+    sourceLabel: "Original group notebook chart",
+  },
   "credit-mlflow-runs.webp": {
     title: "MLflow — recorded credit-score training runs",
     caption: "Original academic evidence, PDF page 1. MLflow run listing for Credit Score Local Training Pipeline.",
