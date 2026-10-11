@@ -1331,7 +1331,7 @@
       "Make EC2 application hosting reproducible with secure HTTPS, managed secrets, infrastructure-as-code and reliable uptime monitoring.",
       "Add a separate untouched customer-group holdout and train-fitted cleaning to strengthen unbiased evaluation and leakage prevention."
     ],
-    "githubUrl": "",
+    "githubUrl": "https://github.com/hazelwinataa/credit-score-deployment-pipeline",
     "demoUrl": "",
     "reportUrl": "",
     "image": "/images/credit-score-deployment/local-model-comparison.svg",
