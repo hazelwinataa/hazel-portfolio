@@ -123,9 +123,34 @@ type GalleryDescription = {
   caption: string;
   details: string[];
   originalScreenshot: boolean;
+  sourceLabel?: string;
 };
 
 const visualDescriptions: Record<string, GalleryDescription> = {
+  "model-f1-comparison.svg": {
+    title: "Credit score — Verified eight-model macro F1 comparison",
+    caption:
+      "Chart recreated directly from the numerical evaluation table recorded in the original credit-score notebook. It compares four algorithms under two feature-set strategies, reporting the saved experiment's macro F1 values.",
+    details: [
+      "The XGBoost Original + Loan Flags configuration recorded the highest macro F1 (0.6898).",
+      "Original + Feature Engineering uses ratio-based predictors; Original + Loan Flags retains a broader set of raw numerical/categorical fields alongside binary loan-type flags.",
+      "Because final configuration selection used reported test scores, further independent evaluation is recommended before treating this as a generalization estimate.",
+    ],
+    originalScreenshot: false,
+    sourceLabel: "Notebook-derived results chart",
+  },
+  "xgboost-confusion-matrix.svg": {
+    title: "Best recorded XGBoost — Credit-score confusion matrix",
+    caption:
+      "Visualization recreated from the Original + Loan Flags XGBoost confusion matrix displayed in the supplied notebook (4,577 test rows).",
+    details: [
+      "Rows are actual classes and columns are model predictions (Good, Poor, Standard).",
+      "Correct predictions on the diagonal are 566 Good, 896 Poor and 1,778 Standard cases.",
+      "The class-level errors reinforce why macro F1 and balanced accuracy are more useful here than reporting accuracy alone.",
+    ],
+    originalScreenshot: false,
+    sourceLabel: "Notebook-derived evaluation chart",
+  },
   "mlflow-experiments.webp": {
     title: "MLflow — Original experiment tracking screenshot",
     caption:
@@ -372,7 +397,7 @@ export default async function ProjectDetailPage({
                               marginBottom: "6px",
                             }}
                           >
-                            {isScreenshot ? "Original project screenshot" : "Explanatory diagram"}
+                            {visual?.sourceLabel ?? (isScreenshot ? "Original project screenshot" : "Explanatory diagram")}
                           </p>
                           <strong
                             style={{

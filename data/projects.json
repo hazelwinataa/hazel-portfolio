@@ -3,9 +3,9 @@
     "id": "1",
     "slug": "credit-score-prediction",
     "title": "Credit Score Prediction",
-    "year": null,
-    "projectType": "",
-    "status": "",
+    "year": 2026,
+    "projectType": "Individual academic machine learning project",
+    "status": "Completed (modeling)",
     "grade": "",
     "featured": false,
     "roleTags": [
@@ -20,22 +20,29 @@
     "domainTags": [
       "Classification"
     ],
-    "description": "Multiclass machine learning for classifying credit scores into Poor, Standard, and Good categories.",
-    "problemStatement": "Develop a classification workflow that assigns a credit-score category from customer financial attributes and compares alternative models for credit-risk assessment.",
-    "businessContext": "Credit-score categories can support the analysis and prioritization of financial risk. The project demonstrates predictive decision support; it does not establish a production lending policy.",
-    "dataset": "",
-    "datasetSize": "",
+    "description": "Developed and benchmarked multiclass credit-score classifiers on 25,000 initial customer-month records, comparing 8 model/feature-set combinations. The selected XGBoost model reached 0.6898 macro F1 and 70.79% accuracy on a 4,577-row group-disjoint evaluation set.",
+    "problemStatement": "Predict customer credit-score categories (Good, Poor, and Standard) from financial behavior and credit history. Compare four machine learning algorithms and two feature-set strategies using customer-disjoint splitting and macro-averaged metrics.",
+    "businessContext": "Credit scoring is a multiclass risk categorization task. This academic study explores how supervised learning may help analysts organize credit-risk patterns. It is not a validated lending decision system or a substitute for appropriate financial and fairness reviews.",
+    "dataset": "Credit-score customer-month dataset (data_C.csv): 25,000 original observations and 29 columns including customer profile, credit facilities, loan details, repayment behavior, balances, and the Credit_Score target. After cleaning and filtering, the notebook reports 22,412 modeling records. Personal identifiers (Name, SSN, ID) are not model predictors.",
+    "datasetSize": "25,000 original records (29 columns) · 22,412 after cleaning · 17,835 train / 4,577 test · 3 classes",
     "preprocessing": [
-      "Prepared customer features for supervised classification",
-      "Performed data preprocessing before training and evaluation; individual transformation details require notebook verification"
+      "Audited missing values, inconsistent numeric/text formatting, duplicates and financial-value anomalies across 29 original columns.",
+      "Repaired inconsistent age and credit-related values, applied customer-based data consistency checks, and retained 22,412 records after documented cleaning.",
+      "Used StratifiedGroupKFold with Customer_ID as the group variable: 7,212 train customers and 1,830 test customers with zero overlapping customers.",
+      "Constructed sklearn Pipelines and ColumnTransformers: numerical median imputation, categorical most-frequent imputation and one-hot encoding; RobustScaler for the linear-model branch.",
+      "Excluded names, social security numbers and customer identifiers from the final classification features."
     ],
     "featureEngineering": [
-      "Explored feature engineering as part of the model comparison workflow; exact engineered features are not yet documented"
+      "Experiment A — Original + Feature Engineering (32 features): constructed EMI-, investment-, balance- and debt-to-salary ratios; credit-history missingness; nine loan-type flags; and spending/payment categories.",
+      "Experiment B — Original + Loan Flags (31 features): kept 17 numerical, 5 categorical and 9 binary loan-type features; this was the best-performing feature configuration.",
+      "Encoded loan categories such as mortgage, student, payday, auto, personal and debt-consolidation loans into model-ready binary flags."
     ],
     "methodology": [
-      "Compared multiple supervised multiclass classifiers",
-      "Evaluated models against the same credit-score target: Poor, Standard, and Good",
-      "Explored feature preparation, model comparison, and model evaluation"
+      "Trained and tuned four algorithms — Logistic Regression, Random Forest, XGBoost and LightGBM — on both feature-set strategies (8 total trained/evaluated combinations).",
+      "For the engineered-feature comparison, used RandomizedSearchCV with 20 candidates and 5 stratified group-aware CV folds per algorithm, optimizing macro F1.",
+      "For the original-plus-loan-flags comparison, used RandomizedSearchCV with 10 candidates and 3 group-aware CV folds per algorithm, optimizing macro F1.",
+      "Used customer-disjoint train/test partitions (17,835 / 4,577 rows); tested all models with accuracy, balanced accuracy, macro precision/recall/F1 and multiclass one-vs-rest ROC-AUC.",
+      "Selected the final saved XGBoost configuration based on the notebook-reported test macro-F1 across the two feature sets; the associated final estimate should therefore be treated as exploratory rather than an independently confirmed holdout result."
     ],
     "models": [
       "Logistic Regression",
@@ -45,28 +52,69 @@
     ],
     "technologies": [
       "Python",
+      "Pandas",
+      "NumPy",
       "Scikit-learn",
       "XGBoost",
-      "LightGBM"
+      "LightGBM",
+      "SciPy",
+      "Matplotlib",
+      "Seaborn",
+      "Jupyter",
+      "Joblib"
     ],
-    "evaluationMetrics": [],
-    "results": [],
+    "evaluationMetrics": [
+      "Macro F1-score (primary comparison)",
+      "Accuracy",
+      "Balanced Accuracy",
+      "Macro Precision and Recall",
+      "Weighted F1-score",
+      "Multiclass ROC-AUC (OvR, macro and weighted)",
+      "Confusion Matrix by Class"
+    ],
+    "results": [
+      "Best recorded configuration: XGBoost with Original + Loan Flags (31 predictors); test macro F1 = 0.6898, accuracy = 70.79%, balanced accuracy = 0.7040, macro OvR ROC-AUC = 0.8591.",
+      "XGBoost using Original + Feature Engineering achieved macro F1 = 0.6860 and accuracy = 70.44%; both feature configurations outperformed Logistic Regression on macro F1.",
+      "Evaluated all 8 algorithm/feature-set combinations on the 4,577-row test partition; highest recorded macro F1 = 0.6898.",
+      "Verified zero Customer_ID overlap between train and test (7,212 vs. 1,830 customers); saved the selected pipeline and label encoder to a Joblib model artifact.",
+      "Best XGBoost confusion-matrix diagonal: 566 Good, 896 Poor, and 1,778 Standard predictions correctly classified."
+    ],
     "insights": [
-      "The problem involves three credit-score classes, so evaluation should inspect performance across classes rather than rely only on overall accuracy."
+      "Using original numerical/categorical credit variables plus explicit loan-type flags slightly outperformed the more extensively engineered ratio-feature strategy on macro F1.",
+      "The dominant Standard class (13,282 of the original 25,000 records) makes macro-averaged metrics more informative than overall accuracy alone.",
+      "Group-based splitting is important because monthly observations may refer to the same customer; this split avoids customer overlap across train and test.",
+      "A comparison of class-level confusion matrices provides more context than accuracy alone, particularly for the Good and Poor categories."
     ],
-    "businessImpact": "Potential application: provide model-assisted credit-risk categorization for further analyst review; real-world performance and fairness require separate validation.",
-    "challenges": [],
+    "businessImpact": "Potential decision support for exploratory customer credit-risk segmentation and analyst-led case prioritization. Any regulated or production credit decision would require independent validation, calibration, explainability, bias/fairness checks, legal review and monitoring.",
+    "challenges": [
+      "Correcting malformed numerical values and anomalous financial fields while preserving plausible credit-risk variation.",
+      "Handling repeated customer-month observations without customer overlap in evaluation.",
+      "Comparing linear and tree-based models under mixed numerical/categorical feature types and a nonuniform class distribution."
+    ],
     "limitations": [
-      "Exact dataset size, train/test setup, confusion matrix, and per-model scores require verification against the original notebook."
+      "Reported metrics are sourced from the supplied notebook and have not been independently reproduced in this documentation.",
+      "The final algorithm/feature-set was chosen using test-set macro F1; a new untouched holdout or outer group-aware validation is needed for unbiased final model selection and evaluation.",
+      "Dataset cleaning occurred before the train/test split, so some preprocessing steps warrant an additional leakage audit and migration into a train-fitted pipeline.",
+      "The source dataset contains personally identifying fields and is intentionally not redistributed in the public GitHub package.",
+      "An end-to-end deployment of this specific credit-score artifact has not been confirmed from the four files supplied here."
     ],
     "futureImprovements": [
-      "Publish the model comparison table, confusion matrix, and documented preprocessing decisions."
+      "Introduce an independent final group holdout (or nested grouped cross-validation), keeping model selection away from final test data.",
+      "Place all learned data-cleaning statistics within train-fitted pipeline stages for leakage-safe reproducibility.",
+      "Add calibrated class probabilities, group-wise error analysis, model explainability, and fairness checks before any production-oriented use.",
+      "Document separate Streamlit / MLflow / AWS deployment evidence once the implementation files are provided."
     ],
     "githubUrl": "",
     "demoUrl": "",
     "reportUrl": "",
-    "image": "",
-    "gallery": []
+    "image": "/images/credit-score/model-f1-comparison.svg",
+    "gallery": [
+      "/images/credit-score/model-f1-comparison.svg",
+      "/images/credit-score/xgboost-confusion-matrix.svg"
+    ],
+    "relatedProjects": [
+      "credit-score-deployment"
+    ]
   },
   {
     "id": "2",
@@ -1218,7 +1266,8 @@
     "businessImpact": "",
     "challenges": [],
     "limitations": [
-      "A public deployment URL, deployment uptime, and final selected model metrics are not currently documented."
+      "A public deployment URL, deployment uptime, and final selected model metrics are not currently documented.",
+      "Deployment application, MLflow training code and cloud screenshots for this specific credit-score system have not yet been supplied for evidence verification."
     ],
     "futureImprovements": [
       "Attach the source repository, MLflow experiment screenshots, and verified local/cloud inference tests."
@@ -1227,7 +1276,10 @@
     "demoUrl": "",
     "reportUrl": "",
     "image": "",
-    "gallery": []
+    "gallery": [],
+    "relatedProjects": [
+      "credit-score-prediction"
+    ]
   },
   {
     "id": "19",
