@@ -1,0 +1,2170 @@
+[
+  {
+    "id": "1",
+    "slug": "credit-score-prediction",
+    "title": "Credit Score Prediction",
+    "year": null,
+    "projectType": "",
+    "status": "",
+    "grade": "",
+    "featured": false,
+    "roleTags": [
+      "Data Science",
+      "Data Analyst",
+      "Business Analytics"
+    ],
+    "courseTags": [
+      "Machine Learning",
+      "Model Deployment"
+    ],
+    "domainTags": [
+      "Classification"
+    ],
+    "description": "Multiclass machine learning for classifying credit scores into Poor, Standard, and Good categories.",
+    "problemStatement": "Develop a classification workflow that assigns a credit-score category from customer financial attributes and compares alternative models for credit-risk assessment.",
+    "businessContext": "Credit-score categories can support the analysis and prioritization of financial risk. The project demonstrates predictive decision support; it does not establish a production lending policy.",
+    "dataset": "",
+    "datasetSize": "",
+    "preprocessing": [
+      "Prepared customer features for supervised classification",
+      "Performed data preprocessing before training and evaluation; individual transformation details require notebook verification"
+    ],
+    "featureEngineering": [
+      "Explored feature engineering as part of the model comparison workflow; exact engineered features are not yet documented"
+    ],
+    "methodology": [
+      "Compared multiple supervised multiclass classifiers",
+      "Evaluated models against the same credit-score target: Poor, Standard, and Good",
+      "Explored feature preparation, model comparison, and model evaluation"
+    ],
+    "models": [
+      "Logistic Regression",
+      "Random Forest",
+      "XGBoost",
+      "LightGBM"
+    ],
+    "technologies": [
+      "Python",
+      "Scikit-learn",
+      "XGBoost",
+      "LightGBM"
+    ],
+    "evaluationMetrics": [],
+    "results": [],
+    "insights": [
+      "The problem involves three credit-score classes, so evaluation should inspect performance across classes rather than rely only on overall accuracy."
+    ],
+    "businessImpact": "Potential application: provide model-assisted credit-risk categorization for further analyst review; real-world performance and fairness require separate validation.",
+    "challenges": [],
+    "limitations": [
+      "Exact dataset size, train/test setup, confusion matrix, and per-model scores require verification against the original notebook."
+    ],
+    "futureImprovements": [
+      "Publish the model comparison table, confusion matrix, and documented preprocessing decisions."
+    ],
+    "githubUrl": "",
+    "demoUrl": "",
+    "reportUrl": "",
+    "image": "",
+    "gallery": []
+  },
+  {
+    "id": "2",
+    "slug": "bank-marketing-campaign",
+    "title": "Bank Marketing Campaign Classification",
+    "year": null,
+    "projectType": "Group Project",
+    "status": "",
+    "grade": "A",
+    "featured": true,
+    "roleTags": [
+      "Data Science",
+      "Data Analyst",
+      "Business Analytics"
+    ],
+    "courseTags": [
+      "Machine Learning"
+    ],
+    "domainTags": [
+      "Classification",
+      "Business Analytics"
+    ],
+    "description": "Predicting bank term-deposit subscriptions from 41,188 customer records through supervised classification and model comparison.",
+    "problemStatement": "Predict whether a bank customer will subscribe to a term deposit, so marketing outreach can be evaluated using data-driven response predictions.",
+    "businessContext": "This is a campaign-response modeling problem relevant to targeting, customer prioritization, and marketing resource allocation.",
+    "dataset": "Bank marketing data containing customer-level attributes and a target indicating term-deposit subscription.",
+    "datasetSize": "41,188 customer records",
+    "preprocessing": [
+      "Encoded categorical variables for machine-learning models",
+      "Investigated imbalanced target classes",
+      "Applied resampling techniques as part of the experiment workflow"
+    ],
+    "featureEngineering": [],
+    "methodology": [
+      "Compared Logistic Regression, KNN, Decision Tree, Random Forest, XGBoost, and SVM",
+      "Used stratified 5-fold cross-validation",
+      "Performed hyperparameter tuning and comparative evaluation"
+    ],
+    "models": [
+      "Logistic Regression",
+      "KNN",
+      "Decision Tree",
+      "Random Forest",
+      "XGBoost",
+      "SVM"
+    ],
+    "technologies": [
+      "Python",
+      "Scikit-learn",
+      "XGBoost"
+    ],
+    "evaluationMetrics": [
+      "Cross-validation-based classification evaluation; exact reported metrics require verification"
+    ],
+    "results": [],
+    "insights": [
+      "Model comparison and class-imbalance handling were central to evaluating campaign-response predictions."
+    ],
+    "businessImpact": "Potential application: prioritize customers with a higher predicted likelihood of subscribing, subject to business and model validation.",
+    "challenges": [],
+    "limitations": [
+      "No verified model-specific scores or deployment results are included in the project inventory."
+    ],
+    "futureImprovements": [
+      "Add the documented baseline-versus-tuned comparison and any available confusion matrix."
+    ],
+    "githubUrl": "",
+    "demoUrl": "",
+    "reportUrl": "",
+    "image": "",
+    "gallery": []
+  },
+  {
+    "id": "3",
+    "slug": "savings-goal-classification",
+    "title": "Savings Goal Achievement Classification",
+    "year": null,
+    "projectType": "",
+    "status": "",
+    "grade": "",
+    "featured": false,
+    "roleTags": [
+      "Data Science",
+      "Data Analyst",
+      "Business Analytics"
+    ],
+    "courseTags": [
+      "Machine Learning"
+    ],
+    "domainTags": [
+      "Classification"
+    ],
+    "description": "Predicting monthly savings-goal achievement using personal finance features and interpretable classification models.",
+    "problemStatement": "Classify whether an individual is expected to meet a monthly savings goal using financial and spending-related features.",
+    "businessContext": "Savings-goal predictions may help explore patterns in spending discipline and personal financial planning.",
+    "dataset": "Financial scenario variables covering income, expenses, debt-to-income information, discretionary spending, and other financial attributes.",
+    "datasetSize": "",
+    "preprocessing": [
+      "Prepared financial predictors for model training; transformation specifics require verification"
+    ],
+    "featureEngineering": [
+      "Examined income, expense, debt-to-income, and discretionary-spending variables as model inputs"
+    ],
+    "methodology": [
+      "Trained and compared Random Forest and XGBoost classifiers",
+      "Used feature importance and permutation importance to interpret predictors",
+      "Evaluated the classification workflow using F1-based analysis"
+    ],
+    "models": [
+      "Random Forest",
+      "XGBoost"
+    ],
+    "technologies": [
+      "Python",
+      "Scikit-learn",
+      "XGBoost"
+    ],
+    "evaluationMetrics": [
+      "F1-score"
+    ],
+    "results": [],
+    "insights": [
+      "Feature-importance methods were used to investigate which financial variables influenced model predictions."
+    ],
+    "businessImpact": "Potential application: identify financial characteristics associated with achieving or missing a savings target.",
+    "challenges": [],
+    "limitations": [
+      "Exact performance scores and the original scenario distribution are not yet documented."
+    ],
+    "futureImprovements": [],
+    "githubUrl": "",
+    "demoUrl": "",
+    "reportUrl": "",
+    "image": "",
+    "gallery": []
+  },
+  {
+    "id": "4",
+    "slug": "pbc-liver-disease",
+    "title": "PBC / Liver Disease Stage Classification",
+    "year": null,
+    "projectType": "",
+    "status": "",
+    "grade": "",
+    "featured": false,
+    "roleTags": [
+      "Data Science",
+      "Data Analyst"
+    ],
+    "courseTags": [
+      "Machine Learning"
+    ],
+    "domainTags": [
+      "Classification"
+    ],
+    "description": "Multiclass classification of liver disease stage using clinical variables and tree-based machine learning.",
+    "problemStatement": "Predict disease-stage labels from clinical features, with attention to data quality and multiclass model performance.",
+    "businessContext": "The project explores classification methodology for clinical data and is not a validated diagnostic tool.",
+    "dataset": "PBC-style liver disease clinical dataset with the target variable Stage.",
+    "datasetSize": "",
+    "preprocessing": [
+      "Checked data quality and prepared clinical features",
+      "Applied preprocessing for Random Forest and XGBoost experiments"
+    ],
+    "featureEngineering": [],
+    "methodology": [
+      "Explored clinical predictor distributions",
+      "Compared Random Forest and XGBoost for multiclass Stage prediction"
+    ],
+    "models": [
+      "Random Forest",
+      "XGBoost"
+    ],
+    "technologies": [
+      "Python",
+      "Pandas",
+      "Scikit-learn",
+      "XGBoost"
+    ],
+    "evaluationMetrics": [],
+    "results": [],
+    "insights": [
+      "Disease-stage classification requires careful attention to class distribution, missing data, and class-specific evaluation."
+    ],
+    "businessImpact": "",
+    "challenges": [],
+    "limitations": [
+      "Dataset counts, selected features, metric values, and clinical validation are not documented in the portfolio inventory."
+    ],
+    "futureImprovements": [
+      "Add verified class distributions, confusion matrix, and comparative model results."
+    ],
+    "githubUrl": "",
+    "demoUrl": "",
+    "reportUrl": "",
+    "image": "",
+    "gallery": []
+  },
+  {
+    "id": "5",
+    "slug": "bangladesh-crime-clustering",
+    "title": "Bangladesh Crime Clustering",
+    "year": null,
+    "projectType": "",
+    "status": "",
+    "grade": "",
+    "featured": false,
+    "roleTags": [
+      "Data Science",
+      "Data Analyst"
+    ],
+    "courseTags": [
+      "Machine Learning"
+    ],
+    "domainTags": [
+      "Clustering"
+    ],
+    "description": "Unsupervised clustering of 6,574 Bangladesh crime records to explore group structure and patterns.",
+    "problemStatement": "Identify useful groupings among crime records without relying on predefined class labels.",
+    "businessContext": "Exploratory segmentation can help organize crime-related records for descriptive analysis; clusters should not be treated as causal explanations.",
+    "dataset": "Bangladesh crime dataset containing 6,574 records.",
+    "datasetSize": "6,574 records",
+    "preprocessing": [
+      "Cleaned and encoded relevant variables",
+      "Scaled model inputs before distance-based clustering"
+    ],
+    "featureEngineering": [],
+    "methodology": [
+      "Applied K-Means clustering",
+      "Explored cluster counts using the elbow method",
+      "Evaluated cohesion/separation using silhouette analysis and Davies–Bouldin analysis where applicable",
+      "Used PCA for low-dimensional visualization and inspected cluster profiles"
+    ],
+    "models": [
+      "K-Means"
+    ],
+    "technologies": [
+      "Python",
+      "Scikit-learn",
+      "Pandas"
+    ],
+    "evaluationMetrics": [
+      "Silhouette score",
+      "Elbow analysis",
+      "Davies–Bouldin index (where applicable)"
+    ],
+    "results": [],
+    "insights": [
+      "PCA visualization and cluster profiling supported interpretation of the unsupervised grouping workflow."
+    ],
+    "businessImpact": "Potential application: organize records for further analysis by investigators or analysts; no operational use is claimed.",
+    "challenges": [],
+    "limitations": [
+      "Final cluster count, quantitative scores, and group definitions are not documented in the available inventory."
+    ],
+    "futureImprovements": [],
+    "githubUrl": "",
+    "demoUrl": "",
+    "reportUrl": "",
+    "image": "",
+    "gallery": []
+  },
+  {
+    "id": "6",
+    "slug": "music-recommendation-system",
+    "title": "Content-Based Music Recommendation System",
+    "year": null,
+    "projectType": "",
+    "status": "",
+    "grade": "",
+    "featured": false,
+    "roleTags": [
+      "Data Science",
+      "Data Analyst"
+    ],
+    "courseTags": [
+      "Machine Learning"
+    ],
+    "domainTags": [
+      "Recommendation System"
+    ],
+    "description": "Content-based music recommendations using textual metadata, TF-IDF vectors, and cosine similarity across 4,999 tracks.",
+    "problemStatement": "Recommend tracks similar to a selected song by comparing their content and available metadata, without requiring interaction history.",
+    "businessContext": "Content-based recommendation offers a way to explore track similarity from item attributes and may complement behavioral recommenders.",
+    "dataset": "A catalog of 4,999 tracks with track, artist, album, genre, and audio or other metadata characteristics.",
+    "datasetSize": "4,999 tracks",
+    "preprocessing": [
+      "Explored missing values and duplicates",
+      "Inspected available textual and metadata fields before feature construction"
+    ],
+    "featureEngineering": [
+      "Prepared music-related content fields for text-based similarity",
+      "Transformed the content representation with TF-IDF"
+    ],
+    "methodology": [
+      "Calculated pairwise similarity using cosine similarity",
+      "Produced Top-N recommendations from content similarity"
+    ],
+    "models": [],
+    "technologies": [
+      "Python",
+      "Pandas",
+      "Scikit-learn",
+      "TF-IDF"
+    ],
+    "evaluationMetrics": [],
+    "results": [],
+    "insights": [
+      "The approach returns recommendations using item-content similarity rather than relying on user rating or click history."
+    ],
+    "businessImpact": "",
+    "challenges": [],
+    "limitations": [
+      "Offline ranking metrics and user-study feedback are not reported in the project inventory.",
+      "Content-based approaches may struggle to recommend unfamiliar or diverse tracks without additional signals."
+    ],
+    "futureImprovements": [
+      "Document a sample Top-N recommendation output and, if available, evaluate recommendation relevance."
+    ],
+    "githubUrl": "",
+    "demoUrl": "",
+    "reportUrl": "",
+    "image": "",
+    "gallery": []
+  },
+  {
+    "id": "7",
+    "slug": "spaceship-titanic-kaggle",
+    "title": "Kaggle Spaceship Titanic Classification",
+    "year": null,
+    "projectType": "",
+    "status": "",
+    "grade": "",
+    "featured": false,
+    "roleTags": [
+      "Data Science",
+      "MLOps"
+    ],
+    "courseTags": [
+      "Machine Learning",
+      "Model Deployment"
+    ],
+    "domainTags": [
+      "Classification",
+      "MLOps"
+    ],
+    "description": "Kaggle Spaceship Titanic classification using engineered passenger features, multiple classifiers, and Optuna tuning.",
+    "problemStatement": "Predict whether each passenger was transported, using tabular passenger features and supervised machine learning.",
+    "businessContext": "This is a Kaggle classification exercise demonstrating feature engineering, model selection, and validation rather than a business deployment.",
+    "dataset": "Kaggle Spaceship Titanic passenger classification data.",
+    "datasetSize": "",
+    "preprocessing": [
+      "Prepared categorical and numerical features for classification",
+      "Handled missingness through engineered indicators where appropriate"
+    ],
+    "featureEngineering": [
+      "Derived features from cabin information, passenger groups, family details, spending, age, and missingness indicators"
+    ],
+    "methodology": [
+      "Compared Logistic Regression, XGBoost, and LightGBM",
+      "Used cross-validation for model assessment",
+      "Applied Optuna to tune hyperparameters"
+    ],
+    "models": [
+      "Logistic Regression",
+      "XGBoost",
+      "LightGBM"
+    ],
+    "technologies": [
+      "Python",
+      "Pandas",
+      "Scikit-learn",
+      "XGBoost",
+      "LightGBM",
+      "Optuna"
+    ],
+    "evaluationMetrics": [
+      "Cross-validation accuracy"
+    ],
+    "results": [
+      "Reported XGBoost cross-validation accuracy: approximately 81.26%; this is a validation metric, not a verified public leaderboard score."
+    ],
+    "insights": [
+      "Feature engineering investigated passenger relationships and spending patterns beyond raw columns."
+    ],
+    "businessImpact": "",
+    "challenges": [],
+    "limitations": [
+      "A cross-validation accuracy value does not by itself establish leaderboard or real-world generalization performance."
+    ],
+    "futureImprovements": [],
+    "githubUrl": "",
+    "demoUrl": "",
+    "reportUrl": "",
+    "image": "",
+    "gallery": []
+  },
+  {
+    "id": "8",
+    "slug": "customer-repeat-order",
+    "title": "Customer Repeat-Order Prediction",
+    "year": null,
+    "projectType": "",
+    "status": "",
+    "grade": "",
+    "featured": true,
+    "roleTags": [
+      "Business Analytics",
+      "Data Analyst",
+      "Data Science"
+    ],
+    "courseTags": [
+      "Competition / Independent Project"
+    ],
+    "domainTags": [
+      "Classification",
+      "Business Analytics"
+    ],
+    "description": "Repeat-order prediction and retention-oriented customer analytics using more than 318,000 vehicle-financing transactions.",
+    "problemStatement": "Estimate the likelihood of a customer placing another financing order using transaction, customer, product, dealer, geographic, and temporal variables.",
+    "businessContext": "Repeat-order prediction can support customer retention analysis, lead prioritization, and decisions about customer engagement.",
+    "dataset": "Vehicle-financing transaction data with financing attributes, demographics, dealer, product, region, and temporal behavior fields.",
+    "datasetSize": "318K+ vehicle-financing transactions",
+    "preprocessing": [
+      "Prepared transaction-level information for predictive modeling; detailed cleaning rules require source verification"
+    ],
+    "featureEngineering": [
+      "Examined financing, demographic, dealer, product, regional, and time-related predictors"
+    ],
+    "methodology": [
+      "Developed repeat-order classification experiments",
+      "Explored gradient-boosted tree models for retention-oriented prediction"
+    ],
+    "models": [
+      "XGBoost",
+      "LightGBM"
+    ],
+    "technologies": [
+      "Python",
+      "XGBoost",
+      "LightGBM"
+    ],
+    "evaluationMetrics": [],
+    "results": [],
+    "insights": [
+      "The project connects transaction-level prediction with potential retention and customer-prioritization use cases."
+    ],
+    "businessImpact": "Potential application: rank customers for targeted follow-up or retention strategies; no measured uplift is claimed.",
+    "challenges": [],
+    "limitations": [
+      "Prediction metrics, label horizon, and any business uplift have not been verified in the supplied inventory."
+    ],
+    "futureImprovements": [
+      "Add the verified target definition, leakage checks, validation strategy, and comparison metrics."
+    ],
+    "githubUrl": "",
+    "demoUrl": "",
+    "reportUrl": "",
+    "image": "",
+    "gallery": []
+  },
+  {
+    "id": "9",
+    "slug": "inklumap",
+    "title": "InkluMap — Inclusive School Decision Support System",
+    "year": null,
+    "projectType": "",
+    "status": "Passed campus selection",
+    "grade": "",
+    "featured": true,
+    "roleTags": [
+      "Data Science",
+      "Data Analyst",
+      "Data Engineer",
+      "Business Analytics"
+    ],
+    "courseTags": [
+      "Competition / Independent Project"
+    ],
+    "domainTags": [
+      "Clustering",
+      "API / Backend"
+    ],
+    "description": "Inclusive-school decision support using mixed-type student assessments, Gower distance, hierarchical clustering, and a web application.",
+    "problemStatement": "Group student accommodation needs into interpretable profiles to help staff review inclusive learning support requirements.",
+    "businessContext": "Designed to support structured review of accessibility and accommodation needs while retaining human oversight of individual recommendations.",
+    "dataset": "Completed special-needs student assessments; modeling used 18 features from 96 completed assessments.",
+    "datasetSize": "96 completed assessments; 18 modeling features",
+    "preprocessing": [
+      "Prepared mixed numerical and categorical assessment features for distance-based clustering"
+    ],
+    "featureEngineering": [
+      "Represented student accessibility and support-related attributes for mixed-type clustering"
+    ],
+    "methodology": [
+      "Compared K-Means, Hierarchical Agglomerative Clustering, and DBSCAN approaches",
+      "Applied Gower distance to mixed-type data",
+      "Selected hierarchical clustering with Gower distance",
+      "Produced cluster profiles, medoids, individual recommendations, priority rules, critical-access flags, and human-review metadata"
+    ],
+    "models": [
+      "K-Means",
+      "Hierarchical Agglomerative Clustering",
+      "DBSCAN"
+    ],
+    "technologies": [
+      "Python",
+      "Gower Distance",
+      "FastAPI",
+      "PostgreSQL",
+      "Next.js",
+      "React",
+      "TypeScript"
+    ],
+    "evaluationMetrics": [
+      "Silhouette score"
+    ],
+    "results": [
+      "Selected hierarchical clustering with Gower distance",
+      "Five clusters identified",
+      "Reported silhouette score: approximately 0.676",
+      "Passed campus selection"
+    ],
+    "insights": [
+      "Gower distance enabled analysis of mixed-type assessment features within an interpretable clustering workflow.",
+      "Cluster profiles and human-review metadata were developed to support review rather than automatic decisions."
+    ],
+    "businessImpact": "Designed to assist schools in organizing and reviewing accommodation needs; actual deployment impact is not yet measured.",
+    "challenges": [],
+    "limitations": [
+      "Small modeling sample (96 assessments) limits confidence in generalization.",
+      "Recommendations must be reviewed by appropriate people and should not be interpreted as diagnoses."
+    ],
+    "futureImprovements": [
+      "Validate profiles with domain experts and assess robustness on a larger, representative sample."
+    ],
+    "githubUrl": "",
+    "demoUrl": "",
+    "reportUrl": "",
+    "image": "",
+    "gallery": []
+  },
+  {
+    "id": "10",
+    "slug": "patient-risk-journey",
+    "title": "Large-Scale Patient Risk Journey Clustering",
+    "year": null,
+    "projectType": "",
+    "status": "",
+    "grade": "",
+    "featured": true,
+    "roleTags": [
+      "Data Science",
+      "Data Analyst",
+      "Business Analytics"
+    ],
+    "courseTags": [
+      "Competition / Independent Project"
+    ],
+    "domainTags": [
+      "Clustering",
+      "Business Analytics"
+    ],
+    "description": "Large-scale patient journey segmentation across 1,210,243 healthcare records from 57,386 patients.",
+    "problemStatement": "Transform longitudinal healthcare records into patient-level features and explore segments representing different patient journey patterns.",
+    "businessContext": "Patient segmentation can help structure exploratory risk-journey analysis and support research into service utilization and support needs.",
+    "dataset": "Healthcare journey data consisting of 1,210,243 records linked to 57,386 patients.",
+    "datasetSize": "1,210,243 healthcare records; 57,386 patients",
+    "preprocessing": [
+      "Cleaned healthcare records and prepared patient-level data"
+    ],
+    "featureEngineering": [
+      "Engineered patient journey and social-determinant features"
+    ],
+    "methodology": [
+      "Built patient-level profiles from longitudinal information",
+      "Evaluated K-Means clustering using silhouette analysis",
+      "Selected a five-cluster solution and visualized a Patient Risk Journey Map"
+    ],
+    "models": [
+      "K-Means"
+    ],
+    "technologies": [
+      "Python",
+      "Pandas",
+      "Scikit-learn",
+      "K-Means"
+    ],
+    "evaluationMetrics": [
+      "Silhouette score"
+    ],
+    "results": [
+      "Selected K-Means with k=5",
+      "Produced a Patient Risk Journey Map using the resulting patient segments"
+    ],
+    "insights": [
+      "Combining journey-level and social-determinant features allows patient segmentation to examine more than a single encounter."
+    ],
+    "businessImpact": "Potential application: support exploratory patient-population analysis and service planning; no clinical outcome improvement is claimed.",
+    "challenges": [],
+    "limitations": [
+      "Clusters are descriptive; they do not establish individual clinical risk or causal relationships.",
+      "Cluster-level statistics and full silhouette values require verification before publication."
+    ],
+    "futureImprovements": [
+      "Add verified cluster profiles and assess segmentation stability across samples and time."
+    ],
+    "githubUrl": "",
+    "demoUrl": "",
+    "reportUrl": "",
+    "image": "",
+    "gallery": []
+  },
+  {
+    "id": "11",
+    "slug": "breast-cancer-ann",
+    "title": "Breast Cancer Classification — ANN",
+    "year": null,
+    "projectType": "",
+    "status": "",
+    "grade": "",
+    "featured": false,
+    "roleTags": [
+      "Data Science",
+      "AI / Machine Learning"
+    ],
+    "courseTags": [
+      "Deep Learning"
+    ],
+    "domainTags": [
+      "Deep Learning",
+      "Classification"
+    ],
+    "description": "Binary breast-cancer classification using feedforward neural networks built with Keras Sequential and Functional APIs.",
+    "problemStatement": "Predict a binary tumor class from the Breast Cancer Wisconsin diagnostic features while exploring neural network implementation styles.",
+    "businessContext": "This is an educational classification experiment; it is not validated for clinical diagnosis.",
+    "dataset": "Scikit-learn Breast Cancer Wisconsin diagnostic dataset.",
+    "datasetSize": "",
+    "preprocessing": [
+      "Used stratified data splitting to preserve class representation",
+      "Applied StandardScaler to numerical features"
+    ],
+    "featureEngineering": [],
+    "methodology": [
+      "Built neural networks using both Keras Sequential and Functional APIs",
+      "Used Adam optimization and binary cross-entropy loss",
+      "Monitored training and validation behavior"
+    ],
+    "models": [
+      "Artificial Neural Network (Sequential API)",
+      "Artificial Neural Network (Functional API)"
+    ],
+    "technologies": [
+      "Python",
+      "Scikit-learn",
+      "TensorFlow",
+      "Keras"
+    ],
+    "evaluationMetrics": [
+      "Accuracy",
+      "Classification report",
+      "Confusion matrix",
+      "Training history"
+    ],
+    "results": [],
+    "insights": [
+      "Comparing network-building APIs illustrates alternative ways to define and train equivalent classes of neural architectures."
+    ],
+    "businessImpact": "",
+    "challenges": [],
+    "limitations": [
+      "No verified accuracy value or external clinical validation is included in the current project information."
+    ],
+    "futureImprovements": [],
+    "githubUrl": "",
+    "demoUrl": "",
+    "reportUrl": "",
+    "image": "",
+    "gallery": []
+  },
+  {
+    "id": "12",
+    "slug": "cherry-leaf-cnn",
+    "title": "Cherry Leaf Disease Classification — CNN / AlexNet",
+    "year": null,
+    "projectType": "",
+    "status": "",
+    "grade": "",
+    "featured": false,
+    "roleTags": [
+      "Data Science",
+      "AI / Machine Learning"
+    ],
+    "courseTags": [
+      "Deep Learning"
+    ],
+    "domainTags": [
+      "Computer Vision",
+      "Classification"
+    ],
+    "description": "Five-class cherry leaf disease image classification with an AlexNet-style convolutional neural network.",
+    "problemStatement": "Classify cherry leaf images into five categories, exploring preprocessing and augmentation for visual disease recognition.",
+    "businessContext": "Computer vision may support exploratory screening of plant disease imagery, subject to field testing and expert confirmation.",
+    "dataset": "Cherry leaf image dataset containing 3,642 images in five classes.",
+    "datasetSize": "3,642 images; 5 classes",
+    "preprocessing": [
+      "Performed image EDA and resizing",
+      "Normalized pixel intensities",
+      "Applied augmentation and class weighting during model development"
+    ],
+    "featureEngineering": [],
+    "methodology": [
+      "Trained an AlexNet-style CNN",
+      "Compared class predictions using classification metrics and a confusion matrix"
+    ],
+    "models": [
+      "AlexNet-style CNN"
+    ],
+    "technologies": [
+      "Python",
+      "TensorFlow",
+      "Keras"
+    ],
+    "evaluationMetrics": [
+      "Accuracy",
+      "Precision",
+      "Recall",
+      "F1-score",
+      "Confusion matrix"
+    ],
+    "results": [],
+    "insights": [
+      "Augmentation and class weighting were part of the workflow for improving generalization and class awareness."
+    ],
+    "businessImpact": "Potential application: support visual inspection in agriculture; field performance has not been established.",
+    "challenges": [],
+    "limitations": [
+      "Exact evaluation values and robustness to real-world lighting/background variations are not documented."
+    ],
+    "futureImprovements": [],
+    "githubUrl": "",
+    "demoUrl": "",
+    "reportUrl": "",
+    "image": "",
+    "gallery": []
+  },
+  {
+    "id": "13",
+    "slug": "used-car-regression-ann",
+    "title": "Used-Car Price Regression — ANN",
+    "year": null,
+    "projectType": "",
+    "status": "",
+    "grade": "",
+    "featured": false,
+    "roleTags": [
+      "Data Science",
+      "Business Analytics"
+    ],
+    "courseTags": [
+      "Deep Learning"
+    ],
+    "domainTags": [
+      "Regression",
+      "Deep Learning"
+    ],
+    "description": "Predicting used-car prices from structured vehicle features with an artificial neural network.",
+    "problemStatement": "Train a regression model to estimate used-car prices from numerical or appropriately prepared vehicle-related predictors.",
+    "businessContext": "Price estimation can support comparative market analysis, but predicted prices are not guaranteed valuations.",
+    "dataset": "Structured used-car price data; the source and record count are not yet documented.",
+    "datasetSize": "",
+    "preprocessing": [
+      "Prepared numerical model inputs for neural-network regression"
+    ],
+    "featureEngineering": [],
+    "methodology": [
+      "Developed an ANN regression model in TensorFlow/Keras",
+      "Evaluated predictions using a regression workflow"
+    ],
+    "models": [
+      "Artificial Neural Network"
+    ],
+    "technologies": [
+      "Python",
+      "TensorFlow",
+      "Keras"
+    ],
+    "evaluationMetrics": [
+      "Regression evaluation; precise reported metrics require notebook verification"
+    ],
+    "results": [],
+    "insights": [
+      "The project demonstrates neural-network regression for a continuous numeric target rather than classification."
+    ],
+    "businessImpact": "",
+    "challenges": [],
+    "limitations": [
+      "Dataset source, architecture details, preprocessing decisions, and numerical performance are not yet verified."
+    ],
+    "futureImprovements": [],
+    "githubUrl": "",
+    "demoUrl": "",
+    "reportUrl": "",
+    "image": "",
+    "gallery": []
+  },
+  {
+    "id": "14",
+    "slug": "amd-lstm",
+    "title": "AMD Stock Price Forecasting — LSTM",
+    "year": null,
+    "projectType": "",
+    "status": "",
+    "grade": "",
+    "featured": false,
+    "roleTags": [
+      "Data Science",
+      "AI / Machine Learning"
+    ],
+    "courseTags": [
+      "Deep Learning"
+    ],
+    "domainTags": [
+      "Forecasting",
+      "Deep Learning"
+    ],
+    "description": "Univariate AMD closing-price forecasting using LSTM networks, chronological splitting, and validation-based model experiments.",
+    "problemStatement": "Forecast the next observed trading-day Close value using a sequence of historical AMD closing prices.",
+    "businessContext": "An educational time-series forecasting study comparing LSTM configurations; it is not a trading recommendation.",
+    "dataset": "AMD historical trading-day Close prices, with Date used to preserve chronological order.",
+    "datasetSize": "10,098 trading-day records (1980-03-17 to 2020-04-01)",
+    "preprocessing": [
+      "Kept the data in chronological order without shuffling",
+      "Reserved 2019-04-01 through 2020-04-01 as the last-year test set",
+      "Split earlier observations chronologically into training and validation",
+      "Fit the scaler only on the training portion",
+      "Constructed temporal sequences with prior observations available as context"
+    ],
+    "featureEngineering": [
+      "Constructed sliding windows of past Close values for one-step-ahead forecasting"
+    ],
+    "methodology": [
+      "Implemented the required baseline LSTM with a five-step input window, 50 LSTM units, ReLU activation, and Dense(1)",
+      "Compared candidate modified configurations using the validation period rather than test results",
+      "Evaluated predictions after inverse-transforming them to the original price scale"
+    ],
+    "models": [
+      "LSTM"
+    ],
+    "technologies": [
+      "Python",
+      "TensorFlow",
+      "Keras",
+      "Scikit-learn"
+    ],
+    "evaluationMetrics": [
+      "RMSE",
+      "MAE",
+      "MAPE"
+    ],
+    "results": [],
+    "insights": [
+      "The final test period includes early-2020 market turbulence, making out-of-sample evaluation challenging.",
+      "Strong autocorrelation of price levels does not guarantee strong forecasts of returns."
+    ],
+    "businessImpact": "",
+    "challenges": [],
+    "limitations": [
+      "Verified baseline-versus-modified numerical results are not included in the available project inventory.",
+      "Historical closing prices do not represent future market conditions; LSTM predictions are not investment advice."
+    ],
+    "futureImprovements": [
+      "Publish original-price evaluation tables and compare against a naive last-close baseline."
+    ],
+    "githubUrl": "",
+    "demoUrl": "",
+    "reportUrl": "",
+    "image": "",
+    "gallery": []
+  },
+  {
+    "id": "15",
+    "slug": "aapl-lstm",
+    "title": "AAPL Stock Price Forecasting — LSTM",
+    "year": null,
+    "projectType": "",
+    "status": "",
+    "grade": "",
+    "featured": false,
+    "roleTags": [
+      "Data Science",
+      "AI / Machine Learning"
+    ],
+    "courseTags": [
+      "Deep Learning"
+    ],
+    "domainTags": [
+      "Forecasting",
+      "Deep Learning"
+    ],
+    "description": "Apple closing-price forecasting with baseline and modified LSTM experiments under a time-ordered evaluation split.",
+    "problemStatement": "Forecast the next observed AAPL trading-day Close from past closing-price sequences without leaking future observations into training.",
+    "businessContext": "An educational time-series modeling exercise focused on generalization under changing price regimes; not an investment signal.",
+    "dataset": "AAPL historical trading-day Close prices, ordered by Date.",
+    "datasetSize": "9,909 trading-day records (1980-12-12 to 2020-04-01)",
+    "preprocessing": [
+      "Preserved chronological ordering without random shuffling",
+      "Reserved the last calendar year from 2019-04-01 for the test set",
+      "Separated earlier observations into chronological training and validation",
+      "Fit scaling parameters on training data only",
+      "Constructed sequences using past observations as input context"
+    ],
+    "featureEngineering": [
+      "Created past-Close sequences for one-step-ahead prediction"
+    ],
+    "methodology": [
+      "Implemented the required five-step LSTM baseline with 50 units, ReLU activation, and Dense(1)",
+      "Explored architecture or transformation changes as candidate modified models",
+      "Used validation results for selection and original-price metrics for final comparison"
+    ],
+    "models": [
+      "LSTM"
+    ],
+    "technologies": [
+      "Python",
+      "TensorFlow",
+      "Keras",
+      "Scikit-learn"
+    ],
+    "evaluationMetrics": [
+      "RMSE",
+      "MAE",
+      "MAPE"
+    ],
+    "results": [],
+    "insights": [
+      "AAPL experienced strong upward price-level drift and a distribution shift across chronological splits.",
+      "Test-time values outside the train-only MinMaxScaler range are legitimate and should not be corrected by fitting on test data."
+    ],
+    "businessImpact": "",
+    "challenges": [],
+    "limitations": [
+      "Model-specific forecasting errors and selected modified hyperparameters require notebook confirmation.",
+      "Price-level forecasts may closely track levels without reliably predicting direction or returns."
+    ],
+    "futureImprovements": [
+      "Compare with a naive last-value forecast and document modified-model selection on validation data."
+    ],
+    "githubUrl": "",
+    "demoUrl": "",
+    "reportUrl": "",
+    "image": "",
+    "gallery": []
+  },
+  {
+    "id": "16",
+    "slug": "overhead-mnist-autoencoder",
+    "title": "Overhead-MNIST Autoencoder — Dimensionality Reduction",
+    "year": null,
+    "projectType": "",
+    "status": "",
+    "grade": "",
+    "featured": true,
+    "roleTags": [
+      "Data Science",
+      "AI / Machine Learning"
+    ],
+    "courseTags": [
+      "Deep Learning"
+    ],
+    "domainTags": [
+      "Computer Vision",
+      "Deep Learning"
+    ],
+    "description": "Reducing 28×28 overhead imagery to a 128-dimensional representation and reconstructing images with baseline and modified autoencoders.",
+    "problemStatement": "Compress grayscale overhead images into a lower-dimensional representation while retaining useful visual information for reconstruction.",
+    "businessContext": "Demonstrates unsupervised representation learning and image reconstruction; this is not an image classification task.",
+    "dataset": "Overhead-MNIST imagery; the broader study contained 16,016 images. The assignment used only Storage Tanks and Parking Lot classes.",
+    "datasetSize": "",
+    "preprocessing": [
+      "Scaled grayscale pixel values to the 0–1 range",
+      "Used an 80% train, 10% validation, and 10% test split in the assignment workflow"
+    ],
+    "featureEngineering": [
+      "Encoded 784 input pixel values into a 128-dimensional latent representation"
+    ],
+    "methodology": [
+      "Trained a baseline autoencoder for reconstruction",
+      "Modified autoencoder architecture and tuned model settings",
+      "Compared reconstructed images and selected modifications using validation behavior",
+      "Evaluated final reconstruction quality on held-out test data"
+    ],
+    "models": [
+      "Autoencoder",
+      "Modified Autoencoder"
+    ],
+    "technologies": [
+      "Python",
+      "TensorFlow",
+      "Keras"
+    ],
+    "evaluationMetrics": [
+      "Structural Similarity Index Measure (SSIM)"
+    ],
+    "results": [
+      "Reported test SSIM increased from approximately 0.486 (baseline) to 0.757 (modified)",
+      "Reported relative improvement in SSIM was approximately 55.7%"
+    ],
+    "insights": [
+      "The modified architecture achieved higher reported reconstruction similarity while retaining the specified latent dimensionality."
+    ],
+    "businessImpact": "",
+    "challenges": [],
+    "limitations": [
+      "The 16,016-image figure refers to the broader study and should not be presented as the exact two-class sample size.",
+      "SSIM measures reconstruction similarity, not downstream classification or information completeness."
+    ],
+    "futureImprovements": [],
+    "githubUrl": "",
+    "demoUrl": "",
+    "reportUrl": "",
+    "image": "",
+    "gallery": []
+  },
+  {
+    "id": "17",
+    "slug": "overhead-mnist-cgan",
+    "title": "Overhead-MNIST Conditional GAN / Conditional DCGAN",
+    "year": null,
+    "projectType": "",
+    "status": "",
+    "grade": "",
+    "featured": false,
+    "roleTags": [
+      "Data Science",
+      "AI / Machine Learning"
+    ],
+    "courseTags": [
+      "Deep Learning"
+    ],
+    "domainTags": [
+      "Generative Modeling",
+      "Computer Vision"
+    ],
+    "description": "Class-conditional overhead-image generation comparing a baseline Conditional GAN with a convolutional Conditional DCGAN.",
+    "problemStatement": "Generate synthetic 28×28 grayscale overhead imagery conditioned on a chosen target class.",
+    "businessContext": "A generative-modeling experiment comparing adversarial architectures; generated imagery requires quality and diversity assessment.",
+    "dataset": "Overhead-MNIST imagery restricted to the Storage Tanks and Parking Lot categories.",
+    "datasetSize": "",
+    "preprocessing": [
+      "Prepared grayscale training images and preserved the two required class labels"
+    ],
+    "featureEngineering": [
+      "Provided class labels to both generator and discriminator to support conditional generation"
+    ],
+    "methodology": [
+      "Implemented a label-conditioned baseline GAN",
+      "Developed a convolutional conditional DCGAN variant",
+      "Used an adversarial training workflow with generator and discriminator updates",
+      "Compared generated images visually and using FID"
+    ],
+    "models": [
+      "Conditional GAN",
+      "Conditional DCGAN"
+    ],
+    "technologies": [
+      "Python",
+      "TensorFlow",
+      "Keras"
+    ],
+    "evaluationMetrics": [
+      "Fréchet Inception Distance (FID)",
+      "Visual inspection of generated samples"
+    ],
+    "results": [
+      "The modified Conditional DCGAN was reported to reduce FID relative to the baseline; exact values require source verification."
+    ],
+    "insights": [
+      "Conditioning allows generation to target Storage Tanks or Parking Lot rather than producing an uncontrolled class mixture.",
+      "Convolutional layers were explored to model local visual structure in small images."
+    ],
+    "businessImpact": "",
+    "challenges": [],
+    "limitations": [
+      "Exact FID values and generated image examples are not currently linked.",
+      "FID on 28×28 grayscale images requires consistent feature extraction and careful interpretation."
+    ],
+    "futureImprovements": [],
+    "githubUrl": "",
+    "demoUrl": "",
+    "reportUrl": "",
+    "image": "",
+    "gallery": []
+  },
+  {
+    "id": "18",
+    "slug": "credit-score-deployment",
+    "title": "Credit Score Deployment Pipeline",
+    "year": null,
+    "projectType": "",
+    "status": "",
+    "grade": "",
+    "featured": true,
+    "roleTags": [
+      "Data Science",
+      "Data Engineer",
+      "MLOps"
+    ],
+    "courseTags": [
+      "Model Deployment"
+    ],
+    "domainTags": [
+      "MLOps",
+      "Cloud",
+      "Classification"
+    ],
+    "description": "Retrainable object-oriented credit-score machine-learning workflow with MLflow tracking, inference, Streamlit, and AWS exposure.",
+    "problemStatement": "Make credit-score classification experiments reproducible and expose trained predictions through a usable inference application.",
+    "businessContext": "Connects model experimentation with an application workflow suitable for demonstrating end-to-end ML delivery.",
+    "dataset": "",
+    "datasetSize": "",
+    "preprocessing": [],
+    "featureEngineering": [],
+    "methodology": [
+      "Separated preprocessing, training, and evaluation into OOP components",
+      "Maintained a repeatable model-training workflow",
+      "Used MLflow for experiment and model comparison tracking",
+      "Built an inference interface with Streamlit",
+      "Explored local and AWS/EC2 deployment"
+    ],
+    "models": [
+      "Credit-score multiclass classifiers; exact selected production model requires verification"
+    ],
+    "technologies": [
+      "Python",
+      "Scikit-learn",
+      "MLflow",
+      "Streamlit",
+      "AWS",
+      "Amazon EC2"
+    ],
+    "evaluationMetrics": [
+      "Tracked model evaluation through the ML pipeline; specific scores require verification"
+    ],
+    "results": [],
+    "insights": [
+      "Separating preprocessing, training, and evaluation supports retraining and easier debugging."
+    ],
+    "businessImpact": "",
+    "challenges": [],
+    "limitations": [
+      "A public deployment URL, deployment uptime, and final selected model metrics are not currently documented."
+    ],
+    "futureImprovements": [
+      "Attach the source repository, MLflow experiment screenshots, and verified local/cloud inference tests."
+    ],
+    "githubUrl": "",
+    "demoUrl": "",
+    "reportUrl": "",
+    "image": "",
+    "gallery": []
+  },
+  {
+    "id": "19",
+    "slug": "spaceship-titanic-mlops",
+    "title": "Spaceship Titanic MLOps Pipeline",
+    "year": null,
+    "projectType": "",
+    "status": "",
+    "grade": "",
+    "featured": true,
+    "roleTags": [
+      "Data Science",
+      "Data Engineer",
+      "MLOps"
+    ],
+    "courseTags": [
+      "Model Deployment"
+    ],
+    "domainTags": [
+      "MLOps",
+      "Classification"
+    ],
+    "description": "Machine-learning lifecycle workflow for Spaceship Titanic covering feature preparation, Optuna tuning, MLflow Registry, and Streamlit inference.",
+    "problemStatement": "Organize experiment tracking, best-model selection, model packaging, and inference around a tabular classification use case.",
+    "businessContext": "A reproducibility and model-serving exercise demonstrating common MLOps practices.",
+    "dataset": "Kaggle Spaceship Titanic passenger classification dataset.",
+    "datasetSize": "",
+    "preprocessing": [
+      "Used a dedicated feature-engineering pipeline",
+      "Prepared training and inference transformations for reuse"
+    ],
+    "featureEngineering": [
+      "Reused passenger-level engineered features from Spaceship Titanic modeling"
+    ],
+    "methodology": [
+      "Compared baseline models and tuned candidates",
+      "Used MLflow for experiment tracking",
+      "Tracked model candidates with MLflow Model Registry and champion selection",
+      "Serialized trained models for deployment",
+      "Connected a Streamlit frontend to prediction logic"
+    ],
+    "models": [
+      "Logistic Regression",
+      "XGBoost",
+      "LightGBM"
+    ],
+    "technologies": [
+      "Python",
+      "MLflow",
+      "Optuna",
+      "Streamlit",
+      "Scikit-learn"
+    ],
+    "evaluationMetrics": [
+      "Experiment-level model metrics tracked through MLflow; exact values require verification"
+    ],
+    "results": [],
+    "insights": [
+      "A registry-based champion workflow creates an explicit path between experimentation and model serving."
+    ],
+    "businessImpact": "",
+    "challenges": [],
+    "limitations": [
+      "No public demo URL, production monitoring results, or independently verified accuracy are supplied for the deployment workflow."
+    ],
+    "futureImprovements": [],
+    "githubUrl": "",
+    "demoUrl": "",
+    "reportUrl": "",
+    "image": "",
+    "gallery": []
+  },
+  {
+    "id": "20",
+    "slug": "student-placement-classification",
+    "title": "Student Placement Classification — Model Comparison",
+    "year": 2026,
+    "projectType": "Academic Midterm Project — Component",
+    "status": "Completed",
+    "grade": "",
+    "featured": false,
+    "roleTags": [
+      "Data Science",
+      "Data Analyst",
+      "MLOps",
+      "Business Analytics"
+    ],
+    "courseTags": [
+      "Model Deployment"
+    ],
+    "domainTags": [
+      "Classification",
+      "Predictive Analytics",
+      "MLOps"
+    ],
+    "description": "Comparative binary classification of student placement using academic, skill, and experience indicators from 5,000 records.",
+    "problemStatement": "Predict whether a student is Placed or Not Placed using academic performance, employability skills, and experience indicators, then compare alternative feature sets and supervised classifiers.",
+    "businessContext": "An academic machine learning study of employment-readiness signals. The placement label in this dataset follows explicit academic and skill thresholds, making rule interpretation central to understanding the results.",
+    "dataset": "B.csv — 5,000 student profiles across 18 columns, including academic performance, CGPA, technical and soft skill scores, backlogs, experience and placement status (4,134 Not Placed; 866 Placed).",
+    "datasetSize": "5,000 student records; 18 columns",
+    "preprocessing": [
+      "Reviewed schema and variable distributions and checked missing values and duplicated identifiers.",
+      "Prepared numeric and categorical inputs for model-specific preprocessing pipelines.",
+      "Used an 80:20 train/test split for the placement experiments."
+    ],
+    "featureEngineering": [
+      "Compared original feature sets against engineered combinations of academic performance and skills.",
+      "Evaluated configurations that included or excluded aggregated variables such as weighted_score and employability_score."
+    ],
+    "methodology": [
+      "Explored label distribution and predictors through EDA and visualization.",
+      "Compared Logistic Regression, Random Forest, and LightGBM.",
+      "Ran cross-validation, Grid Search, and Optuna optimization on model configurations.",
+      "Recorded classification experiments and metrics using MLflow in the associated pipeline.",
+      "Checked the mathematical structure of the target against CGPA, skill scores, and backlog thresholds."
+    ],
+    "models": [
+      "Logistic Regression",
+      "Random Forest",
+      "LightGBM"
+    ],
+    "technologies": [
+      "Python",
+      "Pandas",
+      "Scikit-learn",
+      "Random Forest",
+      "LightGBM",
+      "Optuna",
+      "MLflow"
+    ],
+    "evaluationMetrics": [
+      "Test Accuracy",
+      "Precision",
+      "Recall",
+      "F1-score",
+      "ROC-AUC",
+      "PR-AUC"
+    ],
+    "results": [
+      "100% test accuracy and F1-score of 1.000 were reported for the selected Random Forest original-feature configuration in the MLflow pipeline.",
+      "The dataset placement outcome matched a four-condition threshold rule for all 5,000 records in the submitted data."
+    ],
+    "insights": [
+      "The placement label follows an exact AND rule: CGPA ≥ 7.0, technical_skill_score ≥ 60, soft_skill_score ≥ 55, and backlogs ≤ 2.",
+      "Direct verification of this rule matches all 5,000 observed placement labels (866 Placed and 4,134 Not Placed).",
+      "Random Forest and LightGBM can learn threshold-based splits, explaining their strong classification results on this structured dataset. The 100% result refers to this dataset, not unobserved real-world populations.",
+      "Salary package was not included as an input feature for placement classification in the analyzed notebook."
+    ],
+    "businessImpact": "Illustrates how academic and employability indicators can be structured into an interpretable predictive workflow for exploratory educational analytics.",
+    "challenges": [],
+    "limitations": [],
+    "futureImprovements": [],
+    "githubUrl": "https://github.com/hazelwinataa/HazelNoveroWinata-placement-salary-app",
+    "demoUrl": "https://hazelnoverowinata-placement-salary-app-h5nvpd78ycdb2ut6uehcqc.streamlit.app/",
+    "reportUrl": "",
+    "image": "/images/placement-salary/classification-rule.svg",
+    "gallery": [],
+    "relatedProjects": [
+      "salary-regression",
+      "placement-salary-streamlit",
+      "fastapi-streamlit-architecture"
+    ]
+  },
+  {
+    "id": "21",
+    "slug": "salary-regression",
+    "title": "Student Salary Prediction — Regression Benchmarking",
+    "year": 2026,
+    "projectType": "Academic Midterm Project — Component",
+    "status": "Completed",
+    "grade": "",
+    "featured": false,
+    "roleTags": [
+      "Data Science",
+      "Business Analytics",
+      "Data Analyst",
+      "MLOps"
+    ],
+    "courseTags": [
+      "Model Deployment"
+    ],
+    "domainTags": [
+      "Regression",
+      "Predictive Analytics",
+      "MLOps"
+    ],
+    "description": "Salary-package regression experiments comparing feature representations, tree-based algorithms, and hyperparameter tuning.",
+    "problemStatement": "Estimate salary_package_lpa as a continuous outcome for students with a recorded positive salary package, and compare the effects of engineered academic and skill features.",
+    "businessContext": "A companion regression task to student placement classification that demonstrates continuous-outcome modeling and evidence-based experiment comparison.",
+    "dataset": "The salary experiment uses the 866 placed-student observations with positive salary_package_lpa from B.csv.",
+    "datasetSize": "866 placed-student records (from 5,000 profiles)",
+    "preprocessing": [
+      "Filtered to observations where salary_package_lpa > 0.",
+      "Separated the salary target from candidate predictors.",
+      "Used an 80:20 train/test split and experiment-specific preprocessing workflows.",
+      "Explored a log1p target transformation in regression experiments."
+    ],
+    "featureEngineering": [
+      "Tested original variables against engineered features including improvement_degree, improvement_cgpa, avg_skill, academic_skill, and skill_experience."
+    ],
+    "methodology": [
+      "Compared Random Forest, XGBoost, and LightGBM regressors.",
+      "Evaluated original and engineered feature configurations.",
+      "Conducted baseline, Grid Search, and Optuna experiments.",
+      "Recorded regression results and model artifacts in the associated MLflow pipeline."
+    ],
+    "models": [
+      "Random Forest Regressor",
+      "XGBoost Regressor",
+      "LightGBM Regressor"
+    ],
+    "technologies": [
+      "Python",
+      "Pandas",
+      "Scikit-learn",
+      "Random Forest",
+      "XGBoost",
+      "LightGBM",
+      "GridSearchCV",
+      "Optuna",
+      "MLflow"
+    ],
+    "evaluationMetrics": [
+      "MAE",
+      "MSE",
+      "RMSE",
+      "R²"
+    ],
+    "results": [
+      "Completed comparative salary-regression experiments using multiple algorithms, feature sets, and hyperparameter tuning methods.",
+      "Documented regression outcomes separately from classification results and packaged the selected model for the inference workflows."
+    ],
+    "insights": [
+      "Continuous salary prediction was treated as a separate task from the placement classifier.",
+      "The experiment assessed whether additional academic and skill features provided useful information for estimating a salary package."
+    ],
+    "businessImpact": "Demonstrates regression experimentation and the integration of a continuous target into an end-to-end data product.",
+    "challenges": [],
+    "limitations": [],
+    "futureImprovements": [],
+    "githubUrl": "https://github.com/hazelwinataa/HazelNoveroWinata-placement-salary-app",
+    "demoUrl": "https://hazelnoverowinata-placement-salary-app-h5nvpd78ycdb2ut6uehcqc.streamlit.app/",
+    "reportUrl": "",
+    "image": "",
+    "gallery": [],
+    "relatedProjects": [
+      "student-placement-classification",
+      "placement-salary-streamlit",
+      "fastapi-streamlit-architecture"
+    ]
+  },
+  {
+    "id": "22",
+    "slug": "placement-salary-streamlit",
+    "title": "Student Placement & Salary Prediction — End-to-End ML Deployment",
+    "year": 2026,
+    "projectType": "Individual Academic Midterm Project",
+    "status": "Completed",
+    "grade": "100/100 — Midterm Project",
+    "featured": true,
+    "roleTags": [
+      "Data Science",
+      "Data Analyst",
+      "Data Engineer",
+      "Business Analytics",
+      "MLOps"
+    ],
+    "courseTags": [
+      "Model Deployment"
+    ],
+    "domainTags": [
+      "Classification",
+      "Regression",
+      "MLOps",
+      "API / Backend",
+      "Data Engineering"
+    ],
+    "description": "Built a complete student-outcome ML workflow spanning EDA, two predictive tasks, 26 MLflow runs, and monolithic plus decoupled deployment architectures.",
+    "problemStatement": "Develop an end-to-end system that predicts student placement status and explores salary-package estimation, from feature analysis and model comparison through reproducible pipelines and interactive inference applications.",
+    "businessContext": "An academic career-readiness analytics case study that connects student academic performance, employability skills and experience with two related prediction tasks. The deliverable demonstrates both ML experimentation and deployment engineering.",
+    "dataset": "B.csv — 5,000 student records and 18 columns, including CGPA, educational scores, technical/soft skills, internships, work experience, backlogs, placement_status and salary_package_lpa. Positive-salary regression uses 866 placed student records.",
+    "datasetSize": "5,000 student records · 18 columns · 866 placed students",
+    "preprocessing": [
+      "Performed exploratory analysis, checked missing values and unique student IDs, and inspected placement/salary distributions.",
+      "Built configurable preprocessing workflows for numeric and categorical predictors.",
+      "Used an 80:20 train/test split in the supervised modeling experiments.",
+      "Restricted salary-regression modeling to records with positive salary packages."
+    ],
+    "featureEngineering": [
+      "Compared original attributes with engineered academic/skill indicators, including avg_skill and skill_experience.",
+      "Examined features such as improvement_degree, improvement_cgpa, academic_skill and employability-related aggregates."
+    ],
+    "methodology": [
+      "Part 1 — EDA & Modeling: explored student characteristics, performed classification and regression experiments, and compared algorithms and feature sets.",
+      "Part 2 — ML Pipeline: organized repeatable data preprocessing, training and evaluation with Scikit-learn Pipeline and persisted selected .pkl models.",
+      "Experiment Tracking: organized 26 runs in MLflow (including 2 summary runs), with configurations and evaluation metrics.",
+      "Part 3 — Monolithic App: delivered a Streamlit interface with input forms, placement predictions, salary predictions, probabilities and visualizations.",
+      "Part 4 — Decoupled App: separated a Streamlit frontend from a FastAPI model-serving backend with REST endpoints and Swagger/OpenAPI documentation."
+    ],
+    "models": [
+      "Placement: Logistic Regression, Random Forest, LightGBM",
+      "Salary: Random Forest Regressor, XGBoost, LightGBM"
+    ],
+    "technologies": [
+      "Python",
+      "Pandas",
+      "NumPy",
+      "Scikit-learn",
+      "Random Forest",
+      "XGBoost",
+      "LightGBM",
+      "GridSearchCV",
+      "Optuna",
+      "MLflow",
+      "Streamlit",
+      "FastAPI",
+      "REST API",
+      "Plotly"
+    ],
+    "evaluationMetrics": [
+      "Classification: Accuracy, Precision, Recall, F1-score, ROC-AUC, PR-AUC",
+      "Regression: MAE, MSE, RMSE, R²"
+    ],
+    "results": [
+      "100/100 course midterm score.",
+      "100% held-out placement classification accuracy for the selected Random Forest model within the submitted structured dataset.",
+      "Analyzed 5,000 student records across 18 variables and worked with a salary subset of 866 placed students.",
+      "Logged 26 MLflow runs (24 experiment runs and 2 summary runs).",
+      "Completed a monolithic Streamlit application and a decoupled Streamlit + FastAPI architecture."
+    ],
+    "insights": [
+      "All 5,000 placement labels agree with a deterministic four-threshold rule (CGPA ≥ 7, technical skill ≥ 60, soft skill ≥ 55, backlogs ≤ 2).",
+      "Tree-based classifiers identify threshold splits well; this dataset structure helps explain the perfect held-out test accuracy for the selected placement model.",
+      "The regression track was evaluated separately as a continuous-outcome task, using MAE, RMSE and R² rather than classification accuracy.",
+      "Building monolithic and decoupled applications showed two ways of connecting trained models to user-facing interfaces."
+    ],
+    "businessImpact": "Demonstrates an integrated student-outcome analytics prototype: from feature analysis and ML model selection to a user-facing application and reusable prediction API.",
+    "challenges": [],
+    "limitations": [],
+    "futureImprovements": [],
+    "githubUrl": "https://github.com/hazelwinataa/HazelNoveroWinata-placement-salary-app",
+    "demoUrl": "https://hazelnoverowinata-placement-salary-app-h5nvpd78ycdb2ut6uehcqc.streamlit.app/",
+    "reportUrl": "",
+    "image": "/images/placement-salary/project-overview.svg",
+    "gallery": [
+      "/images/placement-salary/mlflow-experiments.webp",
+      "/images/placement-salary/streamlit-dashboard.webp",
+      "/images/placement-salary/fastapi-swagger.webp"
+    ],
+    "relatedProjects": [
+      "student-placement-classification",
+      "salary-regression",
+      "fastapi-streamlit-architecture"
+    ],
+    "highlights": [
+      {
+        "value": "100/100",
+        "label": "Midterm project grade",
+        "note": "Academic assessment"
+      },
+      {
+        "value": "100%",
+        "label": "Placement test accuracy",
+        "note": "Threshold-based dataset"
+      },
+      {
+        "value": "5,000",
+        "label": "Student records analyzed",
+        "note": "18 columns"
+      },
+      {
+        "value": "26",
+        "label": "MLflow runs",
+        "note": "Including 2 summaries"
+      }
+    ]
+  },
+  {
+    "id": "23",
+    "slug": "fastapi-streamlit-architecture",
+    "title": "FastAPI + Streamlit — Decoupled ML Architecture",
+    "year": 2026,
+    "projectType": "Academic Midterm Project — Component",
+    "status": "Completed",
+    "grade": "",
+    "featured": false,
+    "roleTags": [
+      "Data Engineer",
+      "Data Science",
+      "MLOps"
+    ],
+    "courseTags": [
+      "Model Deployment"
+    ],
+    "domainTags": [
+      "API / Backend",
+      "MLOps",
+      "Data Engineering"
+    ],
+    "description": "Built a separated Streamlit client and FastAPI inference backend for student placement and salary prediction.",
+    "problemStatement": "Separate the UI from model-serving logic for a student-outcome prediction system and expose backend inference through an HTTP API.",
+    "businessContext": "A deployment architecture case study demonstrating separation of concerns between frontend presentation and backend prediction services.",
+    "dataset": "Uses the student placement and salary prediction models trained on the 5,000-record B.csv study.",
+    "datasetSize": "5,000 student records (parent project)",
+    "preprocessing": [
+      "Constructed API input objects from validated student attributes and prepared the feature frame for serialized model inference."
+    ],
+    "featureEngineering": [
+      "Provided a feature preparation path for the saved classification and regression models."
+    ],
+    "methodology": [
+      "Implemented a Streamlit frontend that issues inference requests to a separate service.",
+      "Implemented a FastAPI backend exposing task-specific prediction endpoints and health checks.",
+      "Used Pydantic request schemas and documented API contracts through interactive Swagger/OpenAPI /docs.",
+      "Returned model outputs to the frontend for display and visual explanation."
+    ],
+    "models": [
+      "Serialized student placement classification model",
+      "Serialized salary regression model"
+    ],
+    "technologies": [
+      "Python",
+      "FastAPI",
+      "Pydantic",
+      "REST API",
+      "Swagger/OpenAPI",
+      "Streamlit",
+      "Scikit-learn",
+      "Joblib"
+    ],
+    "evaluationMetrics": [],
+    "results": [
+      "Delivered a working separation between the Streamlit interface and FastAPI model-serving code for the two predictive tasks.",
+      "Included backend endpoint documentation and example response workflows."
+    ],
+    "insights": [
+      "Frontend/backend separation isolates presentation from model-serving responsibilities.",
+      "API-based model inference demonstrates how the same service can support alternate interfaces."
+    ],
+    "businessImpact": "Demonstrates a modular architectural pattern for machine learning applications that need a reusable inference service.",
+    "challenges": [],
+    "limitations": [],
+    "futureImprovements": [],
+    "githubUrl": "https://github.com/hazelwinataa/HazelNoveroWinata-placement-salary-app",
+    "demoUrl": "",
+    "reportUrl": "",
+    "image": "/images/placement-salary/fastapi-flow.svg",
+    "gallery": [
+      "/images/placement-salary/fastapi-swagger.webp",
+      "/images/placement-salary/architecture.svg"
+    ],
+    "relatedProjects": [
+      "student-placement-classification",
+      "salary-regression",
+      "placement-salary-streamlit"
+    ]
+  },
+  {
+    "id": "24",
+    "slug": "bnpl-database-normalization",
+    "title": "BNPL Database Normalization Project",
+    "year": null,
+    "projectType": "",
+    "status": "",
+    "grade": "",
+    "featured": false,
+    "roleTags": [
+      "Data Engineer",
+      "Data Analyst",
+      "Business Analytics"
+    ],
+    "courseTags": [
+      "Data Management & Organization",
+      "Database Technology"
+    ],
+    "domainTags": [
+      "Database",
+      "System Design"
+    ],
+    "description": "Normalization and relational design for Buy Now, Pay Later transaction data from UNF through 3NF.",
+    "problemStatement": "Redesign a denormalized BNPL transaction dataset to reduce data redundancy, update anomalies, and unclear entity relationships.",
+    "businessContext": "Structured payment and installment records benefit from consistent relational entities and referential integrity.",
+    "dataset": "Records representing users, BNPL providers, products, financing plans, transactions, and installment details.",
+    "datasetSize": "50 BNPL transactions; 333 installment details",
+    "preprocessing": [
+      "Analyzed the original unnormalized structure and functional dependencies",
+      "Separated repeating attributes and dependencies into relational entities"
+    ],
+    "featureEngineering": [],
+    "methodology": [
+      "Documented normalization through UNF, 1NF, 2NF, and 3NF",
+      "Defined User, BNPLApp, Product, Plan, TransaksiBNPL, and CicilanDetail entities",
+      "Specified primary/foreign keys, entity relationships, cardinalities, and update-anomaly considerations",
+      "Prepared the final entity relationship diagram (ERD)"
+    ],
+    "models": [],
+    "technologies": [
+      "Relational Database Design",
+      "SQL",
+      "ERD",
+      "Database Normalization"
+    ],
+    "evaluationMetrics": [],
+    "results": [
+      "Produced a normalized relational design and final ERD based on 50 BNPL transactions and 333 installment-detail records."
+    ],
+    "insights": [
+      "Separating transaction and installment-detail records allows financing plans and their associated payments to be modeled without repeated cross-entity attributes."
+    ],
+    "businessImpact": "Potential benefit: improved consistency and maintainability for transaction and installment records; no production deployment is claimed.",
+    "challenges": [],
+    "limitations": [
+      "Query performance and real production data-integrity testing are not documented."
+    ],
+    "futureImprovements": [],
+    "githubUrl": "",
+    "demoUrl": "",
+    "reportUrl": "",
+    "image": "",
+    "gallery": []
+  },
+  {
+    "id": "25",
+    "slug": "database-triggers",
+    "title": "Database Trigger & Transaction Logic Exercises",
+    "year": null,
+    "projectType": "",
+    "status": "",
+    "grade": "",
+    "featured": false,
+    "roleTags": [
+      "Data Engineer"
+    ],
+    "courseTags": [
+      "Database Technology"
+    ],
+    "domainTags": [
+      "Database"
+    ],
+    "description": "SQL exercises implementing triggers, routines, transaction rules, audit logic, and data-integrity checks.",
+    "problemStatement": "Implement database-side constraints and automated operations for common transactional scenarios.",
+    "businessContext": "Database routines and triggers can protect data consistency and improve auditability when implemented and tested appropriately.",
+    "dataset": "",
+    "datasetSize": "",
+    "preprocessing": [
+      "Stored procedures",
+      "Triggers",
+      "Functions",
+      "Transaction logic"
+    ],
+    "featureEngineering": [],
+    "methodology": [
+      "Developed examples for employee validation and account-balance auditing",
+      "Explored deletion prevention, soft deletion, restoration, and payment audit scenarios",
+      "Maintained order totals, product timestamps, and stock consistency through database logic",
+      "Covered ticket workflows, conditional coupon uniqueness, and transaction rules"
+    ],
+    "models": [],
+    "technologies": [
+      "SQL",
+      "Database Triggers",
+      "Stored Procedures",
+      "Database Functions",
+      "Transactions"
+    ],
+    "evaluationMetrics": [],
+    "results": [],
+    "insights": [
+      "Triggers and stored routines can automate recurring integrity checks but also introduce maintenance and debugging costs."
+    ],
+    "businessImpact": "",
+    "challenges": [],
+    "limitations": [
+      "The target database engine, test coverage, and performance results need verification from the original exercises."
+    ],
+    "futureImprovements": [],
+    "githubUrl": "",
+    "demoUrl": "",
+    "reportUrl": "",
+    "image": "",
+    "gallery": []
+  },
+  {
+    "id": "26",
+    "slug": "database-indexing",
+    "title": "Database Physical Design & Indexing Analysis",
+    "year": null,
+    "projectType": "",
+    "status": "",
+    "grade": "",
+    "featured": false,
+    "roleTags": [
+      "Data Engineer",
+      "Data Analyst"
+    ],
+    "courseTags": [
+      "Database Technology"
+    ],
+    "domainTags": [
+      "Database",
+      "System Design"
+    ],
+    "description": "Physical database design and indexing analysis based on workload characteristics, query selectivity, and read/write trade-offs.",
+    "problemStatement": "Translate a database schema into storage and indexing decisions that match an observed or hypothetical workload.",
+    "businessContext": "Index and schema choices affect query performance, write overhead, storage, and long-term maintainability.",
+    "dataset": "",
+    "datasetSize": "",
+    "preprocessing": [],
+    "featureEngineering": [],
+    "methodology": [
+      "Distinguished conceptual, logical, and physical schemas",
+      "Performed workload and ISUD analysis",
+      "Evaluated clustered indexing, search keys, and query selectivity",
+      "Considered read/write frequency when discussing index design"
+    ],
+    "models": [],
+    "technologies": [
+      "Database Design",
+      "Indexing",
+      "SQL"
+    ],
+    "evaluationMetrics": [],
+    "results": [],
+    "insights": [
+      "Index design should follow the queries being served rather than adding indexes indiscriminately."
+    ],
+    "businessImpact": "",
+    "challenges": [],
+    "limitations": [
+      "Benchmark timings and execution plans are not documented in the available project record."
+    ],
+    "futureImprovements": [],
+    "githubUrl": "",
+    "demoUrl": "",
+    "reportUrl": "",
+    "image": "",
+    "gallery": []
+  },
+  {
+    "id": "27",
+    "slug": "weather-traffic-streaming",
+    "title": "Weather–Traffic Streaming Analytics & Congestion Classification",
+    "year": null,
+    "projectType": "",
+    "status": "",
+    "grade": "",
+    "featured": true,
+    "roleTags": [
+      "Data Engineer",
+      "Data Science",
+      "Data Analyst"
+    ],
+    "courseTags": [
+      "Big Data & Infrastructure"
+    ],
+    "domainTags": [
+      "Data Engineering",
+      "Cloud",
+      "Classification"
+    ],
+    "description": "Weather and traffic ingestion across ten Indonesian cities, with Spark Structured Streaming and congestion classification experiments.",
+    "problemStatement": "Integrate weather and traffic feeds into a data-processing workflow and explore whether combined attributes support congestion-level classification.",
+    "businessContext": "Joint weather–traffic analysis can support exploratory urban mobility analysis; predictive reliability depends on leakage-free labels and balanced evaluation.",
+    "dataset": "OpenWeather and TomTom Traffic API snapshots collected for ten Indonesian cities.",
+    "datasetSize": "10 Indonesian cities",
+    "preprocessing": [
+      "Prepared weather/traffic features for Spark ML models",
+      "Applied feature indexing and scaling",
+      "Explored PCA in the predictive workflow"
+    ],
+    "featureEngineering": [
+      "Joined weather and traffic observations",
+      "Constructed time-bucket aggregations from snapshots"
+    ],
+    "methodology": [
+      "Used threaded API ingestion and JSON snapshots",
+      "Processed records through Spark Structured Streaming",
+      "Persisted micro-batch outputs using foreachBatch",
+      "Compared Logistic Regression, Random Forest, and Decision Tree models",
+      "Used cross-validation and grid-based tuning in classification experiments"
+    ],
+    "models": [
+      "Logistic Regression",
+      "Random Forest",
+      "Decision Tree"
+    ],
+    "technologies": [
+      "Python",
+      "OpenWeather API",
+      "TomTom Traffic API",
+      "Apache Spark",
+      "Spark Structured Streaming",
+      "Spark MLlib"
+    ],
+    "evaluationMetrics": [
+      "F1-score",
+      "Weighted precision",
+      "Weighted recall",
+      "Accuracy"
+    ],
+    "results": [],
+    "insights": [
+      "The pipeline demonstrates ingestion, stream processing, joins, and model experimentation across multiple sources.",
+      "Earlier experiments exposed class imbalance and potential target leakage, so apparently perfect results must not be interpreted as reliable proof."
+    ],
+    "businessImpact": "Potential application: explore weather-related patterns in congestion indicators; no deployed traffic-management impact is claimed.",
+    "challenges": [],
+    "limitations": [
+      "Class imbalance and possible target leakage were identified in previous experiments.",
+      "Source API availability and sampling choices can affect temporal coverage and generalization."
+    ],
+    "futureImprovements": [
+      "Recheck target construction for leakage and report leakage-free, class-specific evaluation."
+    ],
+    "githubUrl": "",
+    "demoUrl": "",
+    "reportUrl": "",
+    "image": "",
+    "gallery": []
+  },
+  {
+    "id": "28",
+    "slug": "aws-cloud-coursework",
+    "title": "AWS / Cloud Model Deployment Coursework",
+    "year": null,
+    "projectType": "",
+    "status": "",
+    "grade": "A",
+    "featured": false,
+    "roleTags": [
+      "Data Engineer",
+      "MLOps",
+      "Data Science"
+    ],
+    "courseTags": [
+      "Big Data & Infrastructure",
+      "Model Deployment"
+    ],
+    "domainTags": [
+      "Cloud",
+      "MLOps"
+    ],
+    "description": "Cloud infrastructure and machine-learning deployment coursework covering AWS, local-to-cloud inference, and supporting backend components.",
+    "problemStatement": "Explore how a model and its supporting application components can be deployed and accessed outside a local development machine.",
+    "businessContext": "Cloud-based delivery can improve availability and external accessibility while introducing operational cost, security, and maintenance considerations.",
+    "dataset": "",
+    "datasetSize": "",
+    "preprocessing": [],
+    "featureEngineering": [],
+    "methodology": [
+      "Explored AWS infrastructure concepts and deployment workflows",
+      "Studied Streamlit inference and model-management components",
+      "Worked with REST APIs, PostgreSQL, SQLAlchemy, and local-to-cloud inference",
+      "Compared scalability, accessibility, and maintenance considerations"
+    ],
+    "models": [],
+    "technologies": [
+      "AWS",
+      "Streamlit",
+      "MLflow",
+      "REST API",
+      "PostgreSQL",
+      "SQLAlchemy"
+    ],
+    "evaluationMetrics": [],
+    "results": [],
+    "insights": [
+      "Local deployment and cloud deployment involve different operational trade-offs even when serving the same predictive model."
+    ],
+    "businessImpact": "",
+    "challenges": [],
+    "limitations": [
+      "Course grade A is documented, but specific service configurations and independently verifiable public deployments are not supplied."
+    ],
+    "futureImprovements": [],
+    "githubUrl": "",
+    "demoUrl": "",
+    "reportUrl": "",
+    "image": "",
+    "gallery": []
+  },
+  {
+    "id": "29",
+    "slug": "uml-system-modeling",
+    "title": "UML & System Modeling Coursework",
+    "year": null,
+    "projectType": "",
+    "status": "",
+    "grade": "",
+    "featured": false,
+    "roleTags": [
+      "Data Engineer",
+      "Business Analytics"
+    ],
+    "courseTags": [
+      "Program Design Method"
+    ],
+    "domainTags": [
+      "System Design"
+    ],
+    "description": "UML, requirements, and system modeling coursework covering structural relationships and behavioral use cases.",
+    "problemStatement": "Represent application requirements, classes, and relationships in diagrams that clarify software structure and expected behavior.",
+    "businessContext": "Clear modeling artifacts can support communication between stakeholders, analysts, and developers before implementation.",
+    "dataset": "",
+    "datasetSize": "",
+    "preprocessing": [],
+    "featureEngineering": [],
+    "methodology": [
+      "Modeled classes, associations, aggregation, composition, and realization",
+      "Prepared use case diagrams and requirement models",
+      "Explored process/system modeling and ERDs where relevant"
+    ],
+    "models": [],
+    "technologies": [
+      "UML",
+      "Use Case Modeling",
+      "Class Diagrams",
+      "System Design"
+    ],
+    "evaluationMetrics": [],
+    "results": [],
+    "insights": [
+      "Different diagram types capture complementary structural, behavioral, and requirement perspectives."
+    ],
+    "businessImpact": "",
+    "challenges": [],
+    "limitations": [
+      "Specific source diagrams and review outcomes have not yet been attached to the portfolio."
+    ],
+    "futureImprovements": [],
+    "githubUrl": "",
+    "demoUrl": "",
+    "reportUrl": "",
+    "image": "",
+    "gallery": []
+  },
+  {
+    "id": "30",
+    "slug": "beemazon-avl",
+    "title": "Beemazon E-Commerce Prototype",
+    "year": null,
+    "projectType": "",
+    "status": "",
+    "grade": "",
+    "featured": false,
+    "roleTags": [],
+    "courseTags": [
+      "Other Academic Project"
+    ],
+    "domainTags": [
+      "Database",
+      "System Design"
+    ],
+    "description": "C-language e-commerce product-management prototype centered on an AVL tree data structure.",
+    "problemStatement": "Build a prototype product-management workflow using a balanced tree to support searching and updating product records.",
+    "businessContext": "A programming/data-structures exercise illustrating organized product lookup and basic e-commerce record operations.",
+    "dataset": "",
+    "datasetSize": "",
+    "preprocessing": [],
+    "featureEngineering": [],
+    "methodology": [
+      "Represented product records in an AVL tree",
+      "Implemented tree-based search and insert/update operations",
+      "Explored balanced-search-tree behavior in an e-commerce-inspired prototype"
+    ],
+    "models": [],
+    "technologies": [
+      "C",
+      "AVL Tree",
+      "Data Structures"
+    ],
+    "evaluationMetrics": [],
+    "results": [],
+    "insights": [
+      "AVL trees maintain balance to support efficient ordered lookups and updates in a data-structures setting."
+    ],
+    "businessImpact": "",
+    "challenges": [],
+    "limitations": [
+      "The project is a prototype, not a production-ready database or transactional e-commerce platform."
+    ],
+    "futureImprovements": [],
+    "githubUrl": "",
+    "demoUrl": "",
+    "reportUrl": "",
+    "image": "",
+    "gallery": []
+  },
+  {
+    "id": "31",
+    "slug": "parking-management-c",
+    "title": "Vehicle Parking Management System",
+    "year": null,
+    "projectType": "",
+    "status": "",
+    "grade": "",
+    "featured": false,
+    "roleTags": [],
+    "courseTags": [
+      "Other Academic Project"
+    ],
+    "domainTags": [
+      "System Design"
+    ],
+    "description": "C-language vehicle parking management prototype using tree-based search and structured vehicle records.",
+    "problemStatement": "Track vehicle registration, lookup, entry, exit, and parking-related attributes through a simple management program.",
+    "businessContext": "An early programming project applying data structures to a small operational-management scenario.",
+    "dataset": "",
+    "datasetSize": "",
+    "preprocessing": [],
+    "featureEngineering": [],
+    "methodology": [
+      "Built tree or binary-search-tree based vehicle lookup",
+      "Handled entry and exit actions for vehicle records",
+      "Tracked code, owner, vehicle type, parking status, and pricing-related logic"
+    ],
+    "models": [],
+    "technologies": [
+      "C",
+      "Binary Search Tree",
+      "Data Structures"
+    ],
+    "evaluationMetrics": [],
+    "results": [],
+    "insights": [
+      "The prototype connects tree-based searching with a practical record-management workflow."
+    ],
+    "businessImpact": "",
+    "challenges": [],
+    "limitations": [
+      "System persistence, concurrent access, and production-grade validations are not documented."
+    ],
+    "futureImprovements": [],
+    "githubUrl": "",
+    "demoUrl": "",
+    "reportUrl": "",
+    "image": "",
+    "gallery": []
+  }
+]
