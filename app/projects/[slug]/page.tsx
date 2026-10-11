@@ -127,6 +127,18 @@ type GalleryDescription = {
 };
 
 const visualDescriptions: Record<string, GalleryDescription> = {
+  "local-model-comparison.svg": {
+    title: "Credit Score Deployment — Local eight-model comparison",
+    caption:
+      "Evaluation chart reconstructed directly from the local pipeline's supplied all_model_comparison.csv; it is not an original MLflow or Streamlit screenshot.",
+    details: [
+      "The source files record 8 comparisons: Logistic Regression, Random Forest, XGBoost and LightGBM using two feature sets.",
+      "XGBoost with Original + Loan Flags has the highest local pipeline macro F1 of 0.6878 and 70.81% accuracy.",
+      "This experiment differs from the earlier credit-score modeling notebook (macro F1 0.6898); do not conflate the results.",
+    ],
+    originalScreenshot: false,
+    sourceLabel: "Pipeline CSV-derived results chart",
+  },
   "model-f1-comparison.svg": {
     title: "Credit score — Verified eight-model macro F1 comparison",
     caption:

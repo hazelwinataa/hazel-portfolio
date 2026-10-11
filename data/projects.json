@@ -1213,9 +1213,9 @@
     "id": "18",
     "slug": "credit-score-deployment",
     "title": "Credit Score Deployment Pipeline",
-    "year": null,
-    "projectType": "",
-    "status": "",
+    "year": 2026,
+    "projectType": "Individual academic final project — Model Deployment",
+    "status": "Local pipeline and Streamlit source documented; AWS stage pending verification",
     "grade": "",
     "featured": true,
     "roleTags": [
@@ -1231,54 +1231,123 @@
       "Cloud",
       "Classification"
     ],
-    "description": "Retrainable object-oriented credit-score machine-learning workflow with MLflow tracking, inference, Streamlit, and AWS exposure.",
-    "problemStatement": "Make credit-score classification experiments reproducible and expose trained predictions through a usable inference application.",
-    "businessContext": "Connects model experimentation with an application workflow suitable for demonstrating end-to-end ML delivery.",
-    "dataset": "",
-    "datasetSize": "",
-    "preprocessing": [],
-    "featureEngineering": [],
+    "description": "Designed a retrainable, object-oriented credit-score classification workflow with group-aware model evaluation, MLflow experiment logging, serialized inference, and a Streamlit interface. Across 8 recorded local candidates, XGBoost with Original + Loan Flags achieved 0.6878 macro F1 and 70.81% accuracy.",
+    "problemStatement": "Transition a multiclass credit-score modeling study into a reproducible local ML pipeline, log controlled experiments, save the selected model, and expose predictions through an interactive interface; document cloud work separately when verified.",
+    "businessContext": "Demonstrates an academic MLOps delivery workflow for translating credit-risk experiments into reusable source modules, tracked evaluation, and end-user inference. It is not a validated lending or production risk-scoring system.",
+    "dataset": "Credit-score customer-month data (data_C.csv) with three target classes: Good, Poor, Standard. Local pipeline reports 25,000 raw records / 29 columns, 25,000 cleaned records / 28 columns, and 25,000 engineered records / 44 columns. Raw dataset is not published because it contains customer identifiers.",
+    "datasetSize": "25,000 original records · 29 source columns · 44 engineered columns · 3 classes",
+    "preprocessing": [
+      "Implemented CreditDataCleaner as a reusable OOP class: numeric-string normalization, credit-history age parsing, invalid-value screening, missing-field repair using customer history, and imputation-ready outputs.",
+      "Applied grouped train/test splitting through StratifiedGroupKFold using Customer_ID, limiting overlap of repeated customer-month observations across split partitions.",
+      "Used Scikit-learn ColumnTransformer with median/mode imputation and OneHotEncoder; the linear-model branch applies RobustScaler.",
+      "Recorded the pipeline output shapes: 25,000 raw rows → 25,000 cleaned rows → 25,000 featured rows; source columns change from 29 to 28 to 44."
+    ],
+    "featureEngineering": [
+      "Compared Original + Feature Engineering against Original + Loan Flags feature sets.",
+      "Engineered financial ratios (EMI, investment, balance and outstanding debt relative to monthly salary), a credit-history-age missingness indicator and nine loan-type flags.",
+      "Derived spending-level and payment-value categorical signals from Payment_Behaviour."
+    ],
     "methodology": [
-      "Separated preprocessing, training, and evaluation into OOP components",
-      "Maintained a repeatable model-training workflow",
-      "Used MLflow for experiment and model comparison tracking",
-      "Built an inference interface with Streamlit",
-      "Explored local and AWS/EC2 deployment"
+      "Built OOP classes CreditDataCleaner, CreditFeatureEngineer, CreditPreprocessor, CreditDataSplitter, CreditModelTrainer, CreditModelEvaluator, CreditModelInference and CreditTrainingPipeline.",
+      "Executed an experiment design with Logistic Regression, Random Forest, XGBoost and LightGBM across two feature sets (8 candidate combinations).",
+      "Used RandomizedSearchCV with group-aware StratifiedGroupKFold (3 CV splits by default; 10 search iterations per candidate) optimizing macro F1.",
+      "Implemented MLflow logging for model parameters, cross-validation scores, evaluation metrics, per-model reports and serialized model artifacts.",
+      "Saved a Joblib inference bundle with the selected pipeline, class label encoder, feature configuration, best parameters and evaluation metrics.",
+      "Implemented predict_local.py for CLI-based inference and deployment/streamlit_app.py for an interactive user-facing prediction form with optional class probabilities.",
+      "AWS work is documented as a planned next stage only; no successful SageMaker training or cloud endpoint is claimed."
     ],
     "models": [
-      "Credit-score multiclass classifiers; exact selected production model requires verification"
+      "Logistic Regression",
+      "Random Forest",
+      "XGBoost",
+      "LightGBM"
     ],
     "technologies": [
       "Python",
+      "Pandas",
+      "NumPy",
       "Scikit-learn",
+      "RandomizedSearchCV",
+      "StratifiedGroupKFold",
+      "XGBoost",
+      "LightGBM",
       "MLflow",
       "Streamlit",
-      "AWS",
-      "Amazon EC2"
+      "Joblib"
     ],
     "evaluationMetrics": [
-      "Tracked model evaluation through the ML pipeline; specific scores require verification"
+      "Macro F1-score (primary)",
+      "Accuracy",
+      "Balanced Accuracy",
+      "Macro Precision and Recall",
+      "Weighted F1-score",
+      "Multiclass ROC-AUC (OvR)",
+      "Best group-aware CV macro F1",
+      "Confusion Matrix / Classification Report"
     ],
-    "results": [],
+    "results": [
+      "Audited local training artifacts: 25,000 source rows / 29 columns, 25,000 cleaned rows / 28 columns, and 25,000 feature-engineered rows / 44 columns.",
+      "Compared 8 classifier and feature-set combinations; selected XGBoost with Original + Loan Flags from the recorded evaluation results.",
+      "Selected candidate recorded evaluation macro F1 = 0.6878, accuracy = 70.81%, balanced accuracy = 70.13%, and multiclass OvR macro ROC-AUC = 0.8586.",
+      "Recorded best grouped cross-validation macro F1 = 0.6852 for the selected XGBoost configuration.",
+      "Supplied reusable local pipeline classes, training/inference entry points, MLflow logging code, Streamlit form source and serialized model artifact."
+    ],
     "insights": [
-      "Separating preprocessing, training, and evaluation supports retraining and easier debugging."
+      "Across the eight saved local results, XGBoost with Original + Loan Flags has the highest recorded evaluation macro F1.",
+      "Feature-set selection and customer-grouped splitting are important because monthly customer records may be repeated.",
+      "The separation into cleaning, feature engineering, preprocessing, training, evaluation and inference classes supports clearer local retraining and debugging.",
+      "The original modeling notebook and local deployment pipeline use different cleaning logic and therefore report different row counts and scores."
     ],
-    "businessImpact": "",
-    "challenges": [],
+    "businessImpact": "Academic demonstration of reproducible training, experiment auditability and accessible credit-score inference; deployment and decision thresholds would need independent validation, security reviews and regulatory/fairness analysis for real financial use.",
+    "challenges": [
+      "Separating heterogeneous feature preprocessing and model-specific hyperparameter optimization in reusable Python classes.",
+      "Handling repeated customer-month observations through group-aware model splits and cross-validation.",
+      "Connecting local MLflow experiment output and a serialized model artifact to an interactive inference form."
+    ],
     "limitations": [
-      "A public deployment URL, deployment uptime, and final selected model metrics are not currently documented.",
-      "Deployment application, MLflow training code and cloud screenshots for this specific credit-score system have not yet been supplied for evidence verification."
+      "The local saved artifact scores (macro F1 0.6878 / accuracy 70.81%) are from the pipeline output and differ from the separate exploratory modeling study (macro F1 0.6898 / accuracy 70.79%).",
+      "The final artifact is selected by test-set macro F1 from eight candidates; this is exploratory and not an unbiased final held-out estimate.",
+      "Customer-history repairs run on the full input table before the group split; preprocessing should be reviewed for leakage risks before production use.",
+      "MLflow tracking source exists, but no original MLflow screenshot or live MLflow UI evidence was provided in this batch.",
+      "Streamlit application code was supplied, but no live public URL or visual test cases for each class were provided.",
+      "The supplied AWS note only describes planned SageMaker/endpoint work; AWS training, deployment and endpoint availability have not been verified."
     ],
     "futureImprovements": [
-      "Attach the source repository, MLflow experiment screenshots, and verified local/cloud inference tests."
+      "Verify local inference and save screenshots of prediction examples for Good, Poor and Standard.",
+      "Provide original MLflow screenshots and, when completed, verified AWS training/endpoint scripts plus endpoint test evidence.",
+      "Refactor full-dataset customer-based cleaning into train-fitted transformations where necessary and use independent holdout testing for final model selection."
     ],
     "githubUrl": "",
     "demoUrl": "",
     "reportUrl": "",
-    "image": "",
-    "gallery": [],
+    "image": "/images/credit-score-deployment/local-model-comparison.svg",
+    "gallery": [
+      "/images/credit-score-deployment/local-model-comparison.svg"
+    ],
     "relatedProjects": [
       "credit-score-prediction"
+    ],
+    "highlights": [
+      {
+        "value": "8",
+        "label": "Candidate configurations",
+        "note": "4 models × 2 feature sets"
+      },
+      {
+        "value": "0.6878",
+        "label": "Macro F1 (local pipeline)",
+        "note": "Reported evaluation result"
+      },
+      {
+        "value": "70.81%",
+        "label": "Accuracy (local pipeline)",
+        "note": "Not independently re-tested"
+      },
+      {
+        "value": "OOP",
+        "label": "Retrainable modules",
+        "note": "MLflow + Streamlit source"
+      }
     ]
   },
   {
