@@ -2780,10 +2780,10 @@
   {
     "id": "24",
     "slug": "bnpl-database-normalization",
-    "title": "BNPL Database Normalization Project",
-    "year": null,
-    "projectType": "",
-    "status": "",
+    "title": "BNPL Transaction Database — UNF to 3NF & MariaDB",
+    "year": 2025,
+    "projectType": "Database Technology group project · COMP6799001 · BINUS University",
+    "status": "Completed coursework report with MariaDB SQL export and six-table relational implementation",
     "grade": "",
     "featured": false,
     "roleTags": [
@@ -2799,55 +2799,142 @@
       "Database",
       "System Design"
     ],
-    "description": "Normalization and relational design for Buy Now, Pay Later transaction data from UNF through 3NF.",
-    "problemStatement": "Redesign a denormalized BNPL transaction dataset to reduce data redundancy, update anomalies, and unclear entity relationships.",
-    "businessContext": "Structured payment and installment records benefit from consistent relational entities and referential integrity.",
-    "dataset": "Records representing users, BNPL providers, products, financing plans, transactions, and installment details.",
-    "datasetSize": "50 BNPL transactions; 333 installment details",
+    "description": "Collaborative FinTech database-design project transforming a self-constructed Buy Now Pay Later dataset from UNF through 1NF, 2NF and 3NF. Modeled 50 purchases and 333 installment records in six related MariaDB tables, documented insert/update/delete anomalies, functional dependencies and ERD cardinalities, and audited actual PK/FK constraints.",
+    "problemStatement": "Redesign a denormalized BNPL dataset where customer, product, financing-plan and installment details were repeated in the same row, with multi-valued CicilanList and redundant PlanTuple attributes. Separate entities to reduce update anomalies and support clear financial transaction and repayment relationships.",
+    "businessContext": "BNPL systems must relate customers, financing providers, transaction purchases and installment payments. This five-chapter group report describes a synthetic academic scenario rather than licensed customer data or an operational lending database; transparent fee and payment fields can make future analytics easier.",
+    "dataset": "Self-constructed, non-production BNPL scenario created by the project team. The original UNF representation contained 50 transactions (TX001–TX050), each combining user metadata, product, BNPL provider, financing tenor/interest/fee/promotion, payment total, a composite PlanTuple and repeating monthly CicilanList. Audited provided aol_db (1).sql export (phpMyAdmin 5.2.1, MariaDB 10.4.32, Dec 23 2025) contains bnplapp, bnplplans, cicilandetail, products, transaction and users. These are synthetic academic records, not actual account data.",
+    "datasetSize": "6 SQL tables · 50 transactions · 333 installment records · 14 users · 11 products · 5 providers · 19 financing plans",
     "preprocessing": [
-      "Analyzed the original unnormalized structure and functional dependencies",
-      "Separated repeating attributes and dependencies into relational entities"
+      "Documented original unnormalized attributes: TxnID, UserID, UserName, Age, BNPLApp, Product, TxnDate, TotalPayable, Tenor, InterestPct, Fee, Promo, PlanTuple and repeating CicilanList.",
+      "Identified multi-valued monthly installments and duplicated grouped financing attributes as violations of first normal form atomicity and as sources of data redundancy.",
+      "Analyzed functional dependencies: TxnID identifies a transaction; UserID determines UserName and Age; PlanID identifies provider-specific tenor, promotion, interest and fee; (TxnID, Bulan) identifies an installment row.",
+      "Separated repeated installment tuples into individual rows with monthly due date, amount and status; used composite primary key (TxnID, Bulan) in the saved SQL implementation.",
+      "Factored out reference entities for users, products and BNPL providers, and stored financing offers in a dedicated bnplplans table keyed by PlanID.",
+      "Matched report terminology to saved SQL: report calls the installment-status field Status, while the physical SQL table cicilandetail calls it Keterangan.",
+      "Audited each INSERT statement from the provided SQL file: 5 bnplapp rows, 19 bnplplans, 333 cicilandetail, 11 products, 50 transactions and 14 users; all six tables total 432 inserted rows."
     ],
-    "featureEngineering": [],
+    "featureEngineering": [
+      "Replaced PlanTuple with separately typed Tenor, Promo, InterestPct and Fee attributes in BNPLPlans.",
+      "Expanded each CicilanList tuple into a line-item record identified by its transaction and installment month.",
+      "Used normalization/decomposition rather than predictive feature engineering; maintained customer, provider and purchase identifiers for referential joins."
+    ],
     "methodology": [
-      "Documented normalization through UNF, 1NF, 2NF, and 3NF",
-      "Defined User, BNPLApp, Product, Plan, TransaksiBNPL, and CicilanDetail entities",
-      "Specified primary/foreign keys, entity relationships, cardinalities, and update-anomaly considerations",
-      "Prepared the final entity relationship diagram (ERD)"
+      "Prepared a five-chapter team report covering business/data problems, the original UNF and data dictionary, functional dependencies and anomalies, stepwise normalization, and final ERD plus conclusions.",
+      "Explained insertion anomaly (cannot register a standalone new customer/provider), update anomaly (repeated customer or plan data must be changed across rows), and deletion anomaly (deleting the final transaction can lose unrelated provider/customer metadata).",
+      "Applied UNF → 1NF by removing the repeating CicilanList from a single transaction row and representing each installment as an atomic record.",
+      "Applied 1NF → 2NF by ensuring nonkey attributes depend on the full identifying key, especially the composite installment identifier; entities with single-attribute PKs avoid partial dependencies.",
+      "Applied 2NF → 3NF by moving customer descriptions, product labels, platform information and financing-plan details into separate tables and using keys instead of repeated attributes.",
+      "Built a final six-entity ERD: users → transaction; products → transaction; bnplapp → bnplplans; bnplplans → transaction; transaction → cicilandetail, all conceptual one-to-many relationships.",
+      "Implemented the six physical tables in MariaDB/InnoDB with typed columns and primary keys; the transaction and plan tables store references to their parent entities.",
+      "Verified from SQL that three foreign keys are actually declared: bnplplans.BNPLApp → bnplapp.BNPLApp, transaction.Product → products.Product, and transaction.UserID → users.UserID.",
+      "Identified two additional logical relationships that remain unenforced in the SQL dump: transaction.PlanID → bnplplans.PlanID and cicilandetail.TxnID → transaction.TxnID. The provided seed records currently have zero orphan references across either relationship, but future inserts are not prevented from violating them.",
+      "Inspected payment-status distribution in the 333 installment rows: 173 Paid, 76 Pending and 84 Overdue. These status labels are attributes of constructed examples, not time-validated live delinquency outcomes.",
+      "Documented the intended ability to join transaction, plan, customer and installment tables for reporting, while distinguishing sound relational design from unmeasured query optimization or real-world financial impact."
     ],
-    "models": [],
+    "models": [
+      "UNF → 1NF → 2NF → 3NF normalization",
+      "Relational ERD with PK/FK and cardinality"
+    ],
     "technologies": [
-      "Relational Database Design",
       "SQL",
+      "MariaDB",
+      "MySQL-compatible DDL",
+      "phpMyAdmin",
+      "InnoDB",
       "ERD",
       "Database Normalization"
     ],
-    "evaluationMetrics": [],
+    "evaluationMetrics": [
+      "Normalization correctness against declared functional dependencies",
+      "Primary-key and uniqueness design",
+      "Declared versus logical foreign-key coverage",
+      "Seeded referential-integrity inspection",
+      "Installment status distribution",
+      "Query and constraint test coverage (not benchmarked)"
+    ],
     "results": [
-      "Produced a normalized relational design and final ERD based on 50 BNPL transactions and 333 installment-detail records."
+      "Academic dataset designed as 50 BNPL transactions with monthly installment details. The actual SQL export includes 333 installment rows (432 inserted rows across all six final tables).",
+      "Final relational SQL structure: 14 users, 11 products, 5 BNPL applications, 19 financing plans, 50 transaction records and 333 installment details across six InnoDB tables.",
+      "Implemented primary keys in all six tables, including composite primary key (TxnID, Bulan) for cicilandetail; the report includes a final ERD illustrating one-to-many relations.",
+      "Three SQL foreign keys are declared explicitly; the PlanID reference in transaction and TxnID reference in cicilandetail do not have SQL foreign-key constraints in the uploaded export.",
+      "All existing seeded PlanID, TxnID, UserID, Product and BNPLApp references resolve to parent records, despite the two missing FK constraints. This is a static consistency check on provided seed data, not proof of future referential enforcement.",
+      "Payment-status totals from the seeded installment table: 173 Paid (51.95%), 76 Pending (22.82%) and 84 Overdue (25.23%); the dataset is synthetic and not a real delinquency study.",
+      "Project deliverables include a 28-page five-chapter group report with data dictionary, dependency/anomaly analysis, intermediate normalization tables and a refined final ERD, plus a MariaDB SQL database export.",
+      "No measured query-execution improvement, production usage, deployed BNPL platform or banking/fintech operational impact was recorded."
     ],
     "insights": [
-      "Separating transaction and installment-detail records allows financing plans and their associated payments to be modeled without repeated cross-entity attributes."
+      "The original combination of PlanTuple, CicilanList and repeated user/platform attributes makes it difficult to update a financing offer or a customer record consistently; normalization gives each data entity an explicit responsibility.",
+      "The final schema separates purchase-level (transaction) from installment-level (cicilandetail) records, supporting one-to-many payment plans without storing a nested list in one field.",
+      "Financing details in bnplplans support repeated use of a plan across purchases, while bnplapp names identify the provider without duplicating plan properties per transaction.",
+      "The distinction between conceptual ERD relationships and actually enforced DDL constraints is material: declaring a PlanID column does not automatically create a foreign key.",
+      "Zero orphan records in seeded data means the sample is internally consistent, but missing FK constraints permit future inconsistencies unless corrected.",
+      "Payment statuses can be aggregated descriptively in the provided synthetic data; this does not establish true late-payment risk or credit default behavior.",
+      "Normalized design can facilitate analytical queries and maintenance, but performance gains should be measured using actual query plans and representative workloads, not assumed."
     ],
-    "businessImpact": "Potential benefit: improved consistency and maintainability for transaction and installment records; no production deployment is claimed.",
-    "challenges": [],
+    "businessImpact": "Academic team deliverable: documented UNF-to-3NF decomposition, created six-table MariaDB schema with 50 synthetic transactions and 333 installments, and articulated integrity and reporting benefits. No real financial data, deployed service, measured latency reduction or credit-risk outcome was involved.",
+    "challenges": [
+      "Untangling the repeated CicilanList field into atomic transaction-month rows.",
+      "Tracing functional dependencies that mix transaction, customer, provider and financing-plan attributes.",
+      "Designing a stable composite installment key and consistent one-to-many ERD cardinalities.",
+      "Reconciling report terminology with physical SQL column names and verifying actual DDL declarations.",
+      "Auditing missing foreign-key constraints even when all seed records happen to be consistent."
+    ],
     "limitations": [
-      "Query performance and real production data-integrity testing are not documented."
+      "The dataset is self-constructed by a six-person group as stated in the original report; it does not represent real users, financing contracts or payment behavior.",
+      "The physical SQL export declares 3 foreign keys, while the final ERD depicts 5 conceptual relationships; two references lack enforced constraints.",
+      "The installment Keterangan values are not restricted by an ENUM/CHECK status-domain constraint in the saved DDL; report descriptions of allowed values are not equivalent to database-level enforcement.",
+      "The SQL file has no accompanying benchmark timings, EXPLAIN output, stress test or proof of query speedup, so normalization should not be claimed to improve latency by a measured amount.",
+      "One provider (Kredivo) has three seeded plans, while each of the other four has four; this is the observed sample content, not necessarily a modeling error.",
+      "Some data dictionary validation rules mentioned in the PDF are not implemented as physical CHECK constraints across all relevant SQL fields.",
+      "No public source repository is linked and the original group report contains other members' names/IDs, so it has not been posted publicly in the portfolio.",
+      "No individual team-member contributions beyond group participation were recorded; the work is credited as a collaborative academic project."
     ],
-    "futureImprovements": [],
+    "futureImprovements": [
+      "Add FOREIGN KEY (PlanID) REFERENCES bnplplans(PlanID) on transaction and FOREIGN KEY (TxnID) REFERENCES transaction(TxnID) on cicilandetail, validating existing records before migration.",
+      "Add explicit checks for installment month range, valid payment statuses, nonnegative installment amount, positive transaction amount and business-appropriate dates.",
+      "Test insert/update/delete failure cases and appropriate cascade/restrict rules with a transaction-aware SQL test script.",
+      "Evaluate query plans, helpful joins/indexes and batch-insert workloads before making performance claims.",
+      "Publish a sanitized project report and ERD with team permission, omitting other students' personal identifiers; prepare a reproducible SQL schema and realistic generated seed data.",
+      "Consider stable surrogate IDs for products and providers, and clarify plan/version history so financing terms cannot be unintentionally overwritten."
+    ],
     "githubUrl": "",
     "demoUrl": "",
     "reportUrl": "",
-    "image": "",
-    "gallery": []
+    "image": "/images/bnpl-normalization/relational-schema.svg",
+    "gallery": [
+      "/images/bnpl-normalization/relational-schema.svg",
+      "/images/bnpl-normalization/seeded-data-summary.svg"
+    ],
+    "highlights": [
+      {
+        "value": "6",
+        "label": "Normalized entities",
+        "note": "MariaDB relational tables"
+      },
+      {
+        "value": "50",
+        "label": "Transactions",
+        "note": "Synthetic coursework sample"
+      },
+      {
+        "value": "333",
+        "label": "Installment records",
+        "note": "SQL export verified"
+      },
+      {
+        "value": "3NF",
+        "label": "Normalization target",
+        "note": "Original group report"
+      }
+    ]
   },
   {
     "id": "25",
     "slug": "database-triggers",
-    "title": "Database Trigger & Transaction Logic Exercises",
-    "year": null,
-    "projectType": "",
-    "status": "",
+    "title": "SQL Triggers & Transaction Integrity — Database Technology Exercises",
+    "year": 2026,
+    "projectType": "Academic SQL trigger and stored routine coursework · January 2026",
+    "status": "Historical problem-solving exercises documented; original SQL file and executed tests unavailable",
     "grade": "",
     "featured": false,
     "roleTags": [
@@ -2859,56 +2946,115 @@
     "domainTags": [
       "Database"
     ],
-    "description": "SQL exercises implementing triggers, routines, transaction rules, audit logic, and data-integrity checks.",
-    "problemStatement": "Implement database-side constraints and automated operations for common transactional scenarios.",
-    "businessContext": "Database routines and triggers can protect data consistency and improve auditability when implemented and tested appropriately.",
-    "dataset": "",
-    "datasetSize": "",
+    "description": "Studied ten database integrity scenarios using MySQL-style BEFORE/AFTER triggers, stored procedures and functions, NEW/OLD row references and SIGNAL SQLSTATE. Exercises covered employee validation, account auditing, protected deletes, order totals, inventory, payment audits and soft-delete workflows; they are coursework exercises, not a demonstrated deployed audit system.",
+    "problemStatement": "Translate recurring application data-integrity requirements into database-side validation, automated updates, audit records and transaction-safe behavior, with appropriate use of trigger timing and row-level event context.",
+    "businessContext": "Transactional applications often need defensive checks when inserts, updates or deletes can compromise business rules. Trigger-based enforcement can complement declared constraints and application validation, but increases hidden database-side coupling and requires rigorous testing.",
+    "dataset": "A collection of ten SQL coursework scenarios, each describing related tables and event-based requirements; there is no single source dataset, production schema or unified final ERD for all ten exercises. Earlier discussions covered employee, account, customer, order detail, product, ticket, user status, stock, coupon and payment tables.",
+    "datasetSize": "10 historical database trigger/routine scenarios; executed data volumes not documented",
     "preprocessing": [
-      "Stored procedures",
-      "Triggers",
-      "Functions",
-      "Transaction logic"
+      "Determined trigger event types (INSERT, UPDATE, DELETE) and whether validation must occur BEFORE a write or audit/follow-up logic should run AFTER a write.",
+      "Mapped references to NEW and OLD record values for changed fields and branch conditions.",
+      "Separated row validation, automatic derived-field updates, and audit trail insertion as different categories of SQL behavior.",
+      "Reviewed transaction consistency: operations that raise SIGNAL SQLSTATE should fail as designed instead of silently committing invalid values; no verified engine-specific integration-test logs were recovered."
     ],
     "featureEngineering": [],
     "methodology": [
-      "Developed examples for employee validation and account-balance auditing",
-      "Explored deletion prevention, soft deletion, restoration, and payment audit scenarios",
-      "Maintained order totals, product timestamps, and stock consistency through database logic",
-      "Covered ticket workflows, conditional coupon uniqueness, and transaction rules"
+      "Worked through employee input validation using BEFORE triggers and explicit rejection via SIGNAL SQLSTATE for rule violations.",
+      "Discussed account balance change auditing based on OLD and NEW values so a change history can be captured.",
+      "Designed customer-deletion prevention and payment deletion logging as separate use cases: block an invalid delete versus record a permitted delete.",
+      "Explored OrderDetail aggregation logic and product price/update timestamp maintenance; these require attention to multistep updates and the correct changed row context.",
+      "Reviewed ticket state transitions and user soft-deletion/restoration processes rather than treating physical deletion as the only option.",
+      "Considered inventory consistency when a sale changes stock and conditional uniqueness for coupons within specified business states.",
+      "Studied SQL syntax patterns including DELIMITER, CREATE TRIGGER, BEFORE/AFTER, INSERT/UPDATE/DELETE, OLD/NEW and SIGNAL SQLSTATE.",
+      "Related SQL trigger design to ACID/transaction concepts and the need for error-case tests, idempotency consideration and avoidance of unexpected recursion or cross-table side effects.",
+      "Distinguished original solved/discussed cases from unverified execution: actual complete DDL, stored procedures, trigger test outputs and measured error coverage are not available in the current project archive."
     ],
-    "models": [],
+    "models": [
+      "SQL BEFORE / AFTER triggers",
+      "Stored procedures and functions",
+      "Transactional validation and audit patterns"
+    ],
     "technologies": [
       "SQL",
-      "Database Triggers",
+      "MySQL-style triggers",
       "Stored Procedures",
-      "Database Functions",
-      "Transactions"
+      "SQL Functions",
+      "ACID Transactions",
+      "SIGNAL SQLSTATE"
     ],
-    "evaluationMetrics": [],
-    "results": [],
+    "evaluationMetrics": [
+      "Business-rule validation cases (design objective)",
+      "Audit trail completeness (design objective)",
+      "Transaction failure and rollback behavior (design objective)",
+      "Data-integrity invariants (design objective)"
+    ],
+    "results": [
+      "Historical coursework discussion covered ten distinct trigger/data-integrity scenarios: employee validation, balance audit, customer-delete prevention, order total maintenance, product timestamps, ticket workflow, user soft delete/restore, sales stock, conditional coupon uniqueness and payment deletion audit.",
+      "Worked through MySQL-style SQL trigger syntax and the role of OLD/NEW references and SIGNAL SQLSTATE for enforcing row-dependent rules.",
+      "No original unified SQL dump, test outcomes, pass rate, trigger execution trace or database performance results were recovered.",
+      "This project is best presented as a collection of SQL exercises rather than a single released transactional product."
+    ],
     "insights": [
-      "Triggers and stored routines can automate recurring integrity checks but also introduce maintenance and debugging costs."
+      "Choosing BEFORE versus AFTER is tied to whether the operation needs to be rejected before persistence or observed for audit/side effects after a successful write.",
+      "OLD and NEW row images help compare changes, but trigger correctness depends on event type; INSERT has NEW while DELETE has OLD.",
+      "Stored routines can centralize reusable operations, while triggers can enforce automated database-side behavior; neither removes the need for explicit constraints and application error handling.",
+      "Auditing destructive changes and maintaining derived order/stock totals require transaction-aware designs so partial operations do not leave inconsistent records.",
+      "Too many implicit triggers can make system behavior difficult to trace; unit tests and documented dependencies are essential."
     ],
-    "businessImpact": "",
-    "challenges": [],
+    "businessImpact": "Academic practice in designing SQL integrity checks and audit patterns; no measured reduction in defects, deployed application or production audit-compliance achievement is claimed.",
+    "challenges": [
+      "Correctly selecting trigger event and timing for validation versus audit behavior.",
+      "Referencing OLD/NEW values only in the supported events and handling simultaneous record changes.",
+      "Preventing inventory or aggregate totals from becoming inconsistent under compound operations.",
+      "Considering safe deletion, restoration, transaction rollback and possible unintended side effects."
+    ],
     "limitations": [
-      "The target database engine, test coverage, and performance results need verification from the original exercises."
+      "Ten exercise scenarios are evidenced by prior coursework conversations, but no complete executed SQL scripts, populated database dumps or assertion-based test suite was available for revalidation.",
+      "The archived SQL syntax was MySQL-style; deployment to other engines and specific server versions was not established.",
+      "Correctness of trigger behavior, transactional side effects and performance cannot be inferred without running adversarial test cases against a database.",
+      "No final academic grade, publicly available source code, execution benchmarks or deployed application was documented."
     ],
-    "futureImprovements": [],
+    "futureImprovements": [
+      "Recover problem statements and original executable SQL per scenario; keep database engine/version and sample schemas next to each solution.",
+      "Create a small transactional test suite exercising valid and invalid inserts/updates/deletes and verifying expected SQLSTATE errors.",
+      "Test row-level side effects, rollback behavior, total and stock adjustments, audit rows and soft delete/restore flows under realistic multi-row changes.",
+      "Add source code and evidence to a GitHub repository only after recovering original SQL and verifying correctness."
+    ],
     "githubUrl": "",
     "demoUrl": "",
     "reportUrl": "",
     "image": "",
-    "gallery": []
+    "gallery": [],
+    "highlights": [
+      {
+        "value": "10",
+        "label": "Integrity scenarios",
+        "note": "Historical coursework"
+      },
+      {
+        "value": "BEFORE / AFTER",
+        "label": "Trigger timing",
+        "note": "MySQL-style syntax"
+      },
+      {
+        "value": "OLD / NEW",
+        "label": "Row context",
+        "note": "Event-dependent"
+      },
+      {
+        "value": "ACID",
+        "label": "Transaction concepts",
+        "note": "Design-level exposure"
+      }
+    ]
   },
   {
     "id": "26",
     "slug": "database-indexing",
-    "title": "Database Physical Design & Indexing Analysis",
-    "year": null,
-    "projectType": "",
-    "status": "",
+    "title": "Database Physical Design — Indexing, Workloads & ISUD",
+    "year": 2026,
+    "projectType": "Academic physical database design coursework · January 2026",
+    "status": "Historical design and indexing exercises documented; no EXPLAIN or timing evidence",
     "grade": "",
     "featured": false,
     "roleTags": [
@@ -2922,41 +3068,108 @@
       "Database",
       "System Design"
     ],
-    "description": "Physical database design and indexing analysis based on workload characteristics, query selectivity, and read/write trade-offs.",
-    "problemStatement": "Translate a database schema into storage and indexing decisions that match an observed or hypothetical workload.",
-    "businessContext": "Index and schema choices affect query performance, write overhead, storage, and long-term maintainability.",
-    "dataset": "",
-    "datasetSize": "",
-    "preprocessing": [],
+    "description": "Analyzed how conceptual and logical database structures translate into physical storage and indexing decisions. Covered ISUD workload matrices, equality and range search keys, selectivity, clustered-versus-secondary indexing, multi-attribute and join access patterns, and read/write trade-offs using illustrative Employee/Department-style schemas.",
+    "problemStatement": "Choose candidate physical access structures from actual or hypothetical query workloads rather than adding indexes indiscriminately, while preserving primary/foreign key integrity and acknowledging insert/update/delete overhead.",
+    "businessContext": "Physical database design can affect latency, storage cost and write amplification. The coursework focused on defensible indexing analysis rather than measuring or operating an optimized production database.",
+    "dataset": "Illustrative relational tables and business-query scenarios were discussed in coursework, including EMPLOYEE/DEPARTMENT examples and COURSE/SECTION one-to-many modeling examples. No consolidated dataset, populated DB benchmark or executed query-plan archive was recovered.",
+    "datasetSize": "Schema and workload reasoning exercises; no verified row-count or benchmark workload available",
+    "preprocessing": [
+      "Translated conceptual entities and one-to-many relationships into logical tables, unique identifiers, foreign keys and candidate physical representations.",
+      "Characterized each query according to operations, filtering predicates and expected data access patterns for an ISUD workload assessment.",
+      "Considered frequency of INSERT, SELECT, UPDATE and DELETE actions alongside equality/range predicates and expected search-key selectivity."
+    ],
     "featureEngineering": [],
     "methodology": [
-      "Distinguished conceptual, logical, and physical schemas",
-      "Performed workload and ISUD analysis",
-      "Evaluated clustered indexing, search keys, and query selectivity",
-      "Considered read/write frequency when discussing index design"
+      "Distinguished conceptual models (business entities/relationships), logical schemas (tables, keys and attributes) and physical schemas (storage structures and indexes).",
+      "Used ISUD (Insert, Select, Update, Delete) matrices to relate specific tables and attributes to application workload frequency.",
+      "Considered index candidates based on equality lookup, range selection, join columns, sorted retrieval and combined multi-attribute filters.",
+      "Compared clustered/index-organized access concepts with nonclustered/secondary indexes, recognizing that the same clustered data ordering generally cannot be optimized for every query.",
+      "Evaluated search-key selectivity and the risk that low-selectivity predicates may still cause broad scans or poor index benefit.",
+      "Discussed multi-column ordering for compound indexes and the need to match a leftmost-prefix search pattern to actual workload where supported by the database engine.",
+      "Explored Employee/Department and Course/Section one-to-many schema examples to connect logical foreign-key design with possible join search keys.",
+      "Balanced potential SELECT advantages against additional index storage and maintenance overhead on INSERT/UPDATE/DELETE operations.",
+      "Reserved EXPLAIN plans, real workload timing and storage measurement as future validation rather than presenting analytical recommendations as already benchmarked."
     ],
-    "models": [],
+    "models": [
+      "Conceptual, logical and physical schema design",
+      "ISUD workload analysis",
+      "Clustered / secondary index evaluation",
+      "Single-column and composite search-key design"
+    ],
     "technologies": [
-      "Database Design",
+      "SQL",
+      "Relational Database Modeling",
       "Indexing",
-      "SQL"
+      "ISUD",
+      "Query Workload Analysis",
+      "ERD"
     ],
-    "evaluationMetrics": [],
-    "results": [],
+    "evaluationMetrics": [
+      "Predicate selectivity (analytical concept)",
+      "ISUD operation frequency (workload analysis)",
+      "Index storage/write-maintenance trade-offs",
+      "EXPLAIN query plan verification (not executed)",
+      "Query latency benchmark (not measured)"
+    ],
+    "results": [
+      "Historical coursework covered conceptual/logical/physical schema comparisons, ISUD workload evaluation and selection criteria for index candidates.",
+      "Studied clustered indexing, equality and range access, join search keys, composite index ordering and read-versus-write considerations.",
+      "Illustrative Employee/Department and Course/Section relationships were used for modeling and access-path reasoning.",
+      "No original index-creation SQL, benchmark dataset, measured query latency, EXPLAIN output or quantifiable performance improvement is available."
+    ],
     "insights": [
-      "Index design should follow the queries being served rather than adding indexes indiscriminately."
+      "Indexes are workload-dependent: an index optimized for frequent equality lookups may not help a broad low-selectivity report or a very different sort/range predicate.",
+      "A composite index is most useful when its leading-column order reflects common filtering patterns, subject to optimizer behavior and database engine rules.",
+      "Secondary indexes occupy storage and require upkeep during writes; excessive indexing can degrade write-heavy workloads even when read queries become faster.",
+      "Physical optimization should be supported by EXPLAIN plans and representative row counts rather than assumed from data-model diagrams alone.",
+      "Conceptual, logical and physical data models solve different problems; relational validity does not guarantee efficient query performance."
     ],
-    "businessImpact": "",
-    "challenges": [],
+    "businessImpact": "Academic design reasoning for efficient relational access paths and read/write workload trade-offs. No benchmarked latency reduction, deployed database optimization or measured infrastructure savings is claimed.",
+    "challenges": [
+      "Separating business-level data modeling from engine-specific physical storage decisions.",
+      "Deciding which columns merit indexing based on workload frequency, joins and selectivity.",
+      "Understanding compound index ordering and alternatives for broad or changing query patterns.",
+      "Evaluating maintenance and storage costs along with hypothetical query speed benefits."
+    ],
     "limitations": [
-      "Benchmark timings and execution plans are not documented in the available project record."
+      "The course exercises were recovered as descriptions of topics and worked examples rather than a complete executable benchmark.",
+      "Specific RDBMS optimizer version, workload frequencies, table sizes, physical index DDL and EXPLAIN outputs were not preserved.",
+      "No measured read/write throughput, execution-plan comparison, server utilization or physical storage cost was demonstrated.",
+      "No academic grade, source repository or public demo was verified for this exact coursework entry."
     ],
-    "futureImprovements": [],
+    "futureImprovements": [
+      "Recover the original worksheet and query workloads, including table cardinalities and common predicates.",
+      "Implement representative schemas with seeded data on a recorded database-engine version and capture EXPLAIN plans before/after indexing.",
+      "Measure repeatable SELECT latency, write overhead and storage consumption rather than claiming improvements from theoretical access paths.",
+      "Document index DDL, workload/ISUD matrices, index selectivity estimates and the rationale for retaining or dropping each index."
+    ],
     "githubUrl": "",
     "demoUrl": "",
     "reportUrl": "",
     "image": "",
-    "gallery": []
+    "gallery": [],
+    "highlights": [
+      {
+        "value": "ISUD",
+        "label": "Workload reasoning",
+        "note": "Insert / Select / Update / Delete"
+      },
+      {
+        "value": "3 layers",
+        "label": "Design models",
+        "note": "Conceptual, logical, physical"
+      },
+      {
+        "value": "Index",
+        "label": "Access-path strategy",
+        "note": "Clustered & secondary"
+      },
+      {
+        "value": "No benchmark",
+        "label": "Evidence limitation",
+        "note": "Theoretical coursework"
+      }
+    ]
   },
   {
     "id": "27",
