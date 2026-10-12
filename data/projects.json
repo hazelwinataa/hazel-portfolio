@@ -1354,7 +1354,7 @@
       "Evaluate multiple walk-forward periods, including volatility-regime stress tests.",
       "Explore risk-adjusted directional metrics in addition to raw price-error metrics."
     ],
-    "githubUrl": "",
+    "githubUrl": "https://github.com/hazelwinataa/stock-price-forecasting-lstm",
     "demoUrl": "",
     "reportUrl": "",
     "image": "/images/amd-lstm/amd-lstm-final-test-comparison.webp",
@@ -1456,7 +1456,7 @@
       "Use walk-forward re-evaluation over multiple market regimes.",
       "Analyze robustness to different prediction horizons and volatility shocks."
     ],
-    "githubUrl": "",
+    "githubUrl": "https://github.com/hazelwinataa/stock-price-forecasting-lstm",
     "demoUrl": "",
     "reportUrl": "",
     "image": "/images/aapl-lstm/aapl-lstm-final-test-comparison.webp",
@@ -1560,7 +1560,7 @@
       "Evaluate downstream utility of latent vectors for retrieval/clustering.",
       "Compare a convolutional variational autoencoder while controlling latent dimension."
     ],
-    "githubUrl": "",
+    "githubUrl": "https://github.com/hazelwinataa/overhead-mnist-autoencoder",
     "demoUrl": "",
     "reportUrl": "",
     "image": "/images/overhead-autoencoder/baseline-vs-modified-reconstructions.webp",
@@ -1661,7 +1661,7 @@
       "Use a validation subset for FID-based candidate selection, then reserve an independent test set.",
       "Evaluate class-conditional precision, diversity and a domain-specific feature extractor; consider more stable GAN objectives."
     ],
-    "githubUrl": "",
+    "githubUrl": "https://github.com/hazelwinataa/overhead-mnist-conditional-gan",
     "demoUrl": "",
     "reportUrl": "",
     "image": "/images/overhead-cgan/modified-cdgan-samples.webp",
