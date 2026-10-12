@@ -885,6 +885,13 @@ const visualDescriptions: Record<string, GalleryDescription> = {
     originalScreenshot: false,
     sourceLabel: "Chart recreated from actual notebook evaluation outputs",
   },
+  "archived-test-comparison.svg": {
+    title: "December 2025 evaluation · Random Forest vs XGBoost",
+    caption: "Historical test scores reported in the archived coursework discussion: Random Forest accuracy 0.542 and macro F1 0.406; XGBoost accuracy 0.518 and macro F1 0.427. XGBoost also leads balanced accuracy (0.424 vs 0.410).",
+    details: ["Recreated visual from prior conversation records, NOT an original executed notebook plot or rerun of 1A.tsv.", "Exact source row counts, Stage class support and per-stage confusion matrix could not be recovered."],
+    originalScreenshot: false,
+    sourceLabel: "Explanatory chart from archived December 2025 results",
+  },
 };
 
 export default async function ProjectDetailPage({
