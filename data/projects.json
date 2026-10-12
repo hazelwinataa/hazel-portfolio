@@ -1393,7 +1393,7 @@
       "Preserve aspect ratio via padding/cropping with explicit visual checks; audit dataset leakage, lighting variation and disease-label quality.",
       "Package source notebooks, reproducible requirements and clean dataset access instructions in a separate public repository after verifying permissions."
     ],
-    "githubUrl": "",
+    "githubUrl": "https://github.com/hazelwinataa/cherry-leaf-disease-classification-cnn",
     "demoUrl": "",
     "reportUrl": "",
     "image": "/images/cherry-leaf-cnn/class-distribution.svg",
@@ -1538,7 +1538,7 @@
       "Test temporal and geographic holdouts, monitor drift, and validate across price bands, manufacturers and usage types.",
       "Package source notebook, environment and model serialization in a reproducible repository after verifying data sharing permission."
     ],
-    "githubUrl": "",
+    "githubUrl": "https://github.com/hazelwinataa/used-car-price-prediction-ann",
     "demoUrl": "",
     "reportUrl": "",
     "image": "/images/used-car-regression/ann-test-rmse-log.svg",
