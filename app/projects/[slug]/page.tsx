@@ -843,6 +843,27 @@ const visualDescriptions: Record<string, GalleryDescription> = {
     originalScreenshot: false,
     sourceLabel: "Evidence-backed comparison with methodological warning",
   },
+  "feature-pipeline.svg": {
+    title: "Bank Marketing ANN · Structured data-to-model workflow",
+    caption: "Reconstruction of the saved notebook pipeline: UCI bank-full.csv, stratified 70:15:15 splitting, train-fitted RobustScaler and OneHotEncoder, and class-weighted neural networks.",
+    details: ["45,211 rows and 16 input attributes produce 51 transformed model features.", "The notebook includes call duration, which is not available for pre-call targeting."],
+    originalScreenshot: false,
+    sourceLabel: "Process diagram reconstructed from uploaded main.ipynb",
+  },
+  "target-class-balance.svg": {
+    title: "Original bank marketing target distribution",
+    caption: "Notebook EDA reports 39,922 non-subscribers and 5,289 term-deposit subscribers, or 88.30% versus 11.70%.",
+    details: ["Severe class imbalance motivated training-derived balanced class weights.", "Counts are taken from original saved notebook output; no new data collection or model fitting was performed."],
+    originalScreenshot: false,
+    sourceLabel: "Replotted from original notebook class counts",
+  },
+  "sequential-functional-test-metrics.svg": {
+    title: "Sequential vs Functional ANN · Held-out evaluation",
+    caption: "Sequential and Functional ANN share the same 128–64–32 Dense topology. Functional achieved 0.9189 ROC-AUC and 0.8550 positive recall; Sequential achieved 0.9151 ROC-AUC and 0.8361 recall.",
+    details: ["Functional F1 0.5526 versus Sequential F1 0.5511, with positive-class precision around 0.41 for both.", "Small differences do not demonstrate inherent superiority of a Keras API. Results include the post-call duration feature."],
+    originalScreenshot: false,
+    sourceLabel: "Comparison chart recreated from main.ipynb test metrics",
+  },
 };
 
 export default async function ProjectDetailPage({
