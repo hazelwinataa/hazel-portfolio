@@ -1215,11 +1215,11 @@
   },
   {
     "id": "11",
-    "slug": "breast-cancer-ann",
-    "title": "Breast Cancer Classification — ANN",
-    "year": null,
-    "projectType": "",
-    "status": "",
+    "slug": "bank-marketing-ann",
+    "title": "Bank Marketing Subscription — Sequential vs Functional ANN",
+    "year": 2026,
+    "projectType": "Deep Learning academic coursework",
+    "status": "Completed notebook experiment — evaluation verified",
     "grade": "",
     "featured": false,
     "roleTags": [
@@ -1233,52 +1233,136 @@
       "Deep Learning",
       "Classification"
     ],
-    "description": "Binary breast-cancer classification using feedforward neural networks built with Keras Sequential and Functional APIs.",
-    "problemStatement": "Predict a binary tumor class from the Breast Cancer Wisconsin diagnostic features while exploring neural network implementation styles.",
-    "businessContext": "This is an educational classification experiment; it is not validated for clinical diagnosis.",
-    "dataset": "Scikit-learn Breast Cancer Wisconsin diagnostic dataset.",
-    "datasetSize": "",
+    "description": "Compared two identically structured Keras ANN models built with Sequential and Functional APIs on the UCI Bank Marketing dataset (45,211 records). Conducted feature-level EDA, outlier-aware preprocessing, stratified 70:15:15 splitting, class-weighted training, and held-out test evaluation. Functional ANN achieved ROC-AUC 0.9189 and 85.50% positive-class recall, with the known post-call duration limitation.",
+    "problemStatement": "Predict whether a banking customer subscribed to a term deposit after a direct marketing phone campaign (binary outcome y: yes/no), while studying equivalent ANN topologies defined with different Keras model-building APIs.",
+    "businessContext": "The campaign-response dataset captures historical marketing interactions from a Portuguese bank. This is a retrospective customer-outcome classification exercise, not an operational pre-call lead-scoring system, because call duration is recorded after/during the contact.",
+    "dataset": "Source: UCI Bank Marketing (Moro, Cortez & Rita), using bank-full.csv within bank.zip, loaded as a semicolon-separated file. The version used contains 45,211 rows, 16 predictor variables and target y (17 total columns). Attributes cover customer background, previous campaign history and current contact metadata. This is a different UCI Bank Marketing file from the 41,188-row bank-additional-full.csv used in the separate classical-ML marketing project.",
+    "datasetSize": "45,211 campaign records × 17 columns (16 inputs + binary target)",
     "preprocessing": [
-      "Used stratified data splitting to preserve class representation",
-      "Applied StandardScaler to numerical features"
+      "Loaded semicolon-delimited bank-full.csv and conducted dataset structure, numerical summary, categorical frequencies, boxplots, correlations, class imbalance and outlier EDA.",
+      "Identified all 45,211 rows as non-null at the Pandas dataframe level; categories such as 'unknown' may still represent unavailable information and were retained as their own categorical values rather than silently imputed.",
+      "Observed strongly right-skewed account balances (skewness approximately 8.36). The IQR outlier check highlighted 4,729 balance records outside the specified limits, but these were not automatically removed because large positive balances or overdrafts can be valid financial observations.",
+      "Recognized pdays=-1 as a domain-specific sentinel meaning no previous campaign contact, not a missing-data row to discard.",
+      "Retained numeric variables including age, balance, day, duration, campaign, pdays and previous. The saved implementation does not create additional engineered variables; the main transformation is scaling and one-hot encoding.",
+      "Performed stratified random splitting with seed 42: training 31,647 (70%), validation 6,782 (15%), test 6,782 (15%). The observed positive counts were 3,702 / 794 / 793 respectively.",
+      "Applied RobustScaler to seven numeric attributes to reduce scale sensitivity to skew and outliers, and OneHotEncoder(handle_unknown='ignore') to nine categorical attributes. The resulting feature matrix had 51 columns.",
+      "Fitted ColumnTransformer only on training data and transformed validation and test with the fitted transformer; mapped target no=0 and yes=1.",
+      "Applied balanced class weights from training labels: negative weight approximately 0.5662, positive weight approximately 4.2743. This gives positive-class mistakes more influence during training."
     ],
-    "featureEngineering": [],
+    "featureEngineering": [
+      "Encoded nominal job, marital, education, default, housing, loan, contact, month and previous-campaign-outcome categories without arbitrary ordinal rank.",
+      "Transformed numeric and categorical inputs to a 51-dimensional float32 representation for the ANN; no data-dependent transform was fit on the held-out sets.",
+      "Used train-derived class weights to handle the roughly 88.3% negative / 11.7% positive target imbalance.",
+      "Kept duration in the recorded experiment but explicitly identified it as a current-contact variable unavailable for prediction before the call; the notebook does not provide a duration-excluded comparison."
+    ],
     "methodology": [
-      "Built neural networks using both Keras Sequential and Functional APIs",
-      "Used Adam optimization and binary cross-entropy loss",
-      "Monitored training and validation behavior"
+      "Defined binary deposit-subscription classification using UCI bank-full.csv (45,211 records) and examined demographic, account, loan, contact-duration and campaign-history features.",
+      "Constructed a leakage-aware preprocessing pipeline and stratified 70/15/15 train/validation/test split; class counts show substantial imbalance.",
+      "Built a Sequential ANN with dense ReLU layers of 128, 64 and 32 units, BatchNormalization, Dropout 0.30/0.25/0.20, L2 regularization, and sigmoid output.",
+      "Built a Functional API ANN with the same layer topology and training hyperparameters, so the study primarily compares implementation interfaces and stochastic training outcomes rather than different model families.",
+      "Compiled both models with Adam at learning rate 0.001, binary cross-entropy, and accuracy, ROC-AUC, precision and recall monitoring.",
+      "Trained with maximum 100 epochs, batch size 32, class weights, validation monitoring, EarlyStopping, ModelCheckpoint, CSVLogger and ReduceLROnPlateau.",
+      "Evaluated both models on the same untouched 6,782-row test split at a 0.5 positive prediction threshold, obtaining precision, recall, F1-score, ROC-AUC, classification report and confusion matrix.",
+      "Interpreted the recall-versus-precision trade-off in a minority class: high recall identifies most subscribers but the resulting positive predictions include many false positives.",
+      "Documented operational limitations: duration is unknown pre-call, and the random split does not assess out-of-time campaign generalization."
     ],
     "models": [
-      "Artificial Neural Network (Sequential API)",
-      "Artificial Neural Network (Functional API)"
+      "Keras Sequential ANN (128–64–32)",
+      "Keras Functional ANN (128–64–32)"
     ],
     "technologies": [
       "Python",
+      "Pandas",
+      "NumPy",
       "Scikit-learn",
       "TensorFlow",
-      "Keras"
+      "Keras",
+      "Matplotlib",
+      "Seaborn"
     ],
     "evaluationMetrics": [
+      "Positive-class precision",
+      "Positive-class recall",
+      "Positive-class F1-score",
+      "ROC-AUC",
       "Accuracy",
-      "Classification report",
       "Confusion matrix",
-      "Training history"
+      "Binary cross-entropy loss"
     ],
-    "results": [],
+    "results": [
+      "Data: 45,211 records and 17 original columns; 39,922 'no' (88.30%) and 5,289 'yes' (11.70%). Training/validation/test: 31,647 / 6,782 / 6,782 rows; encoded dimensionality 51.",
+      "Sequential ANN held-out test: accuracy 0.840755, precision 0.411035, recall 0.836066, F1 0.551122, ROC-AUC 0.915079 and Keras-reported test loss 0.348217.",
+      "Functional ANN held-out test: accuracy 0.838101, precision 0.408188, recall 0.854981, F1 0.552567, ROC-AUC 0.918852 and Keras-reported test loss 0.344654.",
+      "At the fixed 0.5 decision threshold, Functional ANN improved positive-class recall by approximately 1.89 percentage points with slightly lower precision and accuracy.",
+      "Both models have the same Dense/BatchNormalization/Dropout architecture. Marginal differences between one run of each cannot demonstrate inherent superiority of the Functional API.",
+      "The models were trained with duration available, which is recorded during or after an outreach call. The notebook does not establish accuracy for selecting prospects BEFORE contacting them.",
+      "All reported values were read directly from the uploaded executed notebook; the model was not retrained or checked against new data during this portfolio review."
+    ],
     "insights": [
-      "Comparing network-building APIs illustrates alternative ways to define and train equivalent classes of neural architectures."
+      "Deposit subscribers represent only 11.7% of this dataset, so accuracy alone can obscure poor positive-class identification. Recall, precision, F1 and ROC-AUC provide a clearer evaluation.",
+      "Class weighting penalizes false negatives on subscriptions more heavily, plausibly explaining recall above 83% but relatively low precision near 41%, with many predicted subscribers who did not actually subscribe.",
+      "The Functional model had marginally stronger positive recall and ROC-AUC, whereas Sequential had marginally stronger accuracy/precision. Because model structures match, this is an experimental outcome, not an intrinsic difference between APIs.",
+      "Bank balances are heavily right-skewed, making RobustScaler a reasonable choice for retaining legitimate extreme values instead of deleting them simply because of IQR flags.",
+      "The pdays=-1 sentinel represents absence of a past contact. Treating this as an ordinary interval value may conflate contact status with elapsed time, suggesting a future indicator-feature experiment.",
+      "Duration can provide strong information about successful past calls, but it makes a model unsuitable for pre-call outreach ranking unless duration is removed and performance is reevaluated.",
+      "The 45,211-row bank-full.csv experiment should not be conflated with the 41,188-row bank-additional-full.csv classic ML project; different source variants and pipelines produce incomparable raw scores."
     ],
-    "businessImpact": "",
-    "challenges": [],
+    "businessImpact": "Academic comparison of ANN implementation approaches for retrospective bank subscription outcomes with class-imbalance-aware evaluation and a 0.9189 ROC-AUC on the saved test split. No prospective customer outreach, confirmed financial lift, or production deployment was measured.",
+    "challenges": [
+      "Diagnosing skewed numerical inputs and preserving plausible high/negative bank balances while avoiding distortion from feature scales.",
+      "Preserving stratification when subscription positives account for only about one in nine observations.",
+      "Ensuring numerical scaling and categorical encoding are fitted on training data only.",
+      "Balancing subscriber recall against false-positive follow-up costs when using strong positive-class weights.",
+      "Distinguishing a retrospective call-outcome classifier from a practical pre-call targeting model when call duration is a predictor."
+    ],
     "limitations": [
-      "No verified accuracy value or external clinical validation is included in the current project information."
+      "Current-call duration is known only after/during telephone contact; including it makes the reported ROC-AUC and recall inapplicable to selecting customers before the call begins.",
+      "Dataset bank-full.csv is ordered by date according to UCI; random stratified splitting does not provide an out-of-time marketing validation.",
+      "Both ANN implementations share the same architecture and nearly identical training settings. The small reported differences may reflect random initialization, optimization variability or training-path stochasticity.",
+      "Positive precision is approximately 41%, requiring careful assessment of false-positive handling costs and probability threshold calibration.",
+      "The notebook uses 'unknown' as a valid categorical level and pdays=-1 as a numerical sentinel, both of which could benefit from additional domain-aware feature engineering.",
+      "No duration-free baseline, threshold-optimization experiment, multiple-seed confidence intervals, model deployment or financial outcome measurement is documented.",
+      "No public code repository is linked yet. The uploaded notebook is available to assemble an authentic repository if desired; course grade was not supplied."
     ],
-    "futureImprovements": [],
+    "futureImprovements": [
+      "Build a second experiment excluding duration for realistic pre-call targeting, and report ROC-AUC, PR-AUC, precision/recall and calibration on an untouched chronological test period.",
+      "Benchmark against majority-class, logistic regression, tree ensembles and XGBoost using the same bank-full.csv splits, explicitly separating this dataset from the 41,188-row UCI alternative.",
+      "Test different classification thresholds and report business-cost curves for outbound call capacity, false alarms and missed subscribers.",
+      "Encode pdays=-1 as a 'never contacted' indicator and handle unknown contact-related categories explicitly; assess their contributions without post-outcome leakage.",
+      "Repeat each same-topology ANN experiment over multiple seeds and report variance rather than attributing stochastic differences to the Keras API.",
+      "Package the original notebook, dataset access instructions, requirements and verified outputs in a public source repository with UCI attribution."
+    ],
     "githubUrl": "",
     "demoUrl": "",
     "reportUrl": "",
-    "image": "",
-    "gallery": []
+    "image": "/images/bank-marketing-ann/sequential-functional-test-metrics.svg",
+    "gallery": [
+      "/images/bank-marketing-ann/feature-pipeline.svg",
+      "/images/bank-marketing-ann/target-class-balance.svg",
+      "/images/bank-marketing-ann/sequential-functional-test-metrics.svg"
+    ],
+    "highlights": [
+      {
+        "value": "45,211",
+        "label": "Marketing records",
+        "note": "UCI bank-full.csv"
+      },
+      {
+        "value": "0.9189",
+        "label": "Functional ROC-AUC",
+        "note": "Duration included"
+      },
+      {
+        "value": "85.50%",
+        "label": "Positive-class recall",
+        "note": "Functional ANN"
+      },
+      {
+        "value": "70:15:15",
+        "label": "Stratified split",
+        "note": "51 encoded features"
+      }
+    ]
   },
   {
     "id": "12",
