@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="660" viewBox="0 0 1200 660">
+<rect width="1200" height="660" fill="#f4f8fb"/><g font-family="Arial,sans-serif">
+<text x="52" y="66" fill="#183c54" font-weight="700" font-size="32">Savings goal · Tuned Random Forest</text>
+<text x="52" y="106" fill="#55778a" font-size="18">Archived December 2025 test confusion matrix · 600 held-out records</text>
+<rect x="54" y="140" width="694" height="430" rx="18" fill="white" stroke="#d4e4ed" stroke-width="2"/>
+<text x="246" y="187" fill="#44667d" font-size="17">Predicted: Not met</text><text x="492" y="187" fill="#44667d" font-size="17">Predicted: Met</text>
+<text x="74" y="279" fill="#44667d" font-size="17">Actual: Not met</text><text x="74" y="470" fill="#44667d" font-size="17">Actual: Met</text>
+<rect x="234" y="216" width="221" height="158" rx="12" fill="#267a8e"/><rect x="477" y="216" width="221" height="158" rx="12" fill="#dbe9ee"/>
+<rect x="234" y="389" width="221" height="158" rx="12" fill="#d5e6eb"/><rect x="477" y="389" width="221" height="158" rx="12" fill="#529faf"/>
+<text x="343" y="292" text-anchor="middle" fill="white" font-size="43" font-weight="700">539</text>
+<text x="587" y="292" text-anchor="middle" fill="#27536b" font-size="43" font-weight="700">6</text>
+<text x="343" y="462" text-anchor="middle" fill="#27536b" font-size="43" font-weight="700">8</text>
+<text x="587" y="462" text-anchor="middle" fill="white" font-size="43" font-weight="700">47</text>
+<text x="343" y="318" text-anchor="middle" fill="white" font-size="16">True negative</text><text x="587" y="318" text-anchor="middle" fill="#27536b" font-size="16">False positive</text>
+<text x="343" y="489" text-anchor="middle" fill="#27536b" font-size="16">False negative</text><text x="587" y="489" text-anchor="middle" fill="white" font-size="16">True positive</text>
+<rect x="774" y="140" width="372" height="430" rx="18" fill="white" stroke="#d4e4ed" stroke-width="2"/>
+<text x="803" y="218" fill="#4f7284" font-size="18">Accuracy</text><text x="803" y="249" fill="#1e5770" font-size="31" font-weight="700">97.67%</text><text x="803" y="309" fill="#4f7284" font-size="18">Precision · Met</text><text x="803" y="340" fill="#1e5770" font-size="31" font-weight="700">88.68%</text><text x="803" y="400" fill="#4f7284" font-size="18">Recall · Met</text><text x="803" y="431" fill="#1e5770" font-size="31" font-weight="700">85.45%</text><text x="803" y="491" fill="#4f7284" font-size="18">F1 · Met</text><text x="803" y="522" fill="#1e5770" font-size="31" font-weight="700">87.04%</text>
+<text x="55" y="620" fill="#56788a" font-size="16">Metrics calculated from archived confusion counts; original notebook and dataset were not recovered.</text>
+</g></svg>
