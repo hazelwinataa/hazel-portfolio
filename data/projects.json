@@ -3322,56 +3322,75 @@
     "id": "29",
     "slug": "uml-system-modeling",
     "title": "UML & System Modeling Coursework",
-    "year": null,
-    "projectType": "",
-    "status": "",
+    "year": 2025,
+    "projectType": "Academic system analysis, requirements and modeling portfolio · 2024–2025",
+    "status": "Documented coursework spanning four related case studies",
     "grade": "",
     "featured": false,
     "roleTags": [
-      "Data Engineer",
-      "Business Analytics"
+      "Business Analytics",
+      "Data Engineer"
     ],
     "courseTags": [
       "Program Design Method"
     ],
     "domainTags": [
-      "System Design"
+      "System Design",
+      "Business Process Modeling"
     ],
-    "description": "UML, requirements, and system modeling coursework covering structural relationships and behavioral use cases.",
-    "problemStatement": "Represent application requirements, classes, and relationships in diagrams that clarify software structure and expected behavior.",
-    "businessContext": "Clear modeling artifacts can support communication between stakeholders, analysts, and developers before implementation.",
-    "dataset": "",
-    "datasetSize": "",
+    "description": "Applied use-case modeling, sequence diagrams, business-process analysis, IPO charts, pseudocode and relational ERDs across four academic case studies: Tim's Studies online tutoring, Z Cheddr business operations, visitor temperature monitoring, and BNPL transaction databases. The work demonstrates how business requirements are translated into structured models before software or database implementation.",
+    "problemStatement": "Different application domains require different ways to express requirements, system behavior, information flows and structural dependencies. These coursework cases examined how an analyst can identify relevant actors and business entities, break down processes, document rules and organize information so stakeholders and developers can discuss how a system should operate.",
+    "businessContext": "This is a compilation of coursework artifacts and problem-solving exercises rather than a single deployed system. Online education requires well-defined tutor and learner interactions; Z Cheddr needs understandable operational processes and information flows; visitor screening requires clear input/output and decision rules; and BNPL requires consistent relationships among customers, financing plans, transactions and installments. The BNPL database implementation is documented separately in its own detailed case study.",
+    "dataset": "Tim's Studies was modeled as an online learning/tutoring system; Z Cheddr used a narrated business-interview scenario; Visitor Temperature Monitoring referenced the Todayvisitors.dat input file with temperature readings; BNPL used the team's self-constructed dataset of 50 transactions and 333 installment records. These were different academic systems rather than a shared modeling dataset.",
+    "datasetSize": "Four distinct academic exercises; BNPL example includes 50 synthetic transactions and 333 installments",
     "preprocessing": [],
     "featureEngineering": [],
     "methodology": [
-      "Modeled classes, associations, aggregation, composition, and realization",
-      "Prepared use case diagrams and requirement models",
-      "Explored process/system modeling and ERDs where relevant"
+      "In the Tim's Studies online learning system coursework, I worked on representing interactions between three main actors—User, Tutor and Admin—through a Use Case Diagram prepared in draw.io/XML format. The requirements discussed included user registration and login, discovering learning materials, browsing or booking tutors, arranging schedules, messaging, educational games, payment-related flows, progress tracking, tutor approval and learning-content management. The related 'Book a Tutor' Sequence Diagram described how an interaction unfolds over time, including alternative cases where a tutor's schedule is unavailable or a payment fails. This work helped distinguish what each participant needs from how the system coordinates a particular transaction.",
+      "For the Z Cheddr business operations case, I examined a business-interview scenario and worked through business-process modeling and the Resources–Events–Agents (REA) perspective using Visio and draw.io-oriented documentation. The analysis focused on how operational steps, business participants and information records relate to one another, including supplier/product/inventory and sales/customer/cash-receipt perspectives. Class-model concepts and possible entities such as Supplier, Product, Inventory, Manager, ShippingClerk, Accountant, Sale, Customer and CashReceipt were also discussed as part of the design exercise. The surviving history supports process/REA modeling work and class-diagram planning, but does not establish a completed final UML Class Diagram for every proposed relationship.",
+      "In the Visitor Temperature Monitoring exercise, I prepared and discussed the logic of reading visitor measurements from Todayvisitors.dat, using an IPO (Input–Process–Output) Chart and pseudocode to organize input handling, temperature validation, classification and final reporting. The rule compared each reading with a 37.1 °C threshold and counted how many visitors fell within or above the defined limit. I also explored how the same workflow could be described with a Visitor entity, a TemperatureAnalyzer class and activity/use-case concepts, but the available record documents these as modeling discussions rather than a verified completed UML diagram. This exercise demonstrated how a simple procedural requirement can be decomposed into explicit, testable processing steps.",
+      "In the BNPL transaction-management group project, I contributed to studying an unnormalized payment dataset and modeling its entities, relationships and dependencies through successive UNF, 1NF, 2NF and 3NF representations. The final report contains an Entity Relationship Diagram connecting Users, Products, BNPLApp, BNPLPlans, Transaction and installment-detail entities, reflecting one-to-many relationships across purchases, financing plans and scheduled payments. The team also examined insert, update and delete anomalies and mapped primary and foreign keys for the relational design. BNPL is included here to demonstrate the structural-modeling aspect of my coursework, while its full MariaDB SQL export, normalization details and implementation limitations are presented separately in Project #24."
     ],
-    "models": [],
+    "models": [
+      "UML Use Case and Sequence Diagrams",
+      "Business-process and REA modeling",
+      "IPO chart and algorithmic pseudocode",
+      "Entity Relationship Diagram (ERD) and normalization"
+    ],
     "technologies": [
       "UML",
-      "Use Case Modeling",
-      "Class Diagrams",
-      "System Design"
+      "draw.io",
+      "Microsoft Visio",
+      "Use Case Diagrams",
+      "Sequence Diagrams",
+      "REA Modeling",
+      "IPO Charts",
+      "Pseudocode",
+      "ERD"
     ],
     "evaluationMetrics": [],
     "results": [],
-    "insights": [
-      "Different diagram types capture complementary structural, behavioral, and requirement perspectives."
-    ],
-    "businessImpact": "",
+    "insights": [],
+    "businessImpact": "Across four coursework contexts, I practiced turning narrative requirements into actor interactions, time-ordered system behavior, business-resource flows, input/process/output logic and structured entity relationships. These are academic modeling outcomes, not measured commercial deployments or client-facing implementations.",
     "challenges": [],
     "limitations": [
-      "Specific source diagrams and review outcomes have not yet been attached to the portfolio."
+      "Four distinct learning exercises are grouped under this general coursework entry; they should not be mistaken for one integrated software system.",
+      "Tim's Studies Use Case and Sequence Diagram work is documented in historical discussions, but original diagram files are not currently attached to this project page.",
+      "Z Cheddr process/REA discussions and proposed class entities are documented, but the completed status of a comprehensive UML Class Diagram could not be verified.",
+      "The Visitor Temperature Monitoring record supports IPO/pseudocode work and UML design ideas, not a confirmed finished Class or Activity Diagram.",
+      "The BNPL ERD is a real documented academic deliverable, but its schema and implementation are covered separately in Project #24 and its original report contains other team members' identifying information.",
+      "No empirical usability evaluation, external system implementation, design grading, public UML source repository or verified operational improvements are claimed."
     ],
     "futureImprovements": [],
     "githubUrl": "",
     "demoUrl": "",
     "reportUrl": "",
     "image": "",
-    "gallery": []
+    "gallery": [],
+    "highlights": [],
+    "relatedProjects": [
+      "bnpl-database-normalization"
+    ]
   },
   {
     "id": "30",
