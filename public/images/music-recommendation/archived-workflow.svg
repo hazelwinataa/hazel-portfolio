@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="570" viewBox="0 0 1200 570">
+<rect width="1200" height="570" rx="22" fill="#f5f8fc"/>
+<text x="56" y="63" fill="#14283f" font-family="Arial,sans-serif" font-weight="700" font-size="30">Content-based music recommendation workflow</text>
+<text x="56" y="93" fill="#537086" font-family="Arial,sans-serif" font-size="17">Documented methodology and proposed configuration recovered from project discussions</text>
+<g font-family="Arial,sans-serif">
+<rect x="56" y="155" width="250" height="206" rx="19" fill="#fff" stroke="#cbdce6" stroke-width="2"/>
+<rect x="56" y="155" width="250" height="10" rx="5" fill="#277f9e"/>
+<text x="76" y="203" font-size="17" font-weight="700" fill="#20354b">01 · MUSIC CATALOG</text>
+<text x="76" y="240" font-size="29" font-weight="700" fill="#172f45">4,999 tracks</text>
+<text x="76" y="274" font-size="17" fill="#4a6478">Track · Artist · Album</text>
+<text x="76" y="300" font-size="17" fill="#4a6478">Genre · Audio features</text>
+<text x="76" y="333" font-size="14" fill="#628095">19 original columns</text>
+<path d="M319 263 H352" stroke="#6790a1" stroke-width="4" stroke-linecap="round"/><path d="M341 251 l13 12 -13 12" fill="none" stroke="#6790a1" stroke-width="4"/>
+<rect x="366" y="155" width="250" height="206" rx="19" fill="#fff" stroke="#cbdce6" stroke-width="2"/>
+<rect x="366" y="155" width="250" height="10" rx="5" fill="#277f9e"/>
+<text x="387" y="203" font-size="17" font-weight="700" fill="#20354b">02 · PREPROCESS</text>
+<text x="387" y="241" font-size="17" fill="#4a6478">Missing values</text>
+<text x="387" y="271" font-size="17" fill="#4a6478">Duplicates / track IDs</text>
+<text x="387" y="301" font-size="17" fill="#4a6478">Clean metadata text</text>
+<text x="387" y="332" font-size="14" fill="#628095">Final execution not recovered</text>
+<path d="M630 263 H663" stroke="#6790a1" stroke-width="4" stroke-linecap="round"/><path d="M652 251 l13 12 -13 12" fill="none" stroke="#6790a1" stroke-width="4"/>
+<rect x="676" y="155" width="220" height="206" rx="19" fill="#fff" stroke="#cbdce6" stroke-width="2"/>
+<rect x="676" y="155" width="220" height="10" rx="5" fill="#277f9e"/>
+<text x="697" y="203" font-size="17" font-weight="700" fill="#20354b">03 · VECTORIZE</text>
+<text x="697" y="246" font-size="26" font-weight="700" fill="#172f45">TF-IDF</text>
+<text x="697" y="278" font-size="17" fill="#4a6478">Textual track profile</text>
+<text x="697" y="308" font-size="17" fill="#4a6478">Artist / album / genre</text>
+<text x="697" y="337" font-size="14" fill="#628095">Exact settings unverified</text>
+<path d="M909 263 H942" stroke="#6790a1" stroke-width="4" stroke-linecap="round"/><path d="M931 251 l13 12 -13 12" fill="none" stroke="#6790a1" stroke-width="4"/>
+<rect x="956" y="155" width="188" height="206" rx="19" fill="#fff" stroke="#cbdce6" stroke-width="2"/>
+<rect x="956" y="155" width="188" height="10" rx="5" fill="#277f9e"/>
+<text x="977" y="203" font-size="17" font-weight="700" fill="#20354b">04 · RANK</text>
+<text x="977" y="245" font-size="23" font-weight="700" fill="#172f45">Cosine</text>
+<text x="977" y="273" font-size="23" font-weight="700" fill="#172f45">similarity</text>
+<text x="977" y="313" font-size="17" fill="#4a6478">Return Top-N</text>
+<text x="977" y="339" font-size="14" fill="#628095">No saved ranking</text>
+<rect x="56" y="402" width="1088" height="85" rx="14" fill="#e8f0f6" stroke="#d5e4ef"/>
+<text x="77" y="437" font-size="17" font-weight="700" fill="#244a60">Audio-feature context</text>
+<text x="77" y="466" font-size="16" fill="#4b6578">Danceability, energy, acousticness, valence, tempo and related fields were inspected during EDA.</text>
+<text x="56" y="535" font-size="14" fill="#647e90">Explanatory diagram reconstructed from archived discussions; not an original notebook visualization or a verified live pipeline.</text>
+</g></svg>
