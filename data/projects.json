@@ -518,11 +518,11 @@
   {
     "id": "6",
     "slug": "music-recommendation-system",
-    "title": "Content-Based Music Recommendation System",
+    "title": "Content-Based Music Recommendation — TF-IDF & Cosine Similarity",
     "year": null,
-    "projectType": "",
-    "status": "",
-    "grade": "",
+    "projectType": "Academic Machine Learning project",
+    "status": "Completed academic project — Grade A",
+    "grade": "A",
     "featured": false,
     "roleTags": [
       "Data Science",
@@ -534,49 +534,122 @@
     "domainTags": [
       "Recommendation System"
     ],
-    "description": "Content-based music recommendations using textual metadata, TF-IDF vectors, and cosine similarity across 4,999 tracks.",
-    "problemStatement": "Recommend tracks similar to a selected song by comparing their content and available metadata, without requiring interaction history.",
-    "businessContext": "Content-based recommendation offers a way to explore track similarity from item attributes and may complement behavioral recommenders.",
-    "dataset": "A catalog of 4,999 tracks with track, artist, album, genre, and audio or other metadata characteristics.",
-    "datasetSize": "4,999 tracks",
+    "description": "Developed an academic content-based song recommendation case study using a 4,999-track, 19-column music catalog. Explored audio and metadata quality, text-based TF-IDF feature representation, cosine-similarity ranking, and Top-N retrieval. Reconstructed documentation is grounded in historical discussions rather than recovered source code.",
+    "problemStatement": "Provide relevant song suggestions from track attributes and metadata when user listening history, ratings, or collaborative-interaction data are unavailable. Explore how textual descriptions of track, artist, album, and genre can represent each catalog item for item-to-item similarity.",
+    "businessContext": "Content-based retrieval can support catalog exploration, related-song discovery, and first-pass recommendations without needing collaborative behavior logs. Musical relevance is subjective; this coursework did not establish listening engagement, user satisfaction, or improvements to a deployed streaming product.",
+    "dataset": "Archived coursework identifies song_recomendation_B.csv with 4,999 tracks and 19 fields. Metadata columns: Track URI, Track Name, Artist Name(s), Album Name, Album Release Date, Artist Genres, and Popularity. Twelve additional audio/music attributes: Danceability, Energy, Key, Loudness, Mode, Speechiness, Acousticness, Instrumentalness, Liveness, Valence, Tempo, and Time Signature. Reported data types: six object columns, twelve float64 columns, and one int64 column. The CSV itself is no longer available to recheck.",
+    "datasetSize": "4,999 tracks × 19 source columns (archived EDA)",
     "preprocessing": [
-      "Explored missing values and duplicates",
-      "Inspected available textual and metadata fields before feature construction"
+      "Inspected the track catalog structure, metadata columns, audio-feature dtypes, missing values, and duplicated identifiers before selecting content fields for similarity analysis.",
+      "Archived df.info-style inspection records missing Artist Genres for 255 tracks (about 5.10%), Danceability for 252 (5.04%), and Instrumentalness for 102 (2.04%); several additional fields had only two missing entries. One separate historical note conflicts on the Album Release Date count, so no final total for that field is asserted.",
+      "Historical discussions recorded 13 exact-duplicate rows and 14 repeated Track URI values. A repeated URI is not automatically a safe record to discard; the exact deduplication result and final catalog size cannot be independently established.",
+      "Reviewed textual metadata for consistent missing-value handling and normalized string representation prior to content construction. Prior proposals included filling missing Artist Genres with 'unknown' and numeric audio features using a median, but the executed final imputation code is unavailable.",
+      "Reviewed valid ranges and outliers for acoustic/music attributes such as danceability, energy, instrumentalness, tempo, and loudness; archived guidance proposed range checks and clipping but did not preserve a final transformation report.",
+      "Kept the track identifier and display metadata distinct from vectorized model input fields, so similarity outputs can be mapped back to human-readable songs.",
+      "Avoided assuming album-release dates, popularity, or numerical audio features were all concatenated into the final TF-IDF representation. Original preprocessing artifacts and fitted transforms have not been recovered."
     ],
     "featureEngineering": [
-      "Prepared music-related content fields for text-based similarity",
-      "Transformed the content representation with TF-IDF"
+      "Archived content-based design combines Track Name, Artist Name(s), Album Name, and Artist Genres into a text_soup profile for each candidate song.",
+      "A TF-IDF vectorizer represents distinctive word tokens in song profiles, reducing the influence of terms that appear throughout the catalog.",
+      "Proposed notebook settings included English stop-word removal, one- and two-word n-grams, and min_df=2; these parameters are documented as historical design guidance, not verified final model settings.",
+      "Audio fields including Danceability, Energy, Loudness, Acousticness, Instrumentalness, Valence and Tempo were inspected for richer music context. Whether they were combined into the exact final cosine-similarity matrix cannot be verified.",
+      "Maintained a track-to-row lookup concept for returning names, artists, albums, and genre metadata with ranked recommendations; exact matching and duplicate-title handling in the original code are not available."
     ],
     "methodology": [
-      "Calculated pairwise similarity using cosine similarity",
-      "Produced Top-N recommendations from content similarity"
+      "Framed song recommendation as item-to-item content similarity rather than supervised classification or collaborative filtering based on user ratings.",
+      "Explored the composition and completeness of the 4,999-song dataset, with particular attention to missing genre information and danceability measures.",
+      "Prepared textual music metadata to form song-level content profiles, then used TF-IDF as the archived text-feature representation.",
+      "Used cosine similarity conceptually to rank tracks by the angle between nonzero TF-IDF feature vectors. Similarity measures metadata overlap, not actual listener preference or audio quality.",
+      "Historical example guidance described a Top-N retrieval function (default N=5) and genre/mood-style text queries such as 'dance pop pitbull party', 'classic rock rolling stones', and 'acoustic chill indie'. The code and resulting Top-N rankings were not preserved, so these are demonstration inputs rather than verified recommendation outputs.",
+      "Interpreted why metadata-rich and genre-consistent tracks would be easier for a TF-IDF retriever to match, while missing or generic artist-genre fields reduce the discriminatory signal.",
+      "Documented key differences between metadata similarity and numerical audio-feature similarity; the two should not be presented as one validated hybrid model without original feature concatenation code.",
+      "Summarized data quality, method design, limitations, and next-step evaluation in a source-code-free academic case study, without inventing similarity scores, selected songs, or deployment."
     ],
-    "models": [],
+    "models": [
+      "Content-based song recommendation",
+      "TF-IDF text representation",
+      "Cosine similarity ranking"
+    ],
     "technologies": [
       "Python",
       "Pandas",
+      "NumPy",
       "Scikit-learn",
-      "TF-IDF"
+      "TF-IDF",
+      "Cosine Similarity"
     ],
-    "evaluationMetrics": [],
-    "results": [],
+    "evaluationMetrics": [
+      "Cosine similarity (ranking criterion, not a held-out relevance metric)"
+    ],
+    "results": [
+      "Historical project data inspection identified 4,999 music catalog rows across 19 columns, with six object, twelve float, and one integer type.",
+      "Reported missingness included Artist Genres: 255 / 4,999 (5.10%); Danceability: 252 / 4,999 (5.04%); Instrumentalness: 102 / 4,999 (2.04%). These figures are reconstructed from old project discussions, not recomputed from the CSV.",
+      "An archived duplicate inspection recorded 13 exact-duplicate rows and 14 repeated Track URI values. Cleaned observation counts are not available for verification.",
+      "Project notes and résumé summaries describe TF-IDF metadata-based recommendation with cosine-similarity Top-N ranking, while the exact final notebook and retrieved song lists are no longer available.",
+      "A Top-5 default and three text-query demonstrations were discussed in the archived notebook guidance, but no original ranked results or cosine-score outputs survived.",
+      "The academic project received Grade A as reported by the student. No trustworthy offline Precision@K, Recall@K, NDCG, coverage, or user-feedback experiment was recovered."
+    ],
     "insights": [
-      "The approach returns recommendations using item-content similarity rather than relying on user rating or click history."
+      "The strongest documented data-quality gaps were in genre and danceability information. Missing Artist Genres can weaken genre-driven text retrieval because it removes valuable discriminating terms from the song profile.",
+      "TF-IDF rewards informative words that are uncommon across the song catalog, while cosine similarity emphasizes overlap in these weighted descriptors; it does not imply that the matched tracks actually sound alike.",
+      "A metadata-driven system can retrieve familiar artists, genres, and album-related content without observing user clicks or ratings, which is useful for item-level discovery but not personalized taste prediction.",
+      "Audio characteristics such as tempo, energy, acousticness, and valence describe musical properties differently from textual artist/genre identity. Combining these representations requires deliberate normalization and weighting, not just concatenating raw numbers into text.",
+      "Missing text descriptors, duplicate catalog records, generic genre tags, and repeated artist names can change recommendation diversity or produce overly homogeneous ranked lists.",
+      "A similarity ranking alone cannot establish recommendation quality; real evaluation requires relevance judgments, user feedback, benchmark labels, or credible proxy tasks."
     ],
-    "businessImpact": "",
-    "challenges": [],
+    "businessImpact": "Completed academic recommendation-system study (Grade A). Demonstrated the reasoning behind content-based catalog matching, metadata preprocessing, vectorization, and ranked retrieval. Commercial recommendation effectiveness, real user adoption, and deployment were not measured.",
+    "challenges": [
+      "Handling substantial missing genre and danceability metadata while keeping track-level identity intact.",
+      "Detecting exact duplicate records versus repeated Track URI values without collapsing legitimately distinct catalog entries.",
+      "Representing song metadata with enough detail to distinguish meaningful matches while limiting noise from common text tokens.",
+      "Avoiding overclaiming metadata-overlap similarity as true acoustic or user-preference similarity.",
+      "Preserving academically accurate evidence after the original source notebook and output rankings were lost."
+    ],
     "limitations": [
-      "Offline ranking metrics and user-study feedback are not reported in the project inventory.",
-      "Content-based approaches may struggle to recommend unfamiliar or diverse tracks without additional signals."
+      "The original CSV, executed Jupyter notebook, fitted vectorizer, cosine-similarity matrix, and model output lists are unavailable; historical notes are the evidence for the documented workflow.",
+      "The exact TF-IDF hyperparameters, post-imputation catalog size, and any combined audio-plus-text scoring are not independently verified.",
+      "A separate historical note conflicts with the detailed df.info count for Album Release Date missingness; this case study does not invent a reconciled figure.",
+      "No recovered recommendation screenshots, true song ranking table, cosine output values, offline relevance metrics, user test, or deployed application exist in the available records.",
+      "Recommendations based on metadata can emphasize repeated artists and genres, underrepresent novel/diverse music, and reflect catalog completeness and tagging biases.",
+      "A Grade A course result indicates academic assessment, not proven production recommendation performance. No GitHub source-code repository is linked because authentic code is unavailable."
     ],
     "futureImprovements": [
-      "Document a sample Top-N recommendation output and, if available, evaluate recommendation relevance."
+      "Recover or obtain a properly licensed version of the same 4,999-track dataset, then rebuild a reproducible preprocessing and versioned data-quality report.",
+      "Recreate the documented TF-IDF content representation with explicit tokenization, missing-data policy, artist/genre weighting, and robust title/identifier matching.",
+      "Evaluate recommendation precision and diversity using annotated relevant-song sets, user ratings, or carefully defined proxy labels; report Precision@K, Recall@K, NDCG@K, coverage and novelty where meaningful.",
+      "Compare metadata-only retrieval with normalized numerical audio-feature similarity and a properly weighted hybrid content recommender.",
+      "Build an interactive search and explanation interface showing why a song was recommended and when the confidence in metadata matching is limited."
     ],
     "githubUrl": "",
     "demoUrl": "",
     "reportUrl": "",
-    "image": "",
-    "gallery": []
+    "image": "/images/music-recommendation/archived-workflow.svg",
+    "gallery": [
+      "/images/music-recommendation/archived-workflow.svg",
+      "/images/music-recommendation/archived-missingness.svg"
+    ],
+    "highlights": [
+      {
+        "value": "4,999",
+        "label": "Music catalog",
+        "note": "19 original fields"
+      },
+      {
+        "value": "TF-IDF",
+        "label": "Content representation",
+        "note": "Track · Artist · Album · Genre"
+      },
+      {
+        "value": "Cosine",
+        "label": "Similarity ranking",
+        "note": "Top-N retrieval design"
+      },
+      {
+        "value": "Grade A",
+        "label": "Academic assessment",
+        "note": "Machine Learning coursework"
+      }
+    ]
   },
   {
     "id": "7",
