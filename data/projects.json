@@ -3283,10 +3283,10 @@
   {
     "id": "31",
     "slug": "parking-management-c",
-    "title": "Vehicle Parking Management System",
-    "year": null,
-    "projectType": "",
-    "status": "",
+    "title": "Vehicle Parking Management System — C & Binary Search Tree",
+    "year": 2025,
+    "projectType": "Academic programming project — March 2025",
+    "status": "Historical C implementation discussed; runnable source file unavailable",
     "grade": "",
     "featured": false,
     "roleTags": [],
@@ -3294,42 +3294,113 @@
       "Other Academic Project"
     ],
     "domainTags": [
+      "Data Structures",
+      "Algorithms",
       "System Design"
     ],
-    "description": "C-language vehicle parking management prototype using tree-based search and structured vehicle records.",
-    "problemStatement": "Track vehicle registration, lookup, entry, exit, and parking-related attributes through a simple management program.",
-    "businessContext": "An early programming project applying data structures to a small operational-management scenario.",
-    "dataset": "",
-    "datasetSize": "",
-    "preprocessing": [],
+    "description": "Developed a menu-driven vehicle parking management exercise in C using a Binary Search Tree to organize vehicle codes. The historical implementation included validated parking entry, automatic vehicle-code generation, active/exit tracking, code-based search, and hourly fee calculation for Sedan, Motorcycle and Truck vehicles. No database server or ML model was involved.",
+    "problemStatement": "Manage parking arrivals and departures, maintain searchable vehicle registration records, prevent invalid or duplicate vehicle codes, show active/completed parking sessions and compute fees from parking duration and vehicle category.",
+    "businessContext": "A practical algorithm and procedural-programming exercise for a small vehicle parking facility. The saved discussion concerns a C console program, not a deployed access-control or payment-processing solution.",
+    "dataset": "User-entered vehicle sessions stored as in-memory BST nodes, including owner name, vehicle type, unique generated code, parking status, entry and exit times, and calculated charge. No external dataset or persisted transaction log was recovered.",
+    "datasetSize": "Interactive vehicle records; original number of executed test sessions not documented",
+    "preprocessing": [
+      "Validated parking owner names to the specified five-to-twenty-character range with at least two words.",
+      "Restricted vehicle category to Sedan, Motorcycle or Truck, and entry time to the recorded hours 6–9.",
+      "Generated a code for a new vehicle and used that code as the Binary Search Tree key; the original discussions identify duplicate-code rejection as required behavior.",
+      "Restricted checkout time to the recorded hours 10–18; parked status was initialized as In and changed to Out at exit."
+    ],
     "featureEngineering": [],
     "methodology": [
-      "Built tree or binary-search-tree based vehicle lookup",
-      "Handled entry and exit actions for vehicle records",
-      "Tracked code, owner, vehicle type, parking status, and pricing-related logic"
+      "Defined a C struct Node storing Name, kendaraan (vehicle type), kode (vehicle code), status, inTime, outTime, Price, plus BST left and right child pointers.",
+      "Used a global root pointer and createNode to initialize a new vehicle record, with parking status In and unset exit time/charge.",
+      "Implemented push(root, Name, Kendaraan, Kode, inTime) to insert vehicle records into a Binary Search Tree keyed by their code and reject duplicates.",
+      "Implemented searchNode(root, code) to locate a registered vehicle when an exit is requested, including checks for missing vehicles and those already marked Out.",
+      "Implemented updateNode to set the departure time and Out status, and compute a price using parking duration in hours multiplied by the vehicle-specific rate.",
+      "The historically documented tariff formula was (outTime − inTime) × 3000 for Sedan, × 2000 for Motorcycle, and × 4000 for Truck. These are source-code constants; no real-world parking tariff claims are made.",
+      "Used viewIn and viewOut alongside printTableHeader and inOrder traversal to show parking records and distinguish active from completed sessions in console output.",
+      "Reviewed validation and search/control-flow risks during code discussions. The original working file was not retained, so this write-up records the intended/historically discussed implementation rather than claiming a fresh successful compilation or test run."
     ],
-    "models": [],
+    "models": [
+      "Binary Search Tree (vehicle-code indexing)"
+    ],
     "technologies": [
       "C",
       "Binary Search Tree",
-      "Data Structures"
+      "Recursion",
+      "Tree Traversal",
+      "CLI Input Validation"
     ],
-    "evaluationMetrics": [],
-    "results": [],
+    "evaluationMetrics": [
+      "Correctness of vehicle entry/exit workflow (design objective)",
+      "Duplicate-code handling (design objective)",
+      "Parking charge calculation (rule-based)",
+      "BST search behavior (theoretical)"
+    ],
+    "results": [
+      "The March 2025 conversation documents vehicle-code BST nodes, insertion/search/update functions and console flows for parking entries, exits and status viewing.",
+      "Supported vehicle categories: Sedan, Motorcycle and Truck; parking cost is the difference between exit and entry hours multiplied by the corresponding category rate.",
+      "Original rate constants: Sedan 3,000 per hour; Motorcycle 2,000 per hour; Truck 4,000 per hour. These are program rules, not operational revenue measurements.",
+      "Validation requirements included owner name length 5–20 with at least two words, entry hour 6–9, and exit hour 10–18; the original code's complete edge-case test coverage is unknown.",
+      "The archived code review identified possible correctness issues in BST insertion/search consistency and record printing. No claim is made that the full application was independently retested after corrections.",
+      "No verified runtime benchmark, real parking dataset, saved binary, public code repository, course grade or deployment artifact is available."
+    ],
     "insights": [
-      "The prototype connects tree-based searching with a practical record-management workflow."
+      "A vehicle code can act as a stable search key for a menu-driven parking register, but generated identifiers still need collision checks and deterministic key comparisons.",
+      "A conventional unbalanced BST has average-case O(log n) search/insert only under suitable tree shapes and O(n) worst case when highly skewed; unlike Beemazon's AVL tree, no balancing logic is documented here.",
+      "Separating vehicle entry from exit status updates prevents removing a historical record merely because a vehicle has departed.",
+      "Business rules such as allowed vehicle type, owner-name formatting, operating hours and per-hour charges belong in explicit input validation and status transitions.",
+      "Tree search, insertion and display must share one consistent ordering invariant; earlier code review flagged a potential mismatch, making correctness testing essential."
     ],
-    "businessImpact": "",
-    "challenges": [],
+    "businessImpact": "Educational demonstration of applying C structures, pointers, binary search trees and conditional rules to a parking registration task. No actual parking-facility adoption, revenue, payment collection, capacity monitoring or operational time savings was reported.",
+    "challenges": [
+      "Maintaining a code-ordered BST so insertion, lookup and traversal operate with compatible comparisons.",
+      "Generating unique codes and detecting duplicate records.",
+      "Implementing validation for names, vehicle categories, hours and repeated checkout attempts.",
+      "Keeping parking statuses synchronized with exit time and computed price.",
+      "Producing readable tables for active and completed vehicles without mixing data fields."
+    ],
     "limitations": [
-      "System persistence, concurrent access, and production-grade validations are not documented."
+      "The executable C program and original source file are not currently available to rerun; behavior and rates are documented from March 2025 code discussions.",
+      "Original code reviews identified possible issues with BST search direction and table-field display; these are not represented as independently resolved without a final verified file.",
+      "The simplified input model handles integer hours in constrained ranges, not overnight sessions, minutes or real-time clock timestamps.",
+      "Data remains in memory with no durable persistence, concurrent processing, payment integration or authentication.",
+      "A plain BST can become unbalanced; no AVL or red-black balancing mechanism was documented for this project.",
+      "No confirmed course grade, benchmark, public code repository or running demo is attached."
     ],
-    "futureImprovements": [],
+    "futureImprovements": [
+      "Recover the actual C file and test all entry/exit, missing-code, duplicate-code, repeat-exit and invalid-input cases before considering GitHub publication.",
+      "Create a consistent BST comparator shared by insertion and search, and verify inorder ordering with varied code sequences.",
+      "Replace restricted integer hours with proper timestamp and duration handling, including crossing midnight and rounding policy.",
+      "Add a persisted record store and a clear separation of data structures from input/output logic if this exercise is extended.",
+      "Consider AVL rebalancing for larger catalogs of vehicle codes and benchmark search performance after reliable functionality is established."
+    ],
     "githubUrl": "",
     "demoUrl": "",
     "reportUrl": "",
     "image": "",
-    "gallery": []
+    "gallery": [],
+    "highlights": [
+      {
+        "value": "3",
+        "label": "Vehicle categories",
+        "note": "Sedan, Motorcycle, Truck"
+      },
+      {
+        "value": "BST",
+        "label": "Primary data structure",
+        "note": "Vehicle-code search"
+      },
+      {
+        "value": "In / Out",
+        "label": "Parking state",
+        "note": "Entry and exit workflow"
+      },
+      {
+        "value": "C",
+        "label": "Implementation language",
+        "note": "Console application"
+      }
+    ]
   },
   {
     "id": "32",
