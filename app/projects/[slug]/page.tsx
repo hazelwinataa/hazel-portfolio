@@ -899,6 +899,20 @@ const visualDescriptions: Record<string, GalleryDescription> = {
     originalScreenshot: false,
     sourceLabel: "Metrics calculated from archived tuned Random Forest confusion counts",
   },
+  "relational-schema.svg": {
+    title: "BNPL relational model · Six MariaDB tables",
+    caption: "Reconstructed from the original SQL export: users, products, BNPL apps, financing plans, transactions and monthly installments. Solid connectors indicate declared SQL foreign keys; dashed links indicate intended relationships with no enforced foreign-key constraint.",
+    details: ["The SQL DDL has three declared foreign keys, whereas transaction.PlanID and cicilandetail.TxnID are logical references without declared foreign-key constraints.", "All existing seeded references resolve, but that does not prevent invalid future inserts. The diagram is a reconstruction, not a screenshot of the team's original ERD."],
+    originalScreenshot: false,
+    sourceLabel: "Diagram recreated from aol_db SQL export and team report",
+  },
+  "seeded-data-summary.svg": {
+    title: "BNPL synthetic SQL data · Table sizes and installment statuses",
+    caption: "The original academic database contains 5 platforms, 19 financing plans, 14 users, 11 products, 50 purchases and 333 installment entries. Installment states comprise 173 Paid, 76 Pending and 84 Overdue.",
+    details: ["Counts were audited from the provided INSERT statements in the December 2025 MariaDB export.", "The project uses self-constructed demonstration records; status frequencies do not represent real customers or measured delinquency rates."],
+    originalScreenshot: false,
+    sourceLabel: "Replotted from original team SQL seed records",
+  },
 };
 
 export default async function ProjectDetailPage({
