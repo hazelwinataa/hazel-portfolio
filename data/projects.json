@@ -258,10 +258,10 @@
   {
     "id": "3",
     "slug": "savings-goal-classification",
-    "title": "Savings Goal Achievement Classification",
-    "year": null,
-    "projectType": "",
-    "status": "",
+    "title": "Savings Goal Achievement — Personal Finance Classification",
+    "year": 2025,
+    "projectType": "Academic Machine Learning project · December 2025",
+    "status": "Historical experiment documented · original notebook unavailable",
     "grade": "",
     "featured": false,
     "roleTags": [
@@ -273,51 +273,134 @@
       "Machine Learning"
     ],
     "domainTags": [
-      "Classification"
+      "Classification",
+      "Personal Finance Analytics",
+      "Machine Learning"
     ],
-    "description": "Predicting monthly savings-goal achievement using personal finance features and interpretable classification models.",
-    "problemStatement": "Classify whether an individual is expected to meet a monthly savings goal using financial and spending-related features.",
-    "businessContext": "Savings-goal predictions may help explore patterns in spending discipline and personal financial planning.",
-    "dataset": "Financial scenario variables covering income, expenses, debt-to-income information, discretionary spending, and other financial attributes.",
-    "datasetSize": "",
+    "description": "Compared Logistic Regression, Random Forest and Gradient Boosting for predicting whether a monthly savings target was achieved from 3,000 personal-finance records. Removed direct-outcome leakage from actual_savings, tuned Random Forest with RandomizedSearchCV and interpreted financial features. The archived tuned-model confusion matrix yields 97.67% test accuracy and 0.8704 positive-class F1.",
+    "problemStatement": "Predict the binary savings_goal_met target from information about income, spending and household financial circumstances, while accounting for uneven outcomes and avoiding direct leakage from final realized savings.",
+    "businessContext": "Personal finance data can support descriptive analysis of spending and financial planning habits. This project is an educational classification experiment, not a verified budgeting product, individualized financial advice, or proof that a recommended intervention improves savings behavior.",
+    "dataset": "The archived December 2025 coursework identifies personal_finance_tracker_dataset.csv, described as 3,000 observations across 25 original variables. It contains a binary savings_goal_met target and personal-finance context including income, spending and expenses, debt-to-income information, discretionary spending, budget behavior, and other financial scenario indicators. date, user_id and actual_savings were explicitly removed before supervised modeling. The original CSV, its licensing/provenance, exact post-cleaning column list and full descriptive tables have not been recovered.",
+    "datasetSize": "3,000 original records × 25 variables; stratified 80:20 train/test split (2,400 / 600)",
     "preprocessing": [
-      "Prepared financial predictors for model training; transformation specifics require verification"
+      "Reviewed the available personal-finance attributes and framed savings_goal_met as a binary target (savings goal achieved or not achieved). Exact distributions and null counts are not preserved in the available discussion.",
+      "Excluded actual_savings from predictive features because realized savings directly reflect the outcome being predicted and could make an artificially strong classifier through target leakage.",
+      "Also excluded user_id (identifier) and date from the model input as recorded in the December 2025 preprocessing code discussion. Their exclusion does not by itself establish that every remaining attribute would be known before month-end.",
+      "Performed an 80/20 stratified random train/test split with random_state=42, giving 2,400 training and 600 held-out records from the stated 3,000-row dataset.",
+      "Compared classification algorithms on a consistent held-out test split. The exact fitted categorical/numerical transformation steps and imputation settings are not accessible in the surviving notebook record.",
+      "Used F1-oriented tuning for Random Forest, and assessed the predicted positive class using confusion matrix, precision and recall in addition to overall accuracy.",
+      "Checked the archived tuned-model confusion matrix for internal consistency: TN=539, FP=6, FN=8 and TP=47, which sum to the 600-row test partition."
     ],
     "featureEngineering": [
-      "Examined income, expense, debt-to-income, and discretionary-spending variables as model inputs"
+      "Considered income, expense burden, debt-to-income ratio, discretionary spending and budgeting-related indicators as explanatory financial predictors.",
+      "Explicitly removed actual_savings, date and user_id from the model matrix rather than using a variable that directly encodes realized monthly savings.",
+      "Examined Random Forest's impurity-based feature importance and discussed permutation importance for additional interpretation; the ranked feature-importance values and plots are not available.",
+      "Discussed cash-flow and debt indicators as associations with the reported target, not as verified causal drivers or financial interventions."
     ],
     "methodology": [
-      "Trained and compared Random Forest and XGBoost classifiers",
-      "Used feature importance and permutation importance to interpret predictors",
-      "Evaluated the classification workflow using F1-based analysis"
+      "Defined the target savings_goal_met, then separated financial predictors from identifiers and directly outcome-derived columns to reduce obvious leakage.",
+      "Split 3,000 reported records into an 80% stratified training set and a 20% held-out test set using random_state=42.",
+      "Trained Logistic Regression, baseline Random Forest and Gradient Boosting as three distinct binary classification approaches.",
+      "Compared classifiers with accuracy, precision, recall, F1, ROC-AUC and confusion-matrix/classification-report interpretation as recorded in the December 2025 workflow.",
+      "Conducted RandomizedSearchCV on Random Forest with F1-score as optimization target. Candidate settings discussed include the number of trees, maximum depth, minimum split/leaf samples and feature subsampling; the selected hyperparameters and search iterations were not preserved.",
+      "Produced a four-configuration comparison comprising Logistic Regression, untuned Random Forest, Gradient Boosting and tuned Random Forest; earlier notes describe Gradient Boosting as strong and a tuned Random Forest as the final presentation choice.",
+      "Interpreted the tuned Random Forest with classification errors and model-based feature importance, noting that high overall accuracy partly reflects a high proportion of non-achievers in the recorded 600-row test sample.",
+      "Documented limits on the historical evidence: no original dataset, notebook, exact performance results for the other candidates, cross-validation logs or saved estimator have been recovered."
     ],
     "models": [
-      "Random Forest",
-      "XGBoost"
+      "Logistic Regression",
+      "Random Forest (baseline)",
+      "Gradient Boosting Classifier",
+      "Random Forest (RandomizedSearchCV tuned)"
     ],
     "technologies": [
       "Python",
+      "Pandas",
+      "NumPy",
       "Scikit-learn",
-      "XGBoost"
+      "Matplotlib",
+      "Seaborn"
     ],
     "evaluationMetrics": [
-      "F1-score"
+      "Accuracy",
+      "Precision for savings goal achieved",
+      "Recall for savings goal achieved",
+      "F1-score for savings goal achieved",
+      "ROC-AUC (evaluated; exact value unavailable)",
+      "Confusion matrix",
+      "Feature / permutation importance (interpretation)"
     ],
-    "results": [],
+    "results": [
+      "Archived dataset inventory: personal_finance_tracker_dataset.csv, 3,000 records and 25 source variables; target savings_goal_met. Documented train/test ratio 80:20 corresponds to 2,400 training and 600 testing observations.",
+      "Archived December 17, 2025 tuned Random Forest test confusion matrix: true negatives 539, false positives 6, false negatives 8 and true positives 47 (600 observations total).",
+      "Derived from those archived counts, NOT from a new model run: test accuracy 586/600 = 0.9767; positive-class precision 47/53 = 0.8868; recall 47/55 = 0.8545; and F1 94/108 = 0.8704.",
+      "The archived test-set positive class contained 55/600 observations (9.17%), while 545/600 (90.83%) did not achieve the target; a majority-only predictor could obtain 90.83% accuracy while missing every positive, illustrating why accuracy is insufficient.",
+      "Archived project discussion identified Gradient Boosting as a strong comparison model and tuned Random Forest as the final chosen presentation model. Exact test scores for Logistic Regression, baseline Random Forest and Gradient Boosting are unavailable, so no numerical head-to-head ranking is asserted.",
+      "Discussion of feature importance emphasized income, expense burden, budgeting behavior and debt-related indicators. Neither original importance magnitudes nor a ranked chart was recovered.",
+      "No source notebook, cleaned dataset, model checkpoint, public deployment, academic grade or verified real-world financial impact is provided. The displayed diagrams reconstruct recorded information instead of reproducing original screenshots."
+    ],
     "insights": [
-      "Feature-importance methods were used to investigate which financial variables influenced model predictions."
+      "A binary savings achievement rate of only 9.17% in the recovered test confusion matrix means accuracy can hide failure to recognize savers; the archived tuned-model recall and F1 are therefore more informative than accuracy alone.",
+      "The tuned Random Forest's archived confusion matrix represents six false-positive predictions and eight missed positive outcomes. Such errors would require different handling depending on how a future budgeting tool were actually used.",
+      "Removing actual_savings was methodologically necessary because a known realized saving amount could effectively reveal whether the savings goal had already been achieved.",
+      "Income, expenses, budgeting and debt-to-income variables were highlighted in earlier model-interpretation discussions, but feature importance does not establish causation or imply that changing a single financial value guarantees a savings outcome.",
+      "Historical comparisons included Logistic Regression, Random Forest and Gradient Boosting. Hyperparameter tuning changes both the model configuration and its test outcomes, so an untuned-vs-tuned comparison should use consistent evaluation procedures.",
+      "Because source feature definitions and temporal availability are unavailable, the reported classification performance cannot be assumed to generalize to predicting a future month before the savings result exists."
     ],
-    "businessImpact": "Potential application: identify financial characteristics associated with achieving or missing a savings target.",
-    "challenges": [],
+    "businessImpact": "Educational proof of concept for identifying statistical patterns associated with monthly savings-goal achievement. No savings increase, user benefit, budgeting intervention, deployment or external validation was measured.",
+    "challenges": [
+      "Separating legitimate pre-outcome predictors from directly target-derived actual_savings to prevent misleadingly high scores.",
+      "Handling a strongly imbalanced positive class in the recovered held-out test confusion matrix.",
+      "Balancing false positive and false negative outcomes using precision, recall and F1 rather than accuracy alone.",
+      "Comparing baseline and tuned models without overstating differences when exact historical model-comparison metrics are missing.",
+      "Recovering an accurate description from past code discussions after losing the original finance dataset and executable notebook."
+    ],
     "limitations": [
-      "Exact performance scores and the original scenario distribution are not yet documented."
+      "Original personal_finance_tracker_dataset.csv and executed notebook were not recovered; data provenance, row-level quality checks, imputation, learned encoders and precise final model hyperparameters remain unverified.",
+      "Reported 97.67% accuracy and 0.8704 F1 were mathematically derived from the previously discussed tuned Random Forest confusion counts, not copied from an independent current experiment output or new training run.",
+      "Only the tuned Random Forest confusion matrix survives in the discussion. Performance values for Logistic Regression, baseline Random Forest and Gradient Boosting were not recovered; this case study makes no unsupported winning-margin claim.",
+      "Strong target imbalance is visible in the historical test confusion counts, but whether all remaining predictors were available before the month ended has not been verified; leakage risk should be reassessed when files are recovered.",
+      "The archived random split does not demonstrate forward-in-time generalization. Evaluation on future months, probability calibration and operational thresholds would be needed for prospective use.",
+      "No original source code, authentication or external data provenance evidence, public application, final academic grade or independently verified financial impact is available."
     ],
-    "futureImprovements": [],
+    "futureImprovements": [
+      "Recover the exact licensed source CSV and archived notebook; record versioned data dictionary, target definition, complete feature list, null/duplicate checks and class distribution.",
+      "Rebuild a leakage-resistant sklearn Pipeline/ColumnTransformer that fits all imputation, encoding and scaling only to training folds.",
+      "Reevaluate eligibility and time availability of each financial predictor to exclude any month-end outcome information beyond actual_savings.",
+      "Compare all three model families using repeated stratified cross-validation and an untouched final test period with precision, recall, F1, PR-AUC and ROC-AUC.",
+      "Report calibration and threshold/cost analysis so false positives and missed goal achievements are evaluated relative to the intended application.",
+      "Repeat Random Forest tuning with reproducible search settings and preserve selected hyperparameters, feature importance, permutation importance and complete model artifacts."
+    ],
     "githubUrl": "",
     "demoUrl": "",
     "reportUrl": "",
-    "image": "",
-    "gallery": []
+    "image": "/images/savings-goal-classification/archived-confusion-matrix.svg",
+    "gallery": [
+      "/images/savings-goal-classification/historical-workflow.svg",
+      "/images/savings-goal-classification/archived-confusion-matrix.svg"
+    ],
+    "highlights": [
+      {
+        "value": "3,000",
+        "label": "Financial records",
+        "note": "25 initial variables"
+      },
+      {
+        "value": "97.67%",
+        "label": "Tuned RF accuracy",
+        "note": "Derived from archived confusion matrix"
+      },
+      {
+        "value": "0.8704",
+        "label": "Positive-class F1",
+        "note": "Derived, historical test"
+      },
+      {
+        "value": "3",
+        "label": "Model families",
+        "note": "Plus tuned Random Forest"
+      }
+    ]
   },
   {
     "id": "5",
