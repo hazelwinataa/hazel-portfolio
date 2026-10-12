@@ -801,6 +801,20 @@ const visualDescriptions: Record<string, GalleryDescription> = {
     details: [],
     originalScreenshot: false,
   },
+  "archived-workflow.svg": {
+    title: "How the content-based recommendation workflow was designed",
+    caption: "Conceptual reconstruction from historical coursework discussions: music catalog checks, metadata preprocessing, TF-IDF song profiles, cosine similarity, and Top-N ranking.",
+    details: ["Original notebook execution and exact final vectorizer settings were not recovered.", "Audio attributes were explored during data inspection; the final integrated audio/text scoring configuration is not verified."],
+    originalScreenshot: false,
+    sourceLabel: "Explanatory reconstruction from archived project notes",
+  },
+  "archived-missingness.svg": {
+    title: "Archived EDA: missing genre and audio-feature values",
+    caption: "Data-quality counts transcribed from earlier project discussions: Artist Genres 255, Danceability 252, Instrumentalness 102 out of 4,999 songs.",
+    details: ["These values are historical EDA observations, not a newly executed data audit.", "No final imputation or deduplicated dataset size is claimed."],
+    originalScreenshot: false,
+    sourceLabel: "Recreated visualization of historical EDA counts",
+  },
 };
 
 export default async function ProjectDetailPage({
