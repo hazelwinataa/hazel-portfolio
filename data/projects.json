@@ -3295,5 +3295,159 @@
     "reportUrl": "",
     "image": "",
     "gallery": []
+  },
+  {
+    "id": "32",
+    "slug": "waste-material-classification",
+    "title": "Waste Material Image Classification — CNN & MobileNetV2 with Grad-CAM",
+    "year": 2026,
+    "projectType": "Collaborative academic Deep Learning project",
+    "status": "Completed team coursework — documented experimental results",
+    "grade": "",
+    "featured": false,
+    "roleTags": [
+      "Data Science",
+      "AI / Machine Learning"
+    ],
+    "courseTags": [
+      "Deep Learning"
+    ],
+    "domainTags": [
+      "Computer Vision",
+      "Image Classification",
+      "Explainable AI",
+      "Transfer Learning"
+    ],
+    "description": "Team computer-vision study classifying 2,527 images across six waste types. Compared baseline/improved CNNs against two fine-tuned MobileNetV2 variants; achieved a best recorded 81.32% test accuracy and inspected Grad-CAM attention maps. Describes class imbalance, per-class trade-offs, and test-based selection limitations.",
+    "problemStatement": "Can a multiclass image-classification workflow recognize cardboard, glass, metal, paper, plastic and trash from product photos and reveal where its predictions focus visually?",
+    "businessContext": "Automated sorting assistance could support exploratory recycling workflows, but this academic prototype has not been deployed at a sorting facility or validated on live recycling streams.",
+    "dataset": "Dataset directory trash_images contained 2,527 labeled photos: paper 594, glass 501, plastic 482, metal 410, cardboard 403 and trash 137. Each image path's class folder defined the corresponding label. Original image assets are not published; preserved notebooks contain recorded samples and plots. No license to redistribute the underlying image collection was provided.",
+    "datasetSize": "2,527 waste images · 6 classes · 70:15:15 stratified split",
+    "preprocessing": [
+      "Enumerated image paths and labels by class folder, built a Pandas dataframe, and mapped the six names to integer and one-hot labels.",
+      "Identified pronounced class imbalance: paper has 594 examples versus only 137 trash images (approximately 4.34 times as many). Checked examples for visually similar cardboard/paper, metal/glass and plastic/glass appearances.",
+      "Used stratified train_test_split with fixed seed 42 to create 1,768 train, 379 validation and 380 test images; the three sets are distinct in the recorded code.",
+      "Decoded all images to RGB and resized to 224×224×3, then normalized channels by dividing by 255. The notebooks do not establish a consistent native aspect ratio or pixel-level duplicate check.",
+      "Built TensorFlow tf.data pipelines with parallel image decoding, cache(), optional train-only shuffle(), batch(32), and prefetch(AUTOTUNE).",
+      "Applied training-only augmentation via horizontal flips, small rotations (0.05), zoom (0.05), translations (0.03), and contrast variation (0.08). Validation and test used the unaugmented image pipeline.",
+      "Calculated training-derived balanced class weights and manually adjusted glass weight to address low recall. The later MobileNetV2 V2 experiment also raised the trash-class weight.",
+      "For pretrained MobileNetV2 models, converted normalized [0,1] pixel data to [-1,1] using an internal Rescaling layer, consistent with the pretrained backbone's expected input range."
+    ],
+    "featureEngineering": [
+      "Extracted image features automatically via convolution filters in the custom CNNs, then through ImageNet-pretrained representations in MobileNetV2.",
+      "Replaced Flatten with GlobalAveragePooling2D in the improved CNN to reduce parameter growth and emphasize per-channel global response.",
+      "Used class-weight tuning rather than oversampling to change training penalties for underrepresented or difficult categories.",
+      "Calculated Grad-CAM heatmaps from late convolution layers to examine attention for correctly and incorrectly classified images."
+    ],
+    "methodology": [
+      "Started with EDA of 2,527 images, six class distributions, examples and dataset paths; standardized image dimensions and an identical stratified 70/15/15 partition.",
+      "Trained a baseline custom CNN with three convolution/pooling blocks (32, 64 and 128 filters), Flatten, Dense(128), Dropout(0.4), softmax and 10 training epochs.",
+      "Trained an improved custom CNN with four convolution blocks (32, 64, 128 and 256 filters), BatchNormalization, GlobalAveragePooling2D, Dense(256), Dropout(0.4), plus adjusted class weights and up to 30 epochs.",
+      "Developed MobileNetV2 V1 using ImageNet-pretrained weights, an initially frozen backbone followed by fine-tuning of selected top layers, and six-class classification head.",
+      "Tested MobileNetV2 V2 with altered dropout and class-weight emphasis, particularly on the underrepresented trash class; trained frozen and partially unfrozen phases.",
+      "Evaluated all variants on the same 380-image test set, recording Keras accuracy/precision/recall and separate sklearn per-class classification reports with macro and weighted F1.",
+      "Inspected original confusion matrices and Grad-CAM overlays. In the archived notebook, test metrics across candidate models were also used to identify the preferred variant; this can bias the selected test performance upward and should be corrected in future experiments.",
+      "Interpreted trade-offs across accuracy, recall and F1 rather than treating a marginal lead in aggregate accuracy as uniform superiority."
+    ],
+    "models": [
+      "Baseline custom CNN",
+      "Improved CNN with BatchNormalization and GAP",
+      "MobileNetV2 transfer learning V1",
+      "MobileNetV2 transfer learning V2"
+    ],
+    "technologies": [
+      "Python",
+      "TensorFlow",
+      "Keras",
+      "Pandas",
+      "Scikit-learn",
+      "NumPy",
+      "Matplotlib",
+      "MobileNetV2",
+      "Grad-CAM"
+    ],
+    "evaluationMetrics": [
+      "Test accuracy",
+      "Keras precision and recall (not macro-averaged)",
+      "Macro / weighted F1 from classification reports",
+      "Per-class precision, recall, F1",
+      "Confusion matrix",
+      "Grad-CAM heatmaps"
+    ],
+    "results": [
+      "Dataset: 2,527 images. Stratified split: 1,768 training, 379 validation and 380 independent test images.",
+      "Baseline custom CNN: recorded test accuracy 0.547368, Keras precision 0.739362, Keras recall 0.365789, macro/weighted F1 approximately 0.55.",
+      "Improved CNN: recorded test accuracy 0.802632, Keras precision 0.871473, Keras recall 0.731579, macro/weighted F1 approximately 0.80. Baseline vs improved comparisons also reflect unequal training budgets.",
+      "MobileNetV2 V1: recorded test accuracy 0.813158, Keras precision 0.840456, Keras recall 0.776316, macro F1 approximately 0.78 and weighted F1 approximately 0.81.",
+      "MobileNetV2 V2: recorded test accuracy 0.797368, Keras precision 0.806630, Keras recall 0.768421, macro F1 approximately 0.78 and weighted F1 approximately 0.80.",
+      "Glass recall improved from 0.33 (baseline CNN) to 0.74 (improved CNN). The improvement co-occurred with architecture, regularization and weight changes, so the effect of custom class weights cannot be isolated.",
+      "Trash recall was 0.55 for MobileNetV2 V1 and 0.65 for V2. V2 improved this minority-class metric despite slightly weaker overall test accuracy.",
+      "Grad-CAM visualizations highlighted object regions in some correct predictions but also showed background sensitivity in misclassified examples. The method is interpretive, not proof of causal feature learning."
+    ],
+    "insights": [
+      "The 594-versus-137 paper/trash imbalance can bias aggregate accuracy toward majority labels and makes rare-category recall important for practical sorting applications.",
+      "Visual similarities such as glass versus plastic or metal, and paper versus cardboard, are plausible sources of confusion because of shared shape, texture, translucency and reflective surfaces.",
+      "Improved CNN's additional normalization and GlobalAveragePooling were associated with much better performance than the 10-epoch baseline, but the models also had different training budgets, so it is not a controlled architectural ablation.",
+      "Transfer learning with ImageNet features and selective fine-tuning plausibly helped MobileNetV2 V1 identify general textures/shapes without learning all representations from scratch on only 2,527 images.",
+      "V1 achieved the highest recorded accuracy and weighted F1; V2 traded a small amount of aggregate accuracy for better trash recall, illustrating the need to select models based on actual error costs.",
+      "Original Keras precision and recall scores calculated directly on one-hot multiclass output do not equal macro-averaged per-class metrics; classification reports provide the latter.",
+      "Some incorrect predictions showed attention on backgrounds, illustrating that Grad-CAM visual plausibility alone is not a reliable deployment-readiness assessment."
+    ],
+    "businessImpact": "Academic five-person team proof of concept covering preprocessing, multi-model CNN evaluation, transfer learning, and Grad-CAM. No observed financial savings, deployment, sorting-line test, or measured environmental outcomes were reported.",
+    "challenges": [
+      "Strong target imbalance between common categories and the small trash class.",
+      "Distinct waste materials with visually similar colors, shine, texture and backgrounds.",
+      "Comparing handwritten CNNs against transfer learning with differing training compute and optimization setups.",
+      "Monitoring per-class performance instead of relying only on global classification accuracy.",
+      "Interpreting attention maps when models still attend to background artifacts."
+    ],
+    "limitations": [
+      "Four architectures were examined with different training schedules, regularization and weighting configurations; performance differences cannot be causally attributed to a single technique.",
+      "The archived team selected the preferred candidate based partly on test outcomes, introducing possible model-selection bias. An ideal study selects hyperparameters using validation data and runs one untouched test evaluation.",
+      "No reported perceptual-hash check prevents near-duplicate images crossing random train/validation/test partitions, potentially affecting estimated generalization.",
+      "The dataset images and saved model checkpoints were not supplied, so experiments were not rerun for the portfolio review.",
+      "Grad-CAM may indicate regions influencing prediction but is not a complete causal explanation of visual decision-making.",
+      "Original team poster contains member names and student IDs; a cropped version without team identifiers is prepared for public sharing. The project is collaborative and no specific individual contributions are claimed.",
+      "No grade, live demo, operational recycling performance, or independently validated performance is asserted."
+    ],
+    "futureImprovements": [
+      "Make an immutable 70:15:15 image manifest, detect exact/near duplicates and evaluate again on a genuinely untouched test cohort.",
+      "Select among model configurations using validation or nested evaluation, and compare identical training budgets before measuring generalization once.",
+      "Expand the rare trash class, diversify camera conditions, and assess out-of-domain objects and mixed-material waste.",
+      "Evaluate class-level precision/recall/F1 and confusion costs; tune decision thresholds or use cost-aware classification where appropriate.",
+      "Compare MobileNetV2 to EfficientNet and other efficient vision backbones under the same training protocol.",
+      "Check Grad-CAM robustness across many images and conduct simple segmentation/background-ablation tests."
+    ],
+    "highlights": [
+      {
+        "value": "2,527",
+        "label": "Labeled images",
+        "note": "Six waste types"
+      },
+      {
+        "value": "81.32%",
+        "label": "Top observed test accuracy",
+        "note": "MobileNetV2 V1"
+      },
+      {
+        "value": "4",
+        "label": "Model configurations",
+        "note": "Custom CNN + transfer learning"
+      },
+      {
+        "value": "Grad-CAM",
+        "label": "Interpretability",
+        "note": "Team coursework"
+      }
+    ],
+    "image": "/images/waste-material-classification/four-model-test-results.svg",
+    "gallery": [
+      "/images/waste-material-classification/experiment-workflow.svg",
+      "/images/waste-material-classification/class-distribution.svg",
+      "/images/waste-material-classification/four-model-test-results.svg"
+    ],
+    "githubUrl": "",
+    "demoUrl": "",
+    "reportUrl": ""
   }
 ]
