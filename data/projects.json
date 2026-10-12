@@ -2092,7 +2092,7 @@
     "year": 2026,
     "projectType": "Individual academic final project — Model Deployment",
     "status": "Completed local MLOps pipeline; AWS SageMaker training and EC2 Streamlit deployment documented",
-    "grade": "",
+    "grade": "A",
     "featured": true,
     "roleTags": [
       "Data Science",
@@ -2257,7 +2257,7 @@
     "year": 2026,
     "projectType": "Machine Learning Operations and Model Deployment coursework",
     "status": "Original local, MLflow, AWS SageMaker Endpoint and EC2 Streamlit evidence documented",
-    "grade": "",
+    "grade": "A",
     "featured": true,
     "roleTags": [
       "Data Science",
