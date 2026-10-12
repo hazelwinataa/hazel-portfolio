@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 360" role="img" aria-label="Two APIs ingested as minute-level JSON snapshots and processed through Spark, joined and explored">
+<rect width="1280" height="360" rx="20" fill="#f7fafd"/>
+<text x="45" y="51" font-family="Arial,sans-serif" font-weight="bold" font-size="27" fill="#192a43">Weather–Traffic: Data Collection and EDA Workflow</text>
+<text x="45" y="80" font-family="Arial,sans-serif" font-size="15" fill="#577087">Notebook-derived process · one fixed coordinate for each of 10 cities</text>
+<g font-family="Arial,sans-serif" text-anchor="middle">
+<rect x="38" y="121" width="185" height="126" rx="15" fill="#e8f3fd" stroke="#a5c9e7"/>
+<text x="130" y="159" fill="#154777" font-size="18" font-weight="bold">OpenWeather</text><text x="130" y="184" fill="#365a7c" font-size="15">temp, humidity</text><text x="130" y="206" fill="#365a7c" font-size="15">wind, conditions</text>
+<rect x="38" y="262" width="185" height="63" rx="13" fill="#e9f5ed" stroke="#b2d8bb"/><text x="130" y="287" fill="#286244" font-size="18" font-weight="bold">TomTom</text><text x="130" y="307" fill="#286244" font-size="14">road segment flow</text>
+<rect x="280" y="144" width="193" height="133" rx="15" fill="#fff" stroke="#c9d7e6"/><text x="377" y="176" fill="#1a2a42" font-size="18" font-weight="bold">JSON snapshots</text><text x="377" y="202" fill="#536778" font-size="15">2 writer threads</text><text x="377" y="226" fill="#536778" font-size="15">20 snapshots/source</text><text x="377" y="248" fill="#536778" font-size="15">nominal 60 s</text>
+<rect x="527" y="144" width="200" height="133" rx="15" fill="#fff" stroke="#c9d7e6"/><text x="627" y="176" fill="#1a2a42" font-size="18" font-weight="bold">PySpark</text><text x="627" y="202" fill="#536778" font-size="15">readStream</text><text x="627" y="226" fill="#536778" font-size="15">foreachBatch</text><text x="627" y="248" fill="#536778" font-size="15">CSV histories</text>
+<rect x="782" y="144" width="211" height="133" rx="15" fill="#fff" stroke="#c9d7e6"/><text x="888" y="176" fill="#1a2a42" font-size="18" font-weight="bold">Time-bucket join</text><text x="888" y="202" fill="#536778" font-size="15">minute + city</text><text x="888" y="226" fill="#536778" font-size="15">lat + lon</text><text x="888" y="249" fill="#af4c24" font-size="15">740 joined rows*</text>
+<rect x="1044" y="144" width="194" height="133" rx="15" fill="#eaf5f1" stroke="#bbd8cd"/><text x="1141" y="176" fill="#1c634c" font-size="18" font-weight="bold">Preprocess / EDA</text><text x="1141" y="202" fill="#486a5f" font-size="15">IQR, scaling,</text><text x="1141" y="226" fill="#486a5f" font-size="15">category encoding</text><text x="1141" y="249" fill="#486a5f" font-size="15">ratio, visualizations</text>
+</g>
+<g stroke="#7191af" stroke-width="3" fill="none"><path d="M223 184 L271 184"/><path d="M223 294 Q252 294 252 225 L271 225"/><path d="M473 210 L517 210"/><path d="M727 210 L772 210"/><path d="M993 210 L1034 210"/></g>
+<g fill="#7191af"><path d="M270 179 l10 5 -10 5"/><path d="M517 205 l10 5 -10 5"/><path d="M772 205 l10 5 -10 5"/><path d="M1034 205 l10 5 -10 5"/></g>
+<text x="45" y="344" font-family="Arial,sans-serif" font-size="14" fill="#7c4055">* 740 joined rows are not necessarily 740 independent snapshots: repeated minute-level keys may multiply join pairs.</text>
+</svg>

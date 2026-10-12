@@ -2420,84 +2420,149 @@
   {
     "id": "27",
     "slug": "weather-traffic-streaming",
-    "title": "Weather–Traffic Streaming Analytics & Congestion Classification",
-    "year": null,
-    "projectType": "",
-    "status": "",
+    "title": "Weather–Traffic API Streaming — Data Collection, Cleaning & EDA",
+    "year": 2025,
+    "projectType": "Academic data engineering and exploratory analytics project — DMO",
+    "status": "Completed notebook experiment",
     "grade": "",
     "featured": true,
     "roleTags": [
       "Data Engineer",
-      "Data Science",
-      "Data Analyst"
+      "Data Analyst",
+      "Data Science"
     ],
     "courseTags": [
-      "Big Data & Infrastructure"
+      "Data Management & Organization / DMO"
     ],
     "domainTags": [
+      "API Data Collection",
       "Data Engineering",
-      "Cloud",
-      "Classification"
+      "Data Preprocessing",
+      "Exploratory Data Analysis",
+      "Spark Streaming"
     ],
-    "description": "Weather and traffic ingestion across ten Indonesian cities, with Spark Structured Streaming and congestion classification experiments.",
-    "problemStatement": "Integrate weather and traffic feeds into a data-processing workflow and explore whether combined attributes support congestion-level classification.",
-    "businessContext": "Joint weather–traffic analysis can support exploratory urban mobility analysis; predictive reliability depends on leakage-free labels and balanced evaluation.",
-    "dataset": "OpenWeather and TomTom Traffic API snapshots collected for ten Indonesian cities.",
-    "datasetSize": "10 Indonesian cities",
+    "description": "Collected timestamped OpenWeather and TomTom Traffic Flow API data for fixed road locations in 10 Indonesian cities, ingested JSON snapshots with Spark Structured Streaming, joined the feeds by time and location, and investigated preprocessing choices and descriptive traffic patterns. The resulting 740 joined rows also revealed a potential many-to-many time-bucket join issue.",
+    "problemStatement": "Build a practical reproducible example of multi-source weather–traffic collection and analysis: retrieve API snapshots, preserve ingestion histories, align observations in time and space, and inspect whether weather attributes co-vary with road-segment traffic conditions.",
+    "businessContext": "Real-time weather and road-speed indicators can support exploratory urban-mobility monitoring. These API observations represent the road segment near each selected coordinate—not citywide traffic conditions—and the short capture window does not establish the causal effect of weather on congestion.",
+    "dataset": "Two official REST sources: OpenWeather Current Weather (temperature, feels-like, humidity, pressure, weather condition and wind) and TomTom Traffic Flow Segment Data (current/free-flow speed, current/free-flow travel time and confidence). Ten fixed coordinates: Jakarta, Bandung, Surabaya, Yogyakarta, Semarang, Medan, Padang, Palembang, Pekanbaru and Banda Aceh. Notebook observations are from December 16, 2025.",
+    "datasetSize": "10 cities · 2 APIs · 20 planned snapshots per source · 740 final joined rows (potential duplicate join matches)",
     "preprocessing": [
-      "Prepared weather/traffic features for Spark ML models",
-      "Applied feature indexing and scaling",
-      "Explored PCA in the predictive workflow"
+      "Configured separate Python threads to request OpenWeather and TomTom once per nominal 60-second interval; the notebook targets 20 snapshots for each feed and saves nested API responses as JSON files.",
+      "Defined Spark schemas for both JSON feeds; used readStream, explode(rows) and foreachBatch to validate micro-batches, inspect per-city summaries and append weather and traffic histories to separate CSV folders.",
+      "Parsed timestamps and joined weather and traffic histories on minute bucket (floor(snapshot_ts / 60)), city, latitude and longitude; renamed source timestamps to preserve both ingestion times.",
+      "Reviewed a critical join-granularity issue: 740 joined rows exceed the nominal 200 samples per 10-city feed, which may indicate multiple rows sharing the minute-level join key; the notebook does not report a post-join uniqueness audit.",
+      "Explicitly cast ten numerical measurements to Double and detected potential outliers using approximate Q1/Q3 and the 1.5×IQR rule; outliers were flagged for scaling-method selection, not automatically deleted.",
+      "Applied z-score standardization to 7 measurements with detected IQR outliers, and min–max scaling to temp, pressure and free-flow travel time; checked raw-versus-scaled Pearson correlations.",
+      "Used Spark StringIndexer and OneHotEncoder for city, weather_main and weather_desc; stored OneHot vectors as strings for CSV persistence, while later modeling used indexed category columns.",
+      "Validated sensible ranges for humidity, wind speed, temperature, pressure, speeds, travel times and TomTom confidence; out-of-range measurements were converted to null."
     ],
     "featureEngineering": [
-      "Joined weather and traffic observations",
-      "Constructed time-bucket aggregations from snapshots"
+      "Created minute-resolution alignment key snapshot_min for two independently polled APIs; retained weather_snapshot_ts and traffic_snapshot_ts separately.",
+      "Built speed_ratio = current_speed / free_flow_speed (guarding against zero and missing denominator) as a normalized, segment-relative traffic indicator.",
+      "Defined descriptive rule-based labels from speed_ratio: Heavy <0.4, Medium 0.4–<0.8, Smooth ≥0.8. These labels are engineering thresholds, not independently measured ground-truth classes.",
+      "Created standardized and min–max scaled numerical variants and categorical encodings for subsequent exploratory modeling."
     ],
     "methodology": [
-      "Used threaded API ingestion and JSON snapshots",
-      "Processed records through Spark Structured Streaming",
-      "Persisted micro-batch outputs using foreachBatch",
-      "Compared Logistic Regression, Random Forest, and Decision Tree models",
-      "Used cross-validation and grid-based tuning in classification experiments"
+      "Source selection and spatial sampling: ten cities across Java and Sumatra, using one fixed latitude/longitude per city and TomTom Flow Segment Data for the road closest to that point.",
+      "API ingestion: two scheduled polling threads, JSON snapshot persistence and Spark Structured Streaming to micro-batch CSV outputs.",
+      "Temporal integration: join history data by minute bucket and matching city/coordinates; acknowledge that a minute bucket can create non-unique many-to-many matches.",
+      "Exploratory data quality checks: source schemas, numeric casting, IQR-based outlier counts, conditional scaling, categorical encoding and valid-range checks.",
+      "EDA: congestion-label frequencies, average speed ratio per sampled city location, time-series temperature snapshots, temperature-versus-speed-ratio scatter, and group-wise speed-ratio distributions.",
+      "Brief exploratory modeling only: the saved notebook performs a five-fold Spark CrossValidator fit for Logistic Regression, not an independent side-by-side benchmark of all three models described in the narrative."
     ],
     "models": [
-      "Logistic Regression",
-      "Random Forest",
-      "Decision Tree"
+      "Exploratory Logistic Regression (secondary; in-sample reported performance)"
     ],
     "technologies": [
       "Python",
+      "Requests",
       "OpenWeather API",
-      "TomTom Traffic API",
+      "TomTom Traffic Flow Segment Data API",
       "Apache Spark",
-      "Spark Structured Streaming",
-      "Spark MLlib"
+      "PySpark Structured Streaming",
+      "Spark SQL",
+      "Spark MLlib",
+      "Pandas",
+      "Matplotlib"
     ],
     "evaluationMetrics": [
-      "F1-score",
-      "Weighted precision",
-      "Weighted recall",
-      "Accuracy"
+      "Descriptive group frequencies",
+      "Mean speed ratio by location",
+      "IQR outlier counts",
+      "Pearson correlation",
+      "Exploratory F1 / accuracy (in-sample; not independent validation)"
     ],
-    "results": [],
+    "results": [
+      "Captured and processed two live API feeds across ten sampled Indonesian city coordinates. The joined, labeled dataset contains 740 rows; row counts may be inflated by minute-bucket many-to-many joining.",
+      "Rule-based congestion labels: Smooth 501/740 (67.70%), Medium 239/740 (32.30%), and Heavy 0. The absence of Heavy reflects this short sample and the defined speed-ratio threshold, not proof of no severe traffic in these cities.",
+      "Lowest average speed ratios at the sampled road segments: Yogyakarta 0.69398, Jakarta 0.75440 and Palembang 0.78346. These are not citywide traffic rankings.",
+      "Bandung, Semarang, Padang and Banda Aceh have observed mean speed ratios of 1.0 at their sampled segments, meaning the measured current speed closely matched free-flow speed during collected snapshots.",
+      "Outlier screening used ten numeric fields. Seven were standardized and three were min–max scaled; checking correlation before/after showed the expected preservation of Pearson relationships under positive linear scaling.",
+      "The notebook reports exploratory Logistic Regression F1 0.9676 and accuracy 0.9676, evaluated on the same dataset used in fitting/CV; this is an optimistic in-sample score, not a verified out-of-sample result."
+    ],
     "insights": [
-      "The pipeline demonstrates ingestion, stream processing, joins, and model experimentation across multiple sources.",
-      "Earlier experiments exposed class imbalance and potential target leakage, so apparently perfect results must not be interpreted as reliable proof."
+      "Traffic flow measurements are road-segment snapshots. A city sampled at one coordinate should never be used to claim its overall congestion ranking.",
+      "The abundance of Smooth and Medium labels is partly a consequence of the rule-based thresholds and the sampled minutes/segments; Heavy does not occur because none of the recorded speed ratios met its threshold.",
+      "High temperature–feels-like Pearson correlation (~0.957) is expected because both describe related atmospheric conditions; strong negative temperature–humidity correlation (~−0.899) is descriptive and may be confounded by geography, short collection times and repeated join rows.",
+      "Weak or visually inconsistent temperature–speed-ratio patterns do not establish that temperature causes traffic changes; road context, traffic demand and time-of-day were not controlled.",
+      "The 740-row join versus the nominal ~200 per feed is a data-quality lesson: align independent API feeds with key-uniqueness checks, closest-timestamp matching or aggregation before joining."
     ],
-    "businessImpact": "Potential application: explore weather-related patterns in congestion indicators; no deployed traffic-management impact is claimed.",
-    "challenges": [],
+    "businessImpact": "Demonstrates a practical prototype for combining external weather and road-traffic APIs into a Spark-based analytical pipeline. The notebook is an exploratory academic exercise and does not measure improvements in traffic management or deployment outcomes.",
+    "challenges": [
+      "Synchronizing two independent API polling threads that return at slightly different timestamps.",
+      "Avoiding cardinality inflation when joining independent data feeds by coarse minute buckets.",
+      "Interpreting speed ratios from a single sampled road segment for each city.",
+      "Distinguishing source API signals from labels engineered out of the same traffic measurements."
+    ],
     "limitations": [
-      "Class imbalance and possible target leakage were identified in previous experiments.",
-      "Source API availability and sampling choices can affect temporal coverage and generalization."
+      "Only a short capture period on 16 Dec 2025, with one fixed location sampled per city; findings do not generalize to full urban road networks, times of day or seasons.",
+      "No explicit proof of deduplicated one-to-one joins or independent temporal observations; 740 final rows may overrepresent repeated source snapshots.",
+      "The Heavy category is absent from the captured sample, making three-class model claims unsupported by this run.",
+      "The 0.9676 reported classification performance is computed on training data following cross-validation, without a held-out temporal test. It should not be used as a recruiter-facing performance claim.",
+      "Scaler and indexer were fit before cross-validation, and the congestion target was derived directly from traffic metrics, so leakage and optimistic validation risks remain.",
+      "The shared original notebook contains hard-coded API keys and must be sanitized before any public GitHub upload; keys should be rotated by the owner."
     ],
     "futureImprovements": [
-      "Recheck target construction for leakage and report leakage-free, class-specific evaluation."
+      "Rotate exposed API keys, read credentials from protected environment variables and provide a public sanitized notebook.",
+      "Validate timestamp uniqueness and enforce one row per city per intended interval (or join by nearest time within a specified tolerance) before exploratory statistics.",
+      "Collect multiple monitored segments per city over longer periods with time-of-day and road-class features.",
+      "Profile missing responses, API HTTP failures, rate limits and confidence values; store request status and actual data timestamps separately.",
+      "Conduct an honest held-out chronological validation and avoid using target-derived columns and correlated target proxies as predictors."
     ],
     "githubUrl": "",
     "demoUrl": "",
     "reportUrl": "",
-    "image": "",
-    "gallery": []
+    "image": "/images/weather-traffic/mean-speed-ratio-by-city.webp",
+    "gallery": [
+      "/images/weather-traffic/collection-to-eda-pipeline.svg",
+      "/images/weather-traffic/congestion-label-distribution.webp",
+      "/images/weather-traffic/mean-speed-ratio-by-city.webp",
+      "/images/weather-traffic/jakarta-temperature-snapshots.webp",
+      "/images/weather-traffic/temperature-vs-speed-ratio.webp",
+      "/images/weather-traffic/speed-ratio-by-label.webp"
+    ],
+    "highlights": [
+      {
+        "value": "10",
+        "label": "Indonesian cities",
+        "note": "One sampled road segment each"
+      },
+      {
+        "value": "2",
+        "label": "REST API sources",
+        "note": "OpenWeather + TomTom Traffic"
+      },
+      {
+        "value": "740",
+        "label": "Joined EDA rows",
+        "note": "Join cardinality needs validation"
+      },
+      {
+        "value": "67.7%",
+        "label": "Smooth-category rows",
+        "note": "Engineered traffic label"
+      }
+    ]
   },
   {
     "id": "28",

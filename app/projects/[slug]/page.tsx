@@ -127,6 +127,48 @@ type GalleryDescription = {
 };
 
 const visualDescriptions: Record<string, GalleryDescription> = {
+  "collection-to-eda-pipeline.svg": {
+    title: "Weather–Traffic streaming workflow",
+    caption: "Notebook-backed diagram of the two scheduled REST API collectors, JSON histories, PySpark Structured Streaming, minute-level integration, and data preprocessing.",
+    details: ["This is an explanatory diagram, not a product screenshot.", "A coarse minute-level join may match multiple rows within the same city and minute and inflate sample count."],
+    originalScreenshot: false,
+    sourceLabel: "Workflow recreated from notebook source",
+  },
+  "congestion-label-distribution.webp": {
+    title: "Original EDA — rule-based congestion labels",
+    caption: "Original Matplotlib chart from the uploaded notebook showing Smooth (501) and Medium (239) in 740 joined rows.",
+    details: ["Heavy is absent because no recorded speed_ratio was less than 0.4.", "Labels were engineered from the TomTom speed ratio rather than independent traffic incident ground truth."],
+    originalScreenshot: true,
+    sourceLabel: "Original notebook Matplotlib visualization",
+  },
+  "mean-speed-ratio-by-city.webp": {
+    title: "Original EDA — speed ratio by sampled city coordinate",
+    caption: "Original notebook plot: Yogyakarta (~0.694) and Jakarta (~0.754) have the lowest average current-speed/free-flow-speed ratio at the sampled road segments.",
+    details: ["This is a single sampled road segment per city, not an urban congestion index.", "Several segments average 1.0, meaning measured current speed matched free-flow conditions during the observed collection window."],
+    originalScreenshot: true,
+    sourceLabel: "Original notebook Matplotlib visualization",
+  },
+  "jakarta-temperature-snapshots.webp": {
+    title: "Original EDA — Jakarta weather snapshots",
+    caption: "Original notebook line chart of Jakarta temperature against ingestion time for the sampled collection window.",
+    details: ["Repeated minute-level matches can make one source weather snapshot appear multiple times in the joined dataset.", "This short capture window cannot demonstrate seasonal climate or long-term daily temperature trends."],
+    originalScreenshot: true,
+    sourceLabel: "Original notebook Matplotlib visualization",
+  },
+  "temperature-vs-speed-ratio.webp": {
+    title: "Original EDA — temperature versus road speed ratio",
+    caption: "Original scatter plot of temperature against TomTom speed ratio from the joined dataset.",
+    details: ["The plot shows observations but does not isolate a causal weather impact on congestion.", "Potential many-to-many duplication and unmeasured time-of-day or road attributes limit generalization."],
+    originalScreenshot: true,
+    sourceLabel: "Original notebook Matplotlib visualization",
+  },
+  "speed-ratio-by-label.webp": {
+    title: "Original EDA — speed ratio grouped by engineered label",
+    caption: "Original boxplot grouping speed_ratio by Medium and Smooth.",
+    details: ["The separation is mathematically expected because the labels were created using thresholds of this same speed_ratio.", "It is a descriptive consistency check, not evidence that a classifier learned independent traffic behavior."],
+    originalScreenshot: true,
+    sourceLabel: "Original notebook Matplotlib visualization",
+  },
   "pipeline-overview.svg": {
     title: "Project architecture — from assessments to human-reviewed support",
     caption: "A source-backed diagram of the dataset, two clustering representations, five selected groups, priority rules, FastAPI/PostgreSQL, and the Next.js frontend.",
