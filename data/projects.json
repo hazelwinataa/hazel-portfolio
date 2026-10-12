@@ -2132,7 +2132,8 @@
       "Implemented predict_local.py for CLI-based inference and deployment/streamlit_app.py for an interactive user-facing prediction form with optional class probabilities.",
       "Ran training and tuning workflows in AWS SageMaker Notebook, as evidenced by screenshots of both feature sets, model comparison and final artifact/inference checks.",
       "Attempted SageMaker Endpoint configuration; AWS Academy Learner Lab explicitly denied sagemaker:CreateEndpointConfig, so no SageMaker inference endpoint was created.",
-      "Deployed the Streamlit prediction application to an AWS EC2 instance via public IPv4 and port 8501; the original evidence document shows the service running, server health check, and browser prediction tests for all three labels."
+      "Deployed the Streamlit prediction application to an AWS EC2 instance via public IPv4 and port 8501; the original evidence document shows the service running, server health check, and browser prediction tests for all three labels.",
+      "Explained the local-to-cloud architecture and operational trade-offs using the actual project evidence: local OOP training and MLflow tracking, SageMaker Notebook training experiments, and Streamlit hosted on EC2. The demonstrated EC2 application is distinct from a managed SageMaker model-serving endpoint, which AWS Academy permissions prevented."
     ],
     "models": [
       "Logistic Regression",
@@ -2183,7 +2184,8 @@
       "The separation into cleaning, feature engineering, preprocessing, training, evaluation and inference classes supports clearer local retraining and debugging.",
       "The original modeling notebook and local deployment pipeline use different cleaning logic and therefore report different row counts and scores.",
       "The project demonstrates two distinct AWS surfaces: SageMaker Notebook for training workflow execution and EC2 for web application hosting.",
-      "Infrastructure permissions shaped the deployment choice: EC2 hosted Streamlit when AWS Academy restrictions prevented SageMaker Endpoint configuration."
+      "Infrastructure permissions shaped the deployment choice: EC2 hosted Streamlit when AWS Academy restrictions prevented SageMaker Endpoint configuration.",
+      "Local inference was easier to reproduce and debug within the development environment, while the EC2-hosted Streamlit demonstration made the application accessible outside the local machine. Hosting adds configuration, security, cost and maintenance responsibilities; the project does not measure comparative cost or availability."
     ],
     "businessImpact": "Academic demonstration of reproducible training, experiment auditability and accessible credit-score inference; deployment and decision thresholds would need independent validation, security reviews and regulatory/fairness analysis for real financial use.",
     "challenges": [
@@ -2205,7 +2207,8 @@
       "Refactor full-dataset customer-based cleaning into train-fitted transformations where necessary and use independent holdout testing for final model selection.",
       "If future IAM permissions allow, implement SageMaker Endpoint deployment with authenticated inference and dedicated end-to-end tests.",
       "Make EC2 application hosting reproducible with secure HTTPS, managed secrets, infrastructure-as-code and reliable uptime monitoring.",
-      "Add a separate untouched customer-group holdout and train-fitted cleaning to strengthen unbiased evaluation and leakage prevention."
+      "Add a separate untouched customer-group holdout and train-fitted cleaning to strengthen unbiased evaluation and leakage prevention.",
+      "Benchmark local versus EC2 application latency, monthly cloud resource costs and operational overhead under the same test inputs; record the results before claiming a measured deployment advantage."
     ],
     "githubUrl": "https://github.com/hazelwinataa/credit-score-deployment-pipeline",
     "demoUrl": "",
@@ -2266,7 +2269,8 @@
     ],
     "domainTags": [
       "MLOps",
-      "Classification"
+      "Classification",
+      "Cloud"
     ],
     "description": "Demonstrated a complete educational MLOps workflow for Spaceship Titanic: Optuna tuning, nested MLflow runs, Model Registry champion selection, local Streamlit inference, SageMaker endpoint deployment and an EC2-hosted Streamlit interface calling the endpoint.",
     "problemStatement": "Organize training experiments, model versioning and model-serving demonstrations around a reproducible passenger Transported classifier; show both local and cloud inference interfaces.",
@@ -2289,7 +2293,8 @@
       "Ran Logistic Regression tuning in an AWS SageMaker Notebook environment, with separate recorded CV accuracy of approximately 0.7927 in the SageMaker terminal screenshot.",
       "Documented a SageMaker inference endpoint with InService status in May 2026, based on original AWS console screenshot.",
       "Deployed an interactive Streamlit form to an AWS EC2 instance and captured a live invocation payload plus response (Transported True, probability ~0.7407 for class 1) in original screenshots.",
-      "Maintained source code for a local deployment implementation in an existing public GitHub repository; the uploaded materials do not independently contain all scripts that created the historical cloud endpoint."
+      "Maintained source code for a local deployment implementation in an existing public GitHub repository; the uploaded materials do not independently contain all scripts that created the historical cloud endpoint.",
+      "Mapped the demonstrated end-to-end cloud serving boundary: an EC2-hosted Streamlit interface collects passenger attributes, forwards an inference request to the deployed SageMaker Endpoint, and displays the returned classification. This differs from running a local Streamlit app and illustrates separation of UI hosting from managed model serving."
     ],
     "models": [
       "Logistic Regression",
@@ -2328,7 +2333,8 @@
       "MLflow and Optuna provide searchable experiments and an auditable route from tuning to an explicitly registered champion.",
       "Using SageMaker Endpoint separates model serving from the EC2-hosted Streamlit presentation layer.",
       "Screenshots establish historical functioning inference, not continuous availability or validated production SLA.",
-      "Cloud SageMaker Logistic Regression CV, local experiment CV and Kaggle leaderboard scores are different evaluation tracks."
+      "Cloud SageMaker Logistic Regression CV, local experiment CV and Kaggle leaderboard scores are different evaluation tracks.",
+      "The separation between EC2 presentation and SageMaker inference supports a modular conceptual deployment design, but its practical benefit depends on IAM configuration, network accessibility, ongoing cloud cost and endpoint monitoring; historical successful requests alone do not establish production reliability."
     ],
     "businessImpact": "Educational demonstration of model lifecycle tooling, AWS inference hosting and browser-based predictions; no real-world service reliability, commercial benefit or deployment uptime is asserted.",
     "challenges": [
@@ -2346,7 +2352,8 @@
     "futureImprovements": [
       "Create a single reproducible containerized inference stack with version-locked model and preprocessor artifacts.",
       "Add unit tests and inference contract checks for the EC2–SageMaker request/response interface.",
-      "Document IAM roles, least-privilege configuration and an automated infrastructure cleanup checklist without publishing credentials."
+      "Document IAM roles, least-privilege configuration and an automated infrastructure cleanup checklist without publishing credentials.",
+      "Compare the local and cloud prediction workflows on identical input samples, measure end-to-end latency and recurring infrastructure cost, and document secure endpoint access and service-health monitoring."
     ],
     "githubUrl": "https://github.com/hazelwinataa/spaceship-titanic-deployment",
     "demoUrl": "",
@@ -3097,67 +3104,6 @@
         "note": "Engineered traffic label"
       }
     ]
-  },
-  {
-    "id": "28",
-    "slug": "aws-cloud-coursework",
-    "title": "AWS / Cloud Model Deployment Coursework",
-    "year": null,
-    "projectType": "",
-    "status": "",
-    "grade": "A",
-    "featured": false,
-    "roleTags": [
-      "Data Engineer",
-      "MLOps",
-      "Data Science"
-    ],
-    "courseTags": [
-      "Big Data & Infrastructure",
-      "Model Deployment"
-    ],
-    "domainTags": [
-      "Cloud",
-      "MLOps"
-    ],
-    "description": "Cloud infrastructure and machine-learning deployment coursework covering AWS, local-to-cloud inference, and supporting backend components.",
-    "problemStatement": "Explore how a model and its supporting application components can be deployed and accessed outside a local development machine.",
-    "businessContext": "Cloud-based delivery can improve availability and external accessibility while introducing operational cost, security, and maintenance considerations.",
-    "dataset": "",
-    "datasetSize": "",
-    "preprocessing": [],
-    "featureEngineering": [],
-    "methodology": [
-      "Explored AWS infrastructure concepts and deployment workflows",
-      "Studied Streamlit inference and model-management components",
-      "Worked with REST APIs, PostgreSQL, SQLAlchemy, and local-to-cloud inference",
-      "Compared scalability, accessibility, and maintenance considerations"
-    ],
-    "models": [],
-    "technologies": [
-      "AWS",
-      "Streamlit",
-      "MLflow",
-      "REST API",
-      "PostgreSQL",
-      "SQLAlchemy"
-    ],
-    "evaluationMetrics": [],
-    "results": [],
-    "insights": [
-      "Local deployment and cloud deployment involve different operational trade-offs even when serving the same predictive model."
-    ],
-    "businessImpact": "",
-    "challenges": [],
-    "limitations": [
-      "Course grade A is documented, but specific service configurations and independently verifiable public deployments are not supplied."
-    ],
-    "futureImprovements": [],
-    "githubUrl": "",
-    "demoUrl": "",
-    "reportUrl": "",
-    "image": "",
-    "gallery": []
   },
   {
     "id": "29",
