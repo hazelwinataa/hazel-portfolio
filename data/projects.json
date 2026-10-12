@@ -3163,10 +3163,10 @@
   {
     "id": "30",
     "slug": "beemazon-avl",
-    "title": "Beemazon E-Commerce Prototype",
-    "year": null,
-    "projectType": "",
-    "status": "",
+    "title": "Beemazon E-Commerce Prototype — AVL Tree in C",
+    "year": 2025,
+    "projectType": "Academic data structures and algorithms programming exercise",
+    "status": "Historical C implementation discussed; complete source file unavailable",
     "grade": "",
     "featured": false,
     "roleTags": [],
@@ -3174,43 +3174,111 @@
       "Other Academic Project"
     ],
     "domainTags": [
-      "Database",
+      "Data Structures",
+      "Algorithms",
       "System Design"
     ],
-    "description": "C-language e-commerce product-management prototype centered on an AVL tree data structure.",
-    "problemStatement": "Build a prototype product-management workflow using a balanced tree to support searching and updating product records.",
-    "businessContext": "A programming/data-structures exercise illustrating organized product lookup and basic e-commerce record operations.",
-    "dataset": "",
-    "datasetSize": "",
-    "preprocessing": [],
+    "description": "Built an e-commerce-inspired product-management exercise in C around a self-balancing AVL Tree. The historical code discussion covered insertion, deletion by product price, nearest-price product lookup with a lower-price tie-breaker, and price-sorted ranked browsing using in-order traversal. This is an in-memory data-structures prototype, not a relational database or online store.",
+    "problemStatement": "Organize product records by price and support ordered e-commerce catalog operations while maintaining a balanced binary search tree after insertions and deletions. Return the nearest available price to a requested value, and browse bounded rank intervals in ascending price order.",
+    "businessContext": "An algorithmic learning exercise demonstrating tree-based product indexing, priority comparisons and menu-driven data access. It does not represent a production catalog, checkout system, persistent database, multi-user marketplace or measured shopping experience.",
+    "dataset": "Program-defined in-memory product entries; archived discussions describe each AVL node storing a numerical price, a product name, node height, and pointers to left and right children. No external dataset, transaction history or standardized benchmark input has been recovered.",
+    "datasetSize": "In-memory product entries; original program input size and test record counts unavailable",
+    "preprocessing": [
+      "Read product name and numerical price from the exercise's command-oriented input and used price as the ordered tree key.",
+      "Stored a cached node height for AVL balance-factor checks; left and right child pointers establish the binary search structure.",
+      "The archived C input example read names as single tokens rather than unrestricted names containing spaces, creating a known catalog-input limitation."
+    ],
     "featureEngineering": [],
     "methodology": [
-      "Represented product records in an AVL tree",
-      "Implemented tree-based search and insert/update operations",
-      "Explored balanced-search-tree behavior in an e-commerce-inspired prototype"
+      "Modeled each product as a C struct holding name, price, height, left pointer and right pointer, with a root pointer representing the current product catalog.",
+      "Implemented recursive AVL insertion ordered by price, updating stored heights and rebalancing subtrees through appropriate single or double left/right rotations (LL, LR, RR, RL).",
+      "Implemented removal of an entry by its price key, using binary-search-tree deletion logic (including a predecessor replacement case) and updating AVL balance after removing the target node.",
+      "Implemented findSimilar to identify a product with the smallest absolute difference between its price and a requested price; the archived rule chooses the lower-priced entry when differences are equal.",
+      "Used in-order traversal to enumerate products in ascending price order and show a requested rank interval x–y; the historical task limited the number of displayed entries in a range to 10.",
+      "Provided a command-driven console interface with four operations: insert product, delete by price, nearest-price search and display a bounded rank range.",
+      "Discussed command validation and response states such as duplicate price, absent similar match, invalid command and invalid requested range, although the original executable and output test log are no longer available."
     ],
-    "models": [],
+    "models": [
+      "AVL Tree (self-balancing binary search tree)"
+    ],
     "technologies": [
       "C",
       "AVL Tree",
-      "Data Structures"
+      "Binary Search Tree",
+      "Tree Rotations",
+      "Recursion",
+      "In-order Traversal"
     ],
-    "evaluationMetrics": [],
-    "results": [],
+    "evaluationMetrics": [
+      "Correctness of ordered insertion/removal (design objective)",
+      "Nearest-price tie-breaking behavior (design objective)",
+      "AVL balance-factor invariant (design objective)",
+      "Asymptotic operation complexity (theoretical, not benchmarked)"
+    ],
+    "results": [
+      "Historical coursework discussion records a product-price-oriented AVL data structure with insert, delete, nearest-price search and sorted rank-range display operations.",
+      "Nearest-price selection rule: minimize absolute price difference to the requested value; when candidate differences tie, prefer the lower product price.",
+      "Ordered display relied on in-order traversal and a requested x–y position interval, with a stated maximum of 10 products per display.",
+      "By AVL theory, the height remains O(log n) when balance invariants hold, supporting O(log n) search/insert/delete by key. The archived source was not recovered for complexity or correctness verification, and a full in-order scan may still take O(n).",
+      "No measured runtime, memory benchmark, test suite, public demo, saved executable, course grade or source-code repository has been independently verified."
+    ],
     "insights": [
-      "AVL trees maintain balance to support efficient ordered lookups and updates in a data-structures setting."
+      "Tree balancing prevents the worst-case linear height that can arise in an unbalanced binary search tree for sorted or adversarial insertion orders, assuming the original AVL update logic is correct.",
+      "Using the price as a key makes the tree naturally suited to sorted price queries, but conflicts when distinct products share exactly the same price unless a composite key or dedicated list is introduced.",
+      "In-order traversal converts the ordered binary tree into ascending price output without sorting a separate array from scratch; traversal cost depends on how much of the tree is visited.",
+      "The lower-price tie-breaking condition creates a deterministic, user-understandable recommendation rule for equidistant candidate prices.",
+      "AVL rotations keep search-oriented ordering operations efficient by design, but the code's practical correctness and execution-time gains should be assessed with real tests rather than claimed from theory alone."
     ],
-    "businessImpact": "",
-    "challenges": [],
+    "businessImpact": "Educational programming outcome: demonstrated a catalog-like command workflow using balanced binary tree operations in C. No users, commercial transactions, sales uplift, operational deployment or measured speed improvement were documented.",
+    "challenges": [
+      "Maintaining correct cached heights and balance factors after recursive insertion and deletion.",
+      "Selecting and implementing single/double rotations for different imbalance patterns without disrupting binary search ordering.",
+      "Handling deletion of a non-leaf entry and rebalancing its ancestor path.",
+      "Implementing deterministic nearest-price selection when two candidates are equally close to the requested price.",
+      "Converting sorted traversal positions into a bounded x–y display with meaningful error handling."
+    ],
     "limitations": [
-      "The project is a prototype, not a production-ready database or transactional e-commerce platform."
+      "Original source .c file, complete sample input/output, automated tests and compiled executable were not recovered; this case study is based on prior program-specific discussions and cannot be represented as a freshly verified runnable implementation.",
+      "Product indexing used price as the primary key; the original treatment of multiple distinct products with identical prices was not fully validated.",
+      "The discussed name-input approach allowed one-token names, not product names containing spaces.",
+      "Product data existed in memory; persistent storage, checkout, accounts, authentication, payments and concurrency were outside the prototype scope.",
+      "AVL theory explains potential O(log n) key operations, but no benchmark or execution profile supports a project-specific performance claim.",
+      "No public GitHub source repository, academic grade or deployment link is asserted."
     ],
-    "futureImprovements": [],
+    "futureImprovements": [
+      "Recover the original Beemazon C source and add a concise README plus sample console sessions before considering a public source repository.",
+      "Add unit tests for LL, LR, RL and RR rotations, duplicate-price handling, missing-key removal and nearest-price ties.",
+      "Support names with spaces via line-oriented input parsing and adopt a stable product ID plus price-based secondary ordering to permit products with matching prices.",
+      "Track subtree sizes to support efficient indexed/rank-range retrieval rather than scanning a full in-order listing.",
+      "Add optional file serialization for persistent records, while preserving this project's identity as a data-structures exercise."
+    ],
     "githubUrl": "",
     "demoUrl": "",
     "reportUrl": "",
     "image": "",
-    "gallery": []
+    "gallery": [],
+    "highlights": [
+      {
+        "value": "C",
+        "label": "Implementation language",
+        "note": "Console-driven algorithm exercise"
+      },
+      {
+        "value": "AVL",
+        "label": "Primary structure",
+        "note": "Height-balanced search tree"
+      },
+      {
+        "value": "4",
+        "label": "Catalog operations",
+        "note": "Insert, remove, nearest, browse"
+      },
+      {
+        "value": "O(log n)",
+        "label": "Tree key operations",
+        "note": "Theoretical AVL bound"
+      }
+    ]
   },
   {
     "id": "31",
