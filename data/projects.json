@@ -395,7 +395,7 @@
       "Random Forest exceeded XGBoost in overall accuracy by 0.024 (2.4 percentage points). XGBoost exceeded Random Forest in balanced accuracy by 0.014 and macro F1 by 0.021.",
       "Both balanced-accuracy scores were around 0.41–0.42. They indicate substantial remaining room for improvement across the four stage classes; per-class errors cannot be diagnosed without the missing confusion matrices and label supports.",
       "Archived input filename: 1A.tsv; the target was discussed as Stage 1–4. The number of observations and final class distribution were not recorded.",
-      "No original source-code repository, rerunnable notebook, exported model, true training curve or deployed clinical workflow is available. The two recreated explanatory graphics (if displayed) are not original notebook screenshots."
+      "No original source-code repository, rerunnable notebook, exported model, true training curve or deployed clinical workflow is available. The recreated metric-comparison graphic is an explanatory chart, not an original notebook screenshot."
     ],
     "insights": [
       "Accuracy and class-balanced metrics ranked the algorithms differently. The higher raw Random Forest accuracy might disproportionately reflect more common stages; exact imbalance effects are not verifiable without label support counts.",
