@@ -1266,10 +1266,10 @@
   {
     "id": "14",
     "slug": "amd-lstm",
-    "title": "AMD Stock Price Forecasting — LSTM",
-    "year": null,
-    "projectType": "",
-    "status": "",
+    "title": "AMD Closing-Price Forecasting — LSTM vs Naive Baseline",
+    "year": 2026,
+    "projectType": "Individual academic Deep Learning final project — time-series forecasting",
+    "status": "Completed academic experiment",
     "grade": "",
     "featured": false,
     "roleTags": [
@@ -1283,67 +1283,97 @@
       "Forecasting",
       "Deep Learning"
     ],
-    "description": "Univariate AMD closing-price forecasting using LSTM networks, chronological splitting, and validation-based model experiments.",
-    "problemStatement": "Forecast the next observed trading-day Close value using a sequence of historical AMD closing prices.",
-    "businessContext": "An educational time-series forecasting study comparing LSTM configurations; it is not a trading recommendation.",
-    "dataset": "AMD historical trading-day Close prices, with Date used to preserve chronological order.",
-    "datasetSize": "10,098 trading-day records (1980-03-17 to 2020-04-01)",
+    "description": "Forecasted next trading-day AMD closing prices across 10,098 observations (1980–2020), using chronological validation, train-only scaling, and a 254-session holdout spanning early COVID-19 volatility. Compared baseline and tuned LSTMs with a naive last-price benchmark.",
+    "problemStatement": "Can a tuned LSTM reliably predict the next AMD closing price when prices are non-stationary, highly autocorrelated, and exposed to abrupt market regime changes?",
+    "businessContext": "A reproducible educational forecasting experiment: all test metrics are computed in original USD price units and compared against a last-observed-price benchmark; predictions are not trading recommendations.",
+    "dataset": "AMD historical OHLCV price series; only Date and Close enter the model. Each observation is a trading day, not a calendar day.",
+    "datasetSize": "10,098 trading sessions, 1980-03-17 to 2020-04-01; 8,859 training, 985 validation, 254 test targets",
     "preprocessing": [
-      "Kept the data in chronological order without shuffling",
-      "Reserved 2019-04-01 through 2020-04-01 as the last-year test set",
-      "Split earlier observations chronologically into training and validation",
-      "Fit the scaler only on the training portion",
-      "Constructed temporal sequences with prior observations available as context"
+      "Audited Date and Close: no nulls, duplicate dates, weekend rows, zero/negative Close or infinite closing prices.",
+      "Converted Date to datetime and sorted chronologically; preserved all genuine price shocks instead of deleting extreme returns.",
+      "Separated 2019-04-01 through 2020-04-01 (254 trading sessions) as the final out-of-sample test; split preceding data chronologically into 8,859 train and 985 validation rows.",
+      "Fit MinMaxScaler to training Close only. Out-of-range validation/test values were retained rather than refitting on later data.",
+      "Built next-trading-day sliding-window sequences with prior-period context at train/validation/test boundaries; no random shuffle.",
+      "Inverse-transformed prices before evaluating RMSE, MAE and MAPE."
     ],
     "featureEngineering": [
-      "Constructed sliding windows of past Close values for one-step-ahead forecasting"
+      "Used last five trading-day Close values for the required baseline (window=5, horizon=1).",
+      "Explored extended 20- and 60-session contexts for the modified model; selected the 60-session configuration on validation data.",
+      "Analyzed returns, rolling statistics and autocorrelation in EDA without leaking future indicators into input features."
     ],
     "methodology": [
-      "Implemented the required baseline LSTM with a five-step input window, 50 LSTM units, ReLU activation, and Dense(1)",
-      "Compared candidate modified configurations using the validation period rather than test results",
-      "Evaluated predictions after inverse-transforming them to the original price scale"
+      "Baseline model: LSTM(50, activation=ReLU) followed by Dense(1), trained with the required five-step input history.",
+      "Developed alternative LSTM settings and selected AMD W60 U32 No Dropout using validation RMSE; this candidate used a 60-day history, 32 LSTM units, tanh activation and Huber loss.",
+      "Benchmarked against naive forecasting, where the predicted Close is simply the previous trading day’s Close.",
+      "Evaluated the untouched final-year test on the same price scale after inversion; compared error metrics and price-trajectory plots."
     ],
     "models": [
-      "LSTM"
+      "Naive last-close forecast",
+      "Baseline LSTM 50 / window 5",
+      "Modified LSTM 32 / window 60 / Huber"
     ],
     "technologies": [
       "Python",
+      "Pandas",
+      "NumPy",
+      "Matplotlib",
+      "Scikit-learn",
       "TensorFlow",
-      "Keras",
-      "Scikit-learn"
+      "Keras"
     ],
     "evaluationMetrics": [
-      "RMSE",
-      "MAE",
-      "MAPE"
+      "RMSE (USD)",
+      "MAE (USD)",
+      "MAPE (%)",
+      "Validation RMSE for tuning"
     ],
-    "results": [],
+    "results": [
+      "Final test — naive last-close: RMSE 1.3745, MAE 0.9112, MAPE 2.4435%.",
+      "Final test — baseline LSTM: RMSE 3.2348, MAE 2.9075, MAPE 8.1176%.",
+      "Final test — modified AMD W60 U32 No Dropout: RMSE 1.8757, MAE 1.3268, MAPE 3.4720%.",
+      "Modified LSTM lowered RMSE by 42.01% versus baseline LSTM, but its RMSE remained approximately 36.47% higher than the naive forecast.",
+      "Test covers 2019-04-01 through 2020-04-01, including the early 2020 pandemic shock."
+    ],
     "insights": [
-      "The final test period includes early-2020 market turbulence, making out-of-sample evaluation challenging.",
-      "Strong autocorrelation of price levels does not guarantee strong forecasts of returns."
+      "Longer temporal context and a robust regression loss improved the weak five-day LSTM, but did not outperform the last-value benchmark.",
+      "Because closing-price levels are very persistent, copying the previous price is a stringent benchmark. A good-looking prediction curve is not sufficient evidence of predictive advantage.",
+      "Abrupt changes in AMD price and volatility create out-of-distribution periods that are difficult for a purely univariate model."
     ],
-    "businessImpact": "",
-    "challenges": [],
+    "businessImpact": "Demonstrates disciplined, leakage-aware time-series validation and honest comparison against a simple benchmark; no trading profitability or real-world deployment is claimed.",
+    "challenges": [
+      "Strong price-level autocorrelation can exaggerate visual forecasting quality.",
+      "Price volatility and non-stationary market regimes challenge extrapolation into the 2020 stress period.",
+      "Test Close can exceed training price ranges; min–max scaling must not be refit on test data."
+    ],
     "limitations": [
-      "Verified baseline-versus-modified numerical results are not included in the available project inventory.",
-      "Historical closing prices do not represent future market conditions; LSTM predictions are not investment advice."
+      "Modified LSTM still underperformed the naive last-price baseline on the final AMD test year.",
+      "Only lagged closing prices were modeled; exogenous macroeconomic or news factors were not used.",
+      "Historical results do not establish profitable trading performance or future-market accuracy."
     ],
     "futureImprovements": [
-      "Publish original-price evaluation tables and compare against a naive last-close baseline."
+      "Evaluate multiple walk-forward periods, including volatility-regime stress tests.",
+      "Explore risk-adjusted directional metrics in addition to raw price-error metrics."
     ],
     "githubUrl": "",
     "demoUrl": "",
     "reportUrl": "",
-    "image": "",
-    "gallery": []
+    "image": "/images/amd-lstm/amd-lstm-final-test-comparison.webp",
+    "gallery": [
+      "/images/amd-lstm/amd-lstm-historical-close.webp",
+      "/images/amd-lstm/amd-lstm-rolling-statistics.webp",
+      "/images/amd-lstm/amd-lstm-chronological-split.webp",
+      "/images/amd-lstm/amd-lstm-validation-prediction.webp",
+      "/images/amd-lstm/amd-lstm-test-rmse-comparison.svg",
+      "/images/amd-lstm/amd-lstm-final-test-comparison.webp"
+    ]
   },
   {
     "id": "15",
     "slug": "aapl-lstm",
-    "title": "AAPL Stock Price Forecasting — LSTM",
-    "year": null,
-    "projectType": "",
-    "status": "",
+    "title": "AAPL Closing-Price Forecasting — Relative-Log LSTM",
+    "year": 2026,
+    "projectType": "Individual academic Deep Learning final project — time-series forecasting",
+    "status": "Completed academic experiment",
     "grade": "",
     "featured": false,
     "roleTags": [
@@ -1357,67 +1387,95 @@
       "Forecasting",
       "Deep Learning"
     ],
-    "description": "Apple closing-price forecasting with baseline and modified LSTM experiments under a time-ordered evaluation split.",
-    "problemStatement": "Forecast the next observed AAPL trading-day Close from past closing-price sequences without leaking future observations into training.",
-    "businessContext": "An educational time-series modeling exercise focused on generalization under changing price regimes; not an investment signal.",
-    "dataset": "AAPL historical trading-day Close prices, ordered by Date.",
-    "datasetSize": "9,909 trading-day records (1980-12-12 to 2020-04-01)",
+    "description": "Forecasted next trading-day AAPL Close from 9,909 historical trading sessions using validation-selected LSTM configurations, train-only scaling and a 254-session 2019–2020 test. A relative-log 40-session LSTM slightly outperformed a naive last-close benchmark.",
+    "problemStatement": "Can an LSTM predict next-day AAPL Close despite dramatic long-term price-level growth and test prices outside the training distribution?",
+    "businessContext": "Univariate academic financial forecasting, not an investment or live trading product. Selection was based on chronological validation data and final results were compared with a simple last-price forecast.",
+    "dataset": "AAPL historical stock prices; Date preserves the observed trading-session order and Close is the sole model input/target.",
+    "datasetSize": "9,909 trading sessions, 1980-12-12 to 2020-04-01; 8,689 training, 966 validation, 254 test targets",
     "preprocessing": [
-      "Preserved chronological ordering without random shuffling",
-      "Reserved the last calendar year from 2019-04-01 for the test set",
-      "Separated earlier observations into chronological training and validation",
-      "Fit scaling parameters on training data only",
-      "Constructed sequences using past observations as input context"
+      "Validated chronological ordering, Date/Close completeness, duplicate dates, and genuine extreme observations.",
+      "Reserved 2019-04-01 through 2020-04-01 as a 254-trading-session final test; divided the earlier rows chronologically into 8,689 train and 966 validation observations.",
+      "Fit MinMaxScaler on training data only for price-level experiments and allowed scaled later periods to exceed the training range.",
+      "Built sequences using exclusively prior Close observations, including boundary context across chronological splits.",
+      "For relative-log experiments, predicted and reconstructed price changes with the last observed Close as anchor; evaluated all forecasts on the original USD price scale."
     ],
     "featureEngineering": [
-      "Created past-Close sequences for one-step-ahead prediction"
+      "Built five-observation windows for the prescribed one-session-ahead baseline.",
+      "Tested raw and transformed close-price representations and longer windows; best modified candidate used a 40-session window with a relative-log target.",
+      "EDA examined right-skew, stock-price distribution shift, rolling mean/standard deviation and price-versus-return autocorrelation."
     ],
     "methodology": [
-      "Implemented the required five-step LSTM baseline with 50 units, ReLU activation, and Dense(1)",
-      "Explored architecture or transformation changes as candidate modified models",
-      "Used validation results for selection and original-price metrics for final comparison"
+      "Baseline: five-day input window, LSTM(50, ReLU), Dense(1).",
+      "Tuned candidate window/architecture and transformation choices using validation RMSE rather than test performance.",
+      "Selected AAPL Relative Log W40 U32 Huber: 40-session input context, LSTM 32 units, Huber loss, and last-close-anchored price reconstruction.",
+      "Used the same original-price RMSE, MAE and MAPE measures for naive last-close, baseline, and modified models on the final test year."
     ],
     "models": [
-      "LSTM"
+      "Naive last-close forecast",
+      "Baseline LSTM 50 / window 5",
+      "Relative-log LSTM 32 / window 40 / Huber"
     ],
     "technologies": [
       "Python",
+      "Pandas",
+      "NumPy",
+      "Matplotlib",
+      "Scikit-learn",
       "TensorFlow",
-      "Keras",
-      "Scikit-learn"
+      "Keras"
     ],
     "evaluationMetrics": [
-      "RMSE",
-      "MAE",
-      "MAPE"
+      "RMSE (USD)",
+      "MAE (USD)",
+      "MAPE (%)",
+      "Validation RMSE for tuning"
     ],
-    "results": [],
+    "results": [
+      "Final test — naive last-close: RMSE 6.2818, MAE 3.8313, MAPE 1.5693%.",
+      "Final test — baseline LSTM: RMSE 8.6425, MAE 7.3481, MAPE 3.0325%.",
+      "Final test — AAPL Relative Log W40 U32 Huber: RMSE 6.1952, MAE 3.8172, MAPE 1.5670%.",
+      "Modified model reduced RMSE by 28.32% versus the baseline LSTM and by a modest 1.38% versus the naive last-close forecast.",
+      "Validation-based model choice preceded final evaluation on the 254-session holdout with the early-2020 market shock."
+    ],
     "insights": [
-      "AAPL experienced strong upward price-level drift and a distribution shift across chronological splits.",
-      "Test-time values outside the train-only MinMaxScaler range are legitimate and should not be corrected by fitting on test data."
+      "AAPL prices exhibited strong long-run upward drift; directly forecasting absolute prices was vulnerable to a severe chronological distribution shift.",
+      "Relative-log modeling around the last observed price better accommodates price-scale changes than an absolute-price target, though improvement over the naive forecast was small.",
+      "A high correlation between adjacent Close levels does not imply equally predictable returns or direction."
     ],
-    "businessImpact": "",
-    "challenges": [],
+    "businessImpact": "Illustrates transformation-aware time-series modeling, validation discipline and a fair last-price benchmark. No investment claims are made.",
+    "challenges": [
+      "All 254 test prices exceeded the initial training-range maximum in the historical audit.",
+      "The final year includes sharp market declines that stress extrapolation."
+    ],
     "limitations": [
-      "Model-specific forecasting errors and selected modified hyperparameters require notebook confirmation.",
-      "Price-level forecasts may closely track levels without reliably predicting direction or returns."
+      "Improvement over the naive test benchmark was marginal and observed on one holdout year.",
+      "Only univariate Close history was used; no fundamentals or market events were included.",
+      "Performance was not assessed as trading returns, fees or risk-adjusted outcomes."
     ],
     "futureImprovements": [
-      "Compare with a naive last-value forecast and document modified-model selection on validation data."
+      "Use walk-forward re-evaluation over multiple market regimes.",
+      "Analyze robustness to different prediction horizons and volatility shocks."
     ],
     "githubUrl": "",
     "demoUrl": "",
     "reportUrl": "",
-    "image": "",
-    "gallery": []
+    "image": "/images/aapl-lstm/aapl-lstm-final-test-comparison.webp",
+    "gallery": [
+      "/images/aapl-lstm/aapl-lstm-historical-close.webp",
+      "/images/aapl-lstm/aapl-lstm-rolling-statistics.webp",
+      "/images/aapl-lstm/aapl-lstm-chronological-split.webp",
+      "/images/aapl-lstm/aapl-lstm-validation-prediction.webp",
+      "/images/aapl-lstm/aapl-lstm-test-rmse-comparison.svg",
+      "/images/aapl-lstm/aapl-lstm-final-test-comparison.webp"
+    ]
   },
   {
     "id": "16",
     "slug": "overhead-mnist-autoencoder",
-    "title": "Overhead-MNIST Autoencoder — Dimensionality Reduction",
-    "year": null,
-    "projectType": "",
-    "status": "",
+    "title": "Overhead-MNIST Autoencoder — 784-to-128 Image Compression",
+    "year": 2026,
+    "projectType": "Individual academic Deep Learning final project — unsupervised image reconstruction",
+    "status": "Completed academic experiment",
     "grade": "",
     "featured": true,
     "roleTags": [
@@ -1431,63 +1489,97 @@
       "Computer Vision",
       "Deep Learning"
     ],
-    "description": "Reducing 28×28 overhead imagery to a 128-dimensional representation and reconstructing images with baseline and modified autoencoders.",
-    "problemStatement": "Compress grayscale overhead images into a lower-dimensional representation while retaining useful visual information for reconstruction.",
-    "businessContext": "Demonstrates unsupervised representation learning and image reconstruction; this is not an image classification task.",
-    "dataset": "Overhead-MNIST imagery; the broader study contained 16,016 images. The assignment used only Storage Tanks and Parking Lot classes.",
-    "datasetSize": "",
+    "description": "Compressed 16,016 Parking Lot and Storage Tanks grayscale images from 784 pixels to 128 latent features. Compared a baseline convolutional autoencoder with nine tuned architectures, improving held-out reconstruction SSIM from 0.4864 to 0.7573 (+55.7% relative).",
+    "problemStatement": "How much spatial structure can an autoencoder retain while compressing 28×28 grayscale overhead imagery from 784 pixel values to a 128-dimensional latent representation?",
+    "businessContext": "An academic dimensionality-reduction and image-reconstruction experiment; class labels select the two image categories but are not reconstruction targets.",
+    "dataset": "Overhead-MNIST v2 image and label files in IDX format. Combined original train/test images were filtered to Parking Lot (label 4) and Storage Tanks (label 9).",
+    "datasetSize": "16,016 selected 28×28 grayscale images: Parking Lot 8,007 and Storage Tanks 8,009; train 12,812, validation 1,602, test 1,602",
     "preprocessing": [
-      "Scaled grayscale pixel values to the 0–1 range",
-      "Used an 80% train, 10% validation, and 10% test split in the assignment workflow"
+      "Read IDX image/label binary headers and arrays; combined the provided original partitions before a required new split.",
+      "Selected labels 4 (Parking Lot) and 9 (Storage Tanks) from 76,777 original images; excluded all other classes.",
+      "Inspected class counts and pixel intensity distributions: Storage Tanks average intensity ≈155.38, Parking Lot ≈130.97 on a 0–255 scale.",
+      "Converted uint8 pixels to float32, scaled 0–255 into [0,1], and added a channel axis for (28,28,1) Conv2D input.",
+      "Used stratified train/validation/test splitting of 12,812 / 1,602 / 1,602 images (≈80/10/10) without fitting a train/test-dependent scaler.",
+      "Used each image as both the encoder input and decoder reconstruction target; labels were retained only for per-class evaluation."
     ],
     "featureEngineering": [
-      "Encoded 784 input pixel values into a 128-dimensional latent representation"
+      "Baseline: Conv2D(16) → MaxPool2D → Flatten → Dense(128) bottleneck; decoder projects latent vector to feature maps and upsamples to 28×28.",
+      "Modified variants explored deeper convolutional encoder/decoder feature extraction while preserving the 128-dimensional bottleneck.",
+      "Compared model quality using reconstructed pixels and SSIM, including separate analyses for Parking Lot and Storage Tanks."
     ],
     "methodology": [
-      "Trained a baseline autoencoder for reconstruction",
-      "Modified autoencoder architecture and tuned model settings",
-      "Compared reconstructed images and selected modifications using validation behavior",
-      "Evaluated final reconstruction quality on held-out test data"
+      "Trained baseline convolutional autoencoder with 128 latent features, batch size 64, learning rate 0.001 and up to 50 epochs.",
+      "Tuned nine modified architecture/hyperparameter configurations using validation SSIM; selection did not use the test split.",
+      "Selected Modified_AE_F48_F96_D256_LR0005_COMBINED: 48/96 convolutional filters, 256-unit dense layer, learning rate 0.0005, combined MSE+SSIM loss, batch size 64 and latent size 128.",
+      "Used EarlyStopping and ReduceLROnPlateau based on validation SSIM; measured held-out reconstruction SSIM, MSE and MAE after selecting the model.",
+      "Inspected original-versus-baseline-versus-modified image grids to explain the scores rather than relying only on a single aggregate metric."
     ],
     "models": [
-      "Autoencoder",
-      "Modified Autoencoder"
+      "Baseline convolutional autoencoder",
+      "Modified deeper convolutional autoencoder"
     ],
     "technologies": [
       "Python",
+      "NumPy",
+      "Pandas",
+      "Matplotlib",
       "TensorFlow",
-      "Keras"
+      "Keras",
+      "Scikit-learn"
     ],
     "evaluationMetrics": [
-      "Structural Similarity Index Measure (SSIM)"
+      "Mean Test SSIM",
+      "Validation SSIM",
+      "MSE",
+      "MAE",
+      "Class-wise SSIM"
     ],
     "results": [
-      "Reported test SSIM increased from approximately 0.486 (baseline) to 0.757 (modified)",
-      "Reported relative improvement in SSIM was approximately 55.7%"
+      "Mean test SSIM improved from 0.48636776 (baseline) to 0.75727385 (modified): +0.2709061 absolute, +55.70% relative.",
+      "Modified best validation SSIM was 0.7542612; test standard deviation decreased from 0.201410 to 0.118133.",
+      "Parking Lot class-wise test SSIM improved from 0.363024 to 0.683231 (n=801 test samples).",
+      "Storage Tanks class-wise test SSIM improved from 0.609712 to 0.831317 (n=801 test samples).",
+      "Best modified test MSE was 0.014135923 and MAE was 0.08082049 on normalized pixels; bottleneck remained 128 dimensions."
     ],
     "insights": [
-      "The modified architecture achieved higher reported reconstruction similarity while retaining the specified latent dimensionality."
+      "Storage Tanks reconstructed more reliably: brighter, more regular and often circular structures are easier to preserve than complex parking lines, cars, shadows and texture.",
+      "Combined MSE+SSIM loss rewards preservation of structural content, which helps explain the large SSIM improvement even though pixelwise MSE improved relatively little.",
+      "The 128-value representation compresses the 784-dimensional pixel vector, but reconstructed images still lose some fine details and should not be interpreted as lossless compression."
     ],
-    "businessImpact": "",
-    "challenges": [],
+    "businessImpact": "Demonstrates unsupervised representation learning, systematic validation-only model selection, and interpretable quantitative plus visual evaluation on grayscale overhead imagery.",
+    "challenges": [
+      "Parking-lot textures contain thin high-frequency details that tend to blur with basic bottleneck reconstruction.",
+      "Combining structural and pixel losses requires checking generalization on an unseen test set."
+    ],
     "limitations": [
-      "The 16,016-image figure refers to the broader study and should not be presented as the exact two-class sample size.",
-      "SSIM measures reconstruction similarity, not downstream classification or information completeness."
+      "SSIM measures similarity for input-to-output reconstruction, not classification accuracy or compression file size.",
+      "The two-class sample does not establish generalization to all satellite or aerial imagery.",
+      "Reconstruction is not lossless even after the improvement."
     ],
-    "futureImprovements": [],
+    "futureImprovements": [
+      "Evaluate downstream utility of latent vectors for retrieval/clustering.",
+      "Compare a convolutional variational autoencoder while controlling latent dimension."
+    ],
     "githubUrl": "",
     "demoUrl": "",
     "reportUrl": "",
-    "image": "",
-    "gallery": []
+    "image": "/images/overhead-autoencoder/baseline-vs-modified-reconstructions.webp",
+    "gallery": [
+      "/images/overhead-autoencoder/overhead-autoencoder-original-class-samples.webp",
+      "/images/overhead-autoencoder/average-image-by-class.webp",
+      "/images/overhead-autoencoder/baseline-reconstructions.webp",
+      "/images/overhead-autoencoder/modified-ssim-training.webp",
+      "/images/overhead-autoencoder/test-ssim-comparison.svg",
+      "/images/overhead-autoencoder/baseline-vs-modified-reconstructions.webp"
+    ]
   },
   {
     "id": "17",
     "slug": "overhead-mnist-cgan",
-    "title": "Overhead-MNIST Conditional GAN / Conditional DCGAN",
-    "year": null,
-    "projectType": "",
-    "status": "",
+    "title": "Overhead-MNIST — Conditional GAN vs Conditional DCGAN",
+    "year": 2026,
+    "projectType": "Individual academic Deep Learning final project — conditional image generation",
+    "status": "Completed academic experiment",
     "grade": "",
     "featured": false,
     "roleTags": [
@@ -1501,55 +1593,86 @@
       "Generative Modeling",
       "Computer Vision"
     ],
-    "description": "Class-conditional overhead-image generation comparing a baseline Conditional GAN with a convolutional Conditional DCGAN.",
-    "problemStatement": "Generate synthetic 28×28 grayscale overhead imagery conditioned on a chosen target class.",
-    "businessContext": "A generative-modeling experiment comparing adversarial architectures; generated imagery requires quality and diversity assessment.",
-    "dataset": "Overhead-MNIST imagery restricted to the Storage Tanks and Parking Lot categories.",
-    "datasetSize": "",
+    "description": "Generated class-conditioned 28×28 images of Parking Lots and Storage Tanks with a label-embedding CGAN and three Conditional DCGAN candidates. Best observed FID fell from 1159.40 to 1111.72 (4.11%), although outputs remained visually imperfect.",
+    "problemStatement": "Can a label-conditioned generator learn separate image patterns for overhead Parking Lots and Storage Tanks rather than producing an uncontrolled mixture of classes?",
+    "businessContext": "Educational conditional generative-modeling study; no claim of photorealistic generated imagery or production synthetic-data quality.",
+    "dataset": "Overhead-MNIST IDX grayscale images; original labels 4 and 9 remapped to classes 0=Parking Lot and 1=Storage Tanks.",
+    "datasetSize": "14,232 two-class training images (7,111 Parking Lot + 7,121 Storage Tanks); 1,784 test images (896 + 888), 28×28 grayscale",
     "preprocessing": [
-      "Prepared grayscale training images and preserved the two required class labels"
+      "Read original IDX train/test image and label files and filtered only Parking Lot (4) and Storage Tanks (9).",
+      "Remapped the selected labels to 0 and 1 to condition both generator and discriminator.",
+      "Converted pixel data to float32, normalized values from 0–255 into [-1,1] via (pixel - 127.5)/127.5, and reshaped to (28,28,1).",
+      "Chose tanh output for the generator so generated values share the same pixel scale as real images during adversarial training.",
+      "Converted/resized grayscale images consistently for InceptionV3 feature extraction in the FID evaluation pipeline."
     ],
     "featureEngineering": [
-      "Provided class labels to both generator and discriminator to support conditional generation"
+      "Added learned class-label embeddings concatenated with random noise at the generator input.",
+      "Conditioned discriminator decisions on both image and corresponding class-label embeddings.",
+      "Used 2048-dimensional InceptionV3 features to compare the real and synthetic image feature distributions."
     ],
     "methodology": [
-      "Implemented a label-conditioned baseline GAN",
-      "Developed a convolutional conditional DCGAN variant",
-      "Used an adversarial training workflow with generator and discriminator updates",
-      "Compared generated images visually and using FID"
+      "Baseline: dense MLP Conditional GAN with generator Dense(128,256,512,1024) layers and discriminator Dense(512,1024,1024,512) layers; noise dimension 100.",
+      "Used a custom alternating training loop: update discriminator on real/fake images, then freeze discriminator for generator updates with fake-image targets set to real.",
+      "Trained the baseline with Adam (lr 0.00005; beta_1=0.5), batch size 128 and 100 epochs.",
+      "Replaced dense-only image processing with a Conditional DCGAN using Conv2DTranspose in the generator and convolutional feature extraction in the discriminator.",
+      "Explored three manual tuning configurations; best observed experiment used 128-D noise, batch 128, 100 steps/epoch, 150 epochs, generator LR 0.0002, discriminator LR 0.0001, 0.3 dropout and real-label smoothing 0.9.",
+      "Measured Fréchet Inception Distance using InceptionV3 features for 1,784 real test images and an equal number of generated samples. Candidate models were compared on this same test-reference FID."
     ],
     "models": [
-      "Conditional GAN",
-      "Conditional DCGAN"
+      "Baseline MLP Conditional GAN",
+      "Modified Conditional DCGAN (3 experiments)"
     ],
     "technologies": [
       "Python",
+      "NumPy",
       "TensorFlow",
-      "Keras"
+      "Keras",
+      "SciPy",
+      "Matplotlib",
+      "InceptionV3"
     ],
     "evaluationMetrics": [
       "Fréchet Inception Distance (FID)",
-      "Visual inspection of generated samples"
+      "Qualitative class-conditioned image inspection"
     ],
     "results": [
-      "The modified Conditional DCGAN was reported to reduce FID relative to the baseline; exact values require source verification."
+      "Baseline MLP CGAN FID: 1159.4017.",
+      "Modified Conditional DCGAN experiments: FID 1141.6341, 1111.7247, and 1114.7536.",
+      "Best observed modified FID: 1111.724735 (Modified_DCGAN_Exp2_Noise128_BS128), a 4.11% decrease from baseline.",
+      "The best modified generator produced somewhat more structured samples, but recognizable class-specific geometry remained limited."
     ],
     "insights": [
-      "Conditioning allows generation to target Storage Tanks or Parking Lot rather than producing an uncontrolled class mixture.",
-      "Convolutional layers were explored to model local visual structure in small images."
+      "Convolutional image generation can exploit spatial neighborhoods better than flattening every pixel into a dense network.",
+      "Although FID decreased, the absolute distance remained very large and generated samples still looked abstract; the experiment does not demonstrate realistic aerial-image synthesis.",
+      "An ImageNet-pretrained InceptionV3 encoder evaluates upsampled grayscale overhead imagery outside its natural-image training domain, so the absolute FID must be interpreted cautiously."
     ],
-    "businessImpact": "",
-    "challenges": [],
+    "businessImpact": "Demonstrates conditional generation, adversarial training loops, architecture iteration and metric-aware qualitative critique; the experiment is not presented as production-grade image generation.",
+    "challenges": [
+      "GAN generator and discriminator training dynamics are sensitive to hyperparameters and relative learning speeds.",
+      "28×28 monochrome overhead images have limited spatial detail.",
+      "FID feature space may not match the aerial-image domain."
+    ],
     "limitations": [
-      "Exact FID values and generated image examples are not currently linked.",
-      "FID on 28×28 grayscale images requires consistent feature extraction and careful interpretation."
+      "The three modified candidates were compared using FID against the test set; thus the reported best FID is a test-selected experimental result, not a completely independent final holdout estimate.",
+      "Absolute FID values exceeded 1000 and visual quality remained limited.",
+      "FID alone does not verify correct label conditioning, image diversity or absence of mode collapse."
     ],
-    "futureImprovements": [],
+    "futureImprovements": [
+      "Use a validation subset for FID-based candidate selection, then reserve an independent test set.",
+      "Evaluate class-conditional precision, diversity and a domain-specific feature extractor; consider more stable GAN objectives."
+    ],
     "githubUrl": "",
     "demoUrl": "",
     "reportUrl": "",
-    "image": "",
-    "gallery": []
+    "image": "/images/overhead-cgan/modified-cdgan-samples.webp",
+    "gallery": [
+      "/images/overhead-cgan/overhead-cgan-original-class-samples.webp",
+      "/images/overhead-cgan/baseline-cgan-samples.webp",
+      "/images/overhead-cgan/baseline-adversarial-loss.webp",
+      "/images/overhead-cgan/modified-cdgan-samples.webp",
+      "/images/overhead-cgan/baseline-vs-modified-fid-original.webp",
+      "/images/overhead-cgan/fid-comparison.svg"
+    ]
   },
   {
     "id": "18",
