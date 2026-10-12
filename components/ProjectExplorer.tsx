@@ -1,16 +1,24 @@
 "use client";
 
 import { useMemo, useState } from "react";
+
 import ProjectCard from "@/components/ProjectCard";
 import { courses, projects, roles } from "@/lib/projects";
 import type { Project } from "@/lib/projects";
 
 type SortOrder = "featured" | "newest" | "oldest" | "course" | "title";
 
-function toggleTag(current: string[], target: string) {
-  return current.includes(target)
-    ? current.filter((tag) => tag !== target)
-    : [...current, target];
+const coreRoles = [
+  "Data Science",
+  "Data Analyst",
+  "Data Engineer",
+  "Business Analytics",
+] as const;
+
+function toggleTag(current: string[], tag: string) {
+  return current.includes(tag)
+    ? current.filter((item) => item !== tag)
+    : [...current, tag];
 }
 
 function searchableText(project: Project) {
@@ -21,6 +29,7 @@ function searchableText(project: Project) {
     project.datasetSize,
     project.problemStatement,
     project.businessContext,
+    project.projectType,
     ...project.technologies,
     ...project.methodology,
     ...project.models,
@@ -31,8 +40,23 @@ function searchableText(project: Project) {
     ...project.featureEngineering,
     ...project.insights,
     ...project.results,
-  ].join(" ").toLocaleLowerCase();
+  ]
+    .join(" ")
+    .toLocaleLowerCase();
 }
+
+const roleOptions = roles.map((role) => ({
+  label: role,
+  count: projects.filter((project) => project.roleTags.includes(role)).length,
+}));
+
+const courseOptions = courses
+  .map((course) => ({
+    label: course,
+    count: projects.filter((project) => project.courseTags.includes(course))
+      .length,
+  }))
+  .filter((course) => course.count > 0);
 
 const hasVerifiedYears = projects.some((project) => project.year !== null);
 
@@ -41,160 +65,246 @@ export default function ProjectExplorer() {
   const [selectedCourses, setSelectedCourses] = useState<string[]>([]);
   const [search, setSearch] = useState("");
   const [sortOrder, setSortOrder] = useState<SortOrder>("featured");
+  const [featuredOnly, setFeaturedOnly] = useState(false);
+  const [publicCodeOnly, setPublicCodeOnly] = useState(false);
 
   const visibleProjects = useMemo(() => {
     const query = search.trim().toLocaleLowerCase();
 
     const matching = projects.filter((project) => {
-      const roleMatch = selectedRoles.length === 0 ||
-        selectedRoles.some((tag) => project.roleTags.includes(tag));
-      const courseMatch = selectedCourses.length === 0 ||
-        selectedCourses.some((tag) => project.courseTags.includes(tag));
+      const roleMatch =
+        selectedRoles.length === 0 ||
+        selectedRoles.some((role) => project.roleTags.includes(role));
+      const courseMatch =
+        selectedCourses.length === 0 ||
+        selectedCourses.some((course) => project.courseTags.includes(course));
       const textMatch = !query || searchableText(project).includes(query);
+      const featuredMatch = !featuredOnly || project.featured;
+      const sourceMatch = !publicCodeOnly || Boolean(project.githubUrl);
 
-      return roleMatch && courseMatch && textMatch;
+      return (
+        roleMatch && courseMatch && textMatch && featuredMatch && sourceMatch
+      );
     });
 
     return matching.sort((a, b) => {
       if (sortOrder === "featured") {
-        return Number(b.featured) - Number(a.featured) ||
+        return (
+          Number(b.featured) - Number(a.featured) ||
           (b.year ?? -1) - (a.year ?? -1) ||
-          a.title.localeCompare(b.title);
+          a.title.localeCompare(b.title)
+        );
       }
       if (sortOrder === "newest") {
-        return (b.year ?? -1) - (a.year ?? -1) ||
-          a.title.localeCompare(b.title);
+        return (
+          (b.year ?? -1) - (a.year ?? -1) || a.title.localeCompare(b.title)
+        );
       }
       if (sortOrder === "oldest") {
-        return (a.year ?? Number.MAX_SAFE_INTEGER) -
-          (b.year ?? Number.MAX_SAFE_INTEGER) ||
-          a.title.localeCompare(b.title);
+        return (
+          (a.year ?? Number.MAX_SAFE_INTEGER) -
+            (b.year ?? Number.MAX_SAFE_INTEGER) ||
+          a.title.localeCompare(b.title)
+        );
       }
       if (sortOrder === "course") {
-        return (a.courseTags[0] ?? "").localeCompare(b.courseTags[0] ?? "") ||
-          a.title.localeCompare(b.title);
+        return (
+          (a.courseTags[0] ?? "").localeCompare(b.courseTags[0] ?? "") ||
+          a.title.localeCompare(b.title)
+        );
       }
       return a.title.localeCompare(b.title);
     });
-  }, [selectedRoles, selectedCourses, search, sortOrder]);
+  }, [selectedRoles, selectedCourses, search, sortOrder, featuredOnly, publicCodeOnly]);
 
-  const hasFilters = selectedRoles.length > 0 ||
+  const hasFilters =
+    selectedRoles.length > 0 ||
     selectedCourses.length > 0 ||
-    search.trim().length > 0;
+    Boolean(search.trim()) ||
+    featuredOnly ||
+    publicCodeOnly;
 
-  function resetFilters() {
+  function clearFilters() {
     setSearch("");
     setSelectedRoles([]);
     setSelectedCourses([]);
+    setFeaturedOnly(false);
+    setPublicCodeOnly(false);
+  }
+
+  function focusRole(role: string) {
+    setSelectedRoles((current) =>
+      current.length === 1 && current[0] === role ? [] : [role],
+    );
   }
 
   return (
-    <div className="explorer">
-      <div className="filter-panel">
-        <label className="filter-label" htmlFor="search-projects">
-          SEARCH PROJECTS
-        </label>
+    <div className="explorer archive-explorer">
+      <section className="archive-focus" aria-labelledby="archive-focus-title">
+        <div className="archive-section-title">
+          <div>
+            <p className="archive-kicker">FIND WORK RELEVANT TO YOUR ROLE</p>
+            <h2 id="archive-focus-title">Explore by career focus</h2>
+          </div>
+          <p>Choose a focus area, or combine detailed filters below.</p>
+        </div>
+        <div className="archive-focus-grid">
+          {coreRoles.map((role) => {
+            const count = roleOptions.find((item) => item.label === role)?.count ?? 0;
+            const active =
+              selectedRoles.length === 1 && selectedRoles[0] === role;
+
+            return (
+              <button
+                type="button"
+                className={`archive-focus-button ${active ? "active" : ""}`}
+                aria-pressed={active}
+                key={role}
+                onClick={() => focusRole(role)}
+              >
+                <span className="archive-focus-name">{role}</span>
+                <span className="archive-focus-meta">
+                  {count} projects <span aria-hidden="true">↗</span>
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </section>
+
+      <section className="filter-panel archive-filter-panel" aria-label="Project filters">
+        <div className="archive-filter-top">
+          <label className="filter-label" htmlFor="search-projects">
+            SEARCH PROJECTS
+          </label>
+          {hasFilters && (
+            <button type="button" className="clear-button" onClick={clearFilters}>
+              Clear all filters
+            </button>
+          )}
+        </div>
         <input
           id="search-projects"
-          className="search-input"
+          className="search-input archive-search-input"
           type="search"
           value={search}
           onChange={(event) => setSearch(event.target.value)}
-          placeholder="Search projects, methods, tools, datasets..."
+          placeholder="Search by project, dataset, technique, or tool..."
         />
 
         <div className="filter-group">
-          <span className="filter-label">FILTER BY ROLE</span>
-          <div className="filter-chips" role="group" aria-label="Filter by target roles">
+          <span className="filter-label">FILTER BY TARGET ROLE</span>
+          <div className="filter-chips" role="group" aria-label="Target role filters">
             <button
               type="button"
+              aria-pressed={selectedRoles.length === 0}
               className={`filter-chip ${selectedRoles.length === 0 ? "active" : ""}`}
               onClick={() => setSelectedRoles([])}
             >
-              All Roles
+              All roles
             </button>
-            {roles.map((role) => (
+            {roleOptions.map(({ label, count }) => (
               <button
-                key={role}
                 type="button"
-                aria-pressed={selectedRoles.includes(role)}
-                className={`filter-chip ${selectedRoles.includes(role) ? "active" : ""}`}
-                onClick={() => setSelectedRoles((current) => toggleTag(current, role))}
+                key={label}
+                aria-pressed={selectedRoles.includes(label)}
+                className={`filter-chip ${selectedRoles.includes(label) ? "active" : ""}`}
+                onClick={() =>
+                  setSelectedRoles((current) => toggleTag(current, label))
+                }
               >
-                {role}
+                {label} <span className="archive-chip-count">{count}</span>
               </button>
             ))}
           </div>
         </div>
 
         <div className="filter-group">
-          <span className="filter-label">FILTER BY COURSE</span>
-          <div className="filter-chips" role="group" aria-label="Filter by academic course">
+          <span className="filter-label">FILTER BY COURSE OR PROJECT CONTEXT</span>
+          <div className="filter-chips" role="group" aria-label="Course filters">
             <button
               type="button"
+              aria-pressed={selectedCourses.length === 0}
               className={`filter-chip ${selectedCourses.length === 0 ? "active" : ""}`}
               onClick={() => setSelectedCourses([])}
             >
-              All Courses
+              All courses
             </button>
-            {courses.map((course) => (
+            {courseOptions.map(({ label, count }) => (
               <button
-                key={course}
                 type="button"
-                aria-pressed={selectedCourses.includes(course)}
-                className={`filter-chip ${selectedCourses.includes(course) ? "active" : ""}`}
-                onClick={() => setSelectedCourses((current) => toggleTag(current, course))}
+                key={label}
+                aria-pressed={selectedCourses.includes(label)}
+                className={`filter-chip ${selectedCourses.includes(label) ? "active" : ""}`}
+                onClick={() =>
+                  setSelectedCourses((current) => toggleTag(current, label))
+                }
               >
-                {course}
+                {label} <span className="archive-chip-count">{count}</span>
               </button>
             ))}
           </div>
         </div>
 
-        <div className="filter-bottom">
-          <p className="filter-count">
-            <strong>{visibleProjects.length}</strong> of {projects.length} projects found
-          </p>
-          <div className="filter-actions">
-            {hasFilters && (
-              <button type="button" className="clear-button" onClick={resetFilters}>
-                Clear filters
-              </button>
-            )}
-            <label htmlFor="sort-projects" className="visually-hidden">
-              Sort projects
-            </label>
-            <select
-              id="sort-projects"
-              className="sort-select"
-              value={sortOrder}
-              onChange={(event) => setSortOrder(event.target.value as SortOrder)}
-            >
-              <option value="featured">Featured first</option>
-              {hasVerifiedYears && <option value="newest">Newest</option>}
-              {hasVerifiedYears && <option value="oldest">Oldest</option>}
-              <option value="course">Course</option>
-              <option value="title">A–Z</option>
-            </select>
-          </div>
+        <div className="archive-filter-extras">
+          <label className="archive-toggle">
+            <input
+              type="checkbox"
+              checked={featuredOnly}
+              onChange={(event) => setFeaturedOnly(event.target.checked)}
+            />
+            Featured projects only
+          </label>
+          <label className="archive-toggle">
+            <input
+              type="checkbox"
+              checked={publicCodeOnly}
+              onChange={(event) => setPublicCodeOnly(event.target.checked)}
+            />
+            Public GitHub repository
+          </label>
         </div>
         <p className="filter-hint">
-          Select multiple tags within one group to match any of them.
-          Selected roles and courses must both match.
+          Multiple choices within a group match any selected tag. Role, course,
+          search and checkboxes are combined to narrow your results.
         </p>
+      </section>
+
+      <div className="archive-results-toolbar">
+        <div>
+          <p className="archive-kicker">PROJECT RESULTS</p>
+          <h2 aria-live="polite" aria-atomic="true">
+            {visibleProjects.length} of {projects.length} projects
+          </h2>
+        </div>
+        <div className="archive-results-actions">
+          <label htmlFor="sort-projects">Sort by</label>
+          <select
+            id="sort-projects"
+            className="sort-select"
+            value={sortOrder}
+            onChange={(event) => setSortOrder(event.target.value as SortOrder)}
+          >
+            <option value="featured">Featured first</option>
+            {hasVerifiedYears && <option value="newest">Newest</option>}
+            {hasVerifiedYears && <option value="oldest">Oldest</option>}
+            <option value="course">Course</option>
+            <option value="title">A–Z</option>
+          </select>
+        </div>
       </div>
 
-      {visibleProjects.length > 0 ? (
-        <div className="project-grid">
+      {visibleProjects.length ? (
+        <div className="project-grid archive-project-grid">
           {visibleProjects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
+            <ProjectCard key={project.id} project={project} variant="archive" />
           ))}
         </div>
       ) : (
         <div className="empty-state">
-          <h2>No matching projects</h2>
-          <p>Try a different keyword or clear the filters.</p>
-          <button type="button" className="button button-outline" onClick={resetFilters}>
+          <h2>No projects match these filters</h2>
+          <p>Try removing a role or course, or use a broader search term.</p>
+          <button type="button" className="button button-outline" onClick={clearFilters}>
             Reset filters
           </button>
         </div>

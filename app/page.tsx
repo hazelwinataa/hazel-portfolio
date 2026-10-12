@@ -1,4 +1,3 @@
-
 import Link from "next/link";
 import ProjectCard from "@/components/ProjectCard";
 import {
@@ -210,9 +209,62 @@ export default function HomePage() {
             <i style={{ height: "93%" }} />
           </div>
 
-          <p className="dashboard-foot">
-            ML · Deep Learning · Data Engineering · MLOps
-          </p>
+          {/* ERD AND UML VISUALS */}
+          <div className="dashboard-diagrams" aria-hidden="true">
+            <svg
+              className="dashboard-diagram"
+              viewBox="0 0 230 86"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <ellipse cx="37" cy="17" rx="27" ry="10" />
+              <path d="M10 17V63C10 69 22 74 37 74C52 74 64 69 64 63V17" />
+              <path d="M10 39C10 45 22 50 37 50C52 50 64 45 64 39" />
+              <path d="M10 61C10 67 22 72 37 72C52 72 64 67 64 61" />
+              <path d="M64 44H90V22H116" />
+              <path d="M90 44V65H116" />
+              <circle cx="90" cy="44" r="3" />
+              <circle cx="116" cy="22" r="3" />
+              <circle cx="116" cy="65" r="3" />
+              <rect x="120" y="7" width="97" height="31" rx="4" />
+              <rect x="120" y="50" width="97" height="31" rx="4" />
+              <path d="M132 18H201M132 26H173M132 61H201M132 69H173" />
+            </svg>
+
+            <svg
+              className="dashboard-diagram"
+              viewBox="0 0 230 86"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect x="86" y="3" width="64" height="25" rx="5" />
+              <rect x="8" y="52" width="62" height="27" rx="5" />
+              <rect x="166" y="52" width="56" height="27" rx="5" />
+              <path d="M118 28V36L118 38M118 38L143 57L118 76L93 57Z" />
+              <path d="M93 57H70M143 57H166" />
+              <path d="M39 52V37C39 32 43 28 49 28H86" />
+              <circle cx="86" cy="28" r="3" />
+              <circle cx="70" cy="57" r="3" />
+              <circle cx="166" cy="57" r="3" />
+              <path d="M98 12H138M98 19H123M19 62H56M177 62H211" />
+            </svg>
+          </div>
+
+          <div
+            className="dashboard-foot"
+            aria-label="Focus areas: Data Science, Data Analyst, Data Engineering, and Business Analytics"
+          >
+            <span className="dashboard-foot-row">
+              <span>Data Science</span>
+              <span aria-hidden="true">·</span>
+              <span>Data Analyst</span>
+            </span>
+            <span className="dashboard-foot-row">
+              <span>Data Engineering</span>
+              <span aria-hidden="true">·</span>
+              <span>Business Analytics</span>
+            </span>
+          </div>
         </div>
       </section>
 

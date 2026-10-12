@@ -871,7 +871,7 @@ const visualDescriptions: Record<string, GalleryDescription> = {
     originalScreenshot: false,
     sourceLabel: "Reconstructed workflow from original team notebooks",
   },
-  "class-distribution.svg": {
+  "/images/waste-material-classification/class-distribution.svg": {
     title: "Six waste categories and class imbalance",
     caption: "Original class counts: paper 594, glass 501, plastic 482, metal 410, cardboard 403 and trash 137.",
     details: ["The rare trash category has fewer than a quarter of the examples in the paper class.", "Class-weighted training and per-class recall matter when interpreting aggregate accuracy."],
@@ -1079,7 +1079,7 @@ export default async function ProjectDetailPage({
               <div className="detail-gallery">
                 {project.gallery.map((src) => {
                   const filename = src.split("/").pop() ?? "";
-                  const visual = visualDescriptions[filename];
+                  const visual = visualDescriptions[src] ?? visualDescriptions[filename];
                   const isScreenshot = visual?.originalScreenshot ?? false;
 
                   return (
