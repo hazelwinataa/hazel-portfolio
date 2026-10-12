@@ -1283,11 +1283,11 @@
   {
     "id": "12",
     "slug": "cherry-leaf-cnn",
-    "title": "Cherry Leaf Disease Classification — CNN / AlexNet",
-    "year": null,
-    "projectType": "",
-    "status": "",
-    "grade": "",
+    "title": "Cherry Leaf Disease Classification — AlexNet vs EfficientNetB0",
+    "year": 2026,
+    "projectType": "Individual academic Deep Learning midterm project",
+    "status": "Completed coursework — Grade A",
+    "grade": "A",
     "featured": false,
     "roleTags": [
       "Data Science",
@@ -1300,60 +1300,138 @@
       "Computer Vision",
       "Classification"
     ],
-    "description": "Five-class cherry leaf disease image classification with an AlexNet-style convolutional neural network.",
-    "problemStatement": "Classify cherry leaf images into five categories, exploring preprocessing and augmentation for visual disease recognition.",
-    "businessContext": "Computer vision may support exploratory screening of plant disease imagery, subject to field testing and expert confirmation.",
-    "dataset": "Cherry leaf image dataset containing 3,642 images in five classes.",
-    "datasetSize": "3,642 images; 5 classes",
+    "description": "Examined 3,642 cherry leaf images across five imbalanced classes; built a manual AlexNet baseline, tested three architectural modifications, and applied ImageNet-pretrained EfficientNetB0 transfer learning. Reported 91.76% accuracy and 0.9185 weighted F1 on a shared validation/test subset, with the holdout limitation explicitly disclosed.",
+    "problemStatement": "Classify five cherry-leaf visual conditions based on RGB image texture, color, lesions, scorching and perforations; evaluate whether architecture selection and transfer learning help on a small, imbalanced image catalog.",
+    "businessContext": "The exercise explores image-based agricultural disease screening. The dataset is not an external field-validation benchmark, and reported predictions should not be used as autonomous crop diagnosis.",
+    "dataset": "3,642 RGB JPEG images grouped in five folders: Cherry_Leaf_Scorch (1,101), Cherry_purple_leaf_spot (987), Cherry_brown_spot (614), Cherry_Normal_leaf (500), and Cherry_shot_hole_disease (440). Original resolution observed as 800×1,000 pixels (aspect ratio 0.8). Source files are not included with the notebook upload.",
+    "datasetSize": "3,642 JPEG images · 5 classes",
     "preprocessing": [
-      "Performed image EDA and resizing",
-      "Normalized pixel intensities",
-      "Applied augmentation and class weighting during model development"
+      "Counted images by class and inspected sample leaves; 1,101 Leaf Scorch images versus 440 Shot-hole Disease images showed meaningful class imbalance.",
+      "Inspected image dimensions and aspect ratio (800×1,000; width-to-height 0.8), checked for corrupted images (zero reported), and resized all inputs to 224×224×3. Square resizing changes the original aspect ratio and may distort geometry; constant input dimensions alone do not guarantee zero distortion.",
+      "Applied rescale=1/255 to the manual AlexNet data generators. Training augmentation included rotation up to 25°, width/height shifts 10%, zoom 20%, horizontal flipping, and brightness 0.8–1.2; these transforms were not applied to the evaluation subset.",
+      "Computed balanced class weights for the manual CNN experiments to reduce domination by majority classes; kept categorical/one-hot labels for five-class cross-entropy.",
+      "Used a separate EfficientNetB0 data pipeline with pixel inputs on their original 0–255 scale because the imported Keras application backbone includes internal input preprocessing. This was a necessary change relative to the earlier manually scaled generator.",
+      "Notebook's directory generators created 2,550 training images and 1,092 validation images with validation_split=0.3. The later 'test' generator reused subset='validation' on the same folders, so the requested independent 70:15:15 split was not implemented.",
+      "Used shuffle=False on the reported evaluation generator when aligning predicted probabilities with directory class labels for classification report, confusion matrix and AUC."
     ],
-    "featureEngineering": [],
+    "featureEngineering": [
+      "Modeled visual features automatically using convolutional filters rather than handcrafted lesion descriptors.",
+      "Implemented a manual AlexNet-style sequence of 11×11, 5×5 and 3×3 convolutions followed by pooling and two large 4,096-unit dense layers.",
+      "Added BatchNormalization and progressively smaller dense heads in experimental modified CNNs, comparing stability and overfitting behavior.",
+      "Used an ImageNet-pretrained EfficientNetB0 frozen convolutional backbone with global average pooling, a Dense(256) layer, Dropout(0.2), and a five-neuron softmax head."
+    ],
     "methodology": [
-      "Trained an AlexNet-style CNN",
-      "Compared class predictions using classification metrics and a confusion matrix"
+      "Established the five-category supervised classification problem and audited image distribution, class imbalance, representative class appearance and file integrity.",
+      "Trained a manually specified AlexNet baseline using Adam, categorical cross-entropy, and balanced class weights. The architecture contained 46,767,493 trainable parameters and showed stagnant training/validation accuracy around chance levels.",
+      "Tested three manual CNN modifications by adding BatchNormalization, reducing dense-layer size, lowering learning rates, and incorporating callbacks such as EarlyStopping and ReduceLROnPlateau.",
+      "Compared with a fourth modified approach using EfficientNetB0 with ImageNet weights and a frozen backbone. Model summary reported 4,378,792 total parameters, with 329,221 trainable.",
+      "Recorded learning curves, weighted precision/recall/F1, classification report, confusion matrix, and one-versus-rest class-wise ROC/AUC for the EfficientNet experiment.",
+      "Reported an EfficientNetB0 evaluation accuracy of 0.917582 and weighted F1 0.918513 on 1,092 validation-subset images. These figures are not held-out final test metrics because model selection and evaluation reused the same 30% images.",
+      "Interpreted the large transfer-learning improvement in light of pretrained features and reduced trainable parameter count, while noting that manual CNNs and EfficientNet were fed differently preprocessed input during the recorded model-comparison evaluation."
     ],
     "models": [
-      "AlexNet-style CNN"
+      "Manual AlexNet-style CNN baseline",
+      "Modified AlexNet + BatchNormalization",
+      "Tuned modified AlexNet (variants 2 and 3)",
+      "EfficientNetB0 transfer learning (frozen backbone)"
     ],
     "technologies": [
       "Python",
       "TensorFlow",
-      "Keras"
+      "Keras",
+      "EfficientNetB0",
+      "Scikit-learn",
+      "NumPy",
+      "Pillow",
+      "Matplotlib",
+      "Seaborn"
     ],
     "evaluationMetrics": [
-      "Accuracy",
-      "Precision",
-      "Recall",
-      "F1-score",
-      "Confusion matrix"
+      "Shared validation/test subset accuracy",
+      "Weighted precision, recall and F1",
+      "Five-class confusion matrix",
+      "Per-class ROC AUC",
+      "Training/validation loss and accuracy"
     ],
-    "results": [],
+    "results": [
+      "Dataset EDA: 3,642 images in five classes: 1,101 Leaf Scorch; 987 Purple Leaf Spot; 614 Brown Spot; 500 Normal Leaf; 440 Shot-hole Disease. Corrupted images reported: zero.",
+      "Manual AlexNet baseline had 46.77 million trainable parameters. Its recorded evaluation accuracy was 0.271062 and weighted F1 was 0.115612.",
+      "Final table reported the following accuracies: Modified Model 1, 0.244505; Model 2, 0.293040; Model 3, 0.120879; Model 4 (EfficientNetB0), 0.917582. This is not a strictly controlled cross-model ranking because the baseline/manual CNN input scaling differs from the EfficientNet evaluation generator.",
+      "EfficientNetB0 reported shared-subset accuracy 91.7582%, weighted precision 0.928558, weighted recall 0.917582, weighted F1 0.918513 and categorical cross-entropy loss 0.2909.",
+      "Reported multi-class ROC AUC (macro OvR) 0.9909 and weighted OvR AUC 0.9919, measured against the same shared validation/test subset.",
+      "Effective split in saved code: 2,550 train and 1,092 validation/test-shared images; despite a 70:15:15 task description, no independent 15% test set was separated.",
+      "All reported model metrics are existing notebook outputs, not independently retrained results. The source notebook and PDF are available as user-provided evidence, but no public GitHub source repository has yet been created."
+    ],
     "insights": [
-      "Augmentation and class weighting were part of the workflow for improving generalization and class awareness."
+      "Class imbalance between Leaf Scorch and Shot-hole Disease motivated class weighting, and augmentation introduced reasonable image variations to make training less dependent on specific poses and lighting.",
+      "Manual AlexNet's two 4,096-unit dense layers created a high-parameter model that remained difficult to optimize on 3,642 images; the initial near-chance training curve suggests ineffective learning rather than proven classic overfitting.",
+      "EfficientNetB0 reused pretrained edge, texture and shape representations, needed fewer trained parameters, and required correct input scaling to work with its built-in preprocessing. These factors plausibly explain the much stronger reported validation performance.",
+      "Resizing 800×1,000 leaves directly to 224×224 changes aspect ratio from 0.8 to 1.0, potentially altering the shape of lesions and leaf contours; aspect-ratio-preserving resizing/padding would be a more controlled alternative.",
+      "The apparent large accuracy increase cannot be attributed to architecture alone: input preprocessing and training configurations changed, and there is no independent final test cohort.",
+      "A high ROC AUC on the reused holdout subset measures score separation under the current evaluation but is not proof of robust generalization to unseen farms, cameras, leaf species or disease prevalence."
     ],
-    "businessImpact": "Potential application: support visual inspection in agriculture; field performance has not been established.",
-    "challenges": [],
+    "businessImpact": "Academic proof of concept for visual classification of five cherry-leaf conditions, with documented model comparisons and a reported 91.76% evaluation on a shared validation/test subset. No deployment, clinical/agricultural expert certification, or field-impact outcome is claimed.",
+    "challenges": [
+      "Limited images relative to manual AlexNet's 46.8M trainable parameters and strong differences in class support.",
+      "Choosing augmentation and class weights without destroying leaf lesion patterns.",
+      "Diagnosing stalled training curves and selecting a lighter transferable visual representation.",
+      "Correcting scaling mismatch between generic ImageDataGenerator rescaling and EfficientNet application preprocessing.",
+      "Recognizing that validation and test reuse prevents reliable independent model generalization claims."
+    ],
     "limitations": [
-      "Exact evaluation values and robustness to real-world lighting/background variations are not documented."
+      "Evaluation design is 70% training + 30% shared validation/test, not the requested independent 70:15:15. The reported 91.76% is NOT an untouched final-test accuracy.",
+      "Manual CNN candidates were trained on rescaled 0–1 images, whereas the final comparison function passed the non-rescaled EfficientNet evaluation generator to all models. Their reported evaluation accuracies therefore cannot be treated as a fair head-to-head benchmark.",
+      "Trained model weights, original image dataset, external site holdout and production API are not included in the uploaded source files.",
+      "Square resize without padding distorts the original 800:1000 aspect ratio.",
+      "Potential overlap of visually related photographs across splits and effects of class imbalance were not separately audited for data leakage.",
+      "An academic grade and internal evaluation are not evidence of real-world diagnostic performance."
     ],
-    "futureImprovements": [],
+    "futureImprovements": [
+      "Create a genuinely stratified and independent 70:15:15 train/validation/test split, storing immutable per-image manifests and checking exact/near duplicate images across partitions.",
+      "Apply evaluation preprocessing consistently for all models, and tune solely on validation data before reporting untouched test results.",
+      "Compare freezing versus partially unfreezing the EfficientNet backbone, report class-level F1 and calibration, and use domain-specific acquisition tests.",
+      "Preserve aspect ratio via padding/cropping with explicit visual checks; audit dataset leakage, lighting variation and disease-label quality.",
+      "Package source notebooks, reproducible requirements and clean dataset access instructions in a separate public repository after verifying permissions."
+    ],
     "githubUrl": "",
     "demoUrl": "",
     "reportUrl": "",
-    "image": "",
-    "gallery": []
+    "image": "/images/cherry-leaf-cnn/class-distribution.svg",
+    "gallery": [
+      "/images/cherry-leaf-cnn/class-distribution.svg",
+      "/images/cherry-leaf-cnn/model-evaluation-caution.svg"
+    ],
+    "highlights": [
+      {
+        "value": "3,642",
+        "label": "Cherry leaf images",
+        "note": "Five imbalanced classes"
+      },
+      {
+        "value": "91.76%",
+        "label": "Shared-subset accuracy",
+        "note": "Not an independent test"
+      },
+      {
+        "value": "0.9185",
+        "label": "Weighted F1",
+        "note": "EfficientNetB0"
+      },
+      {
+        "value": "Grade A",
+        "label": "Academic assessment",
+        "note": "Deep Learning coursework"
+      }
+    ]
   },
   {
     "id": "13",
     "slug": "used-car-regression-ann",
-    "title": "Used-Car Price Regression — ANN",
-    "year": null,
-    "projectType": "",
-    "status": "",
-    "grade": "",
+    "title": "Used-Car Price Prediction — ANN Regression",
+    "year": 2026,
+    "projectType": "Individual academic Deep Learning midterm project",
+    "status": "Completed coursework — Grade A",
+    "grade": "A",
     "featured": false,
     "roleTags": [
       "Data Science",
@@ -1366,45 +1444,130 @@
       "Regression",
       "Deep Learning"
     ],
-    "description": "Predicting used-car prices from structured vehicle features with an artificial neural network.",
-    "problemStatement": "Train a regression model to estimate used-car prices from numerical or appropriately prepared vehicle-related predictors.",
-    "businessContext": "Price estimation can support comparative market analysis, but predicted prices are not guaranteed valuations.",
-    "dataset": "Structured used-car price data; the source and record count are not yet documented.",
-    "datasetSize": "",
+    "description": "Built an ANN price-regression workflow from 2,000 used-car sales records, resolving mixed-format features and outliers, selecting 1,648 modeling cases, and comparing baseline versus modified Keras models. The modified model achieved test R² 0.8777 and RMSE 0.2625 on log-transformed prices.",
+    "problemStatement": "Estimate a used vehicle's selling price from model, technical specifications, age, mileage, ownership, fuel type, transmission and location, while handling noisy mixed tabular inputs.",
+    "businessContext": "Used-car price estimation can help dealerships perform consistency checks and comparative market analysis; the experiment does not provide production valuation guarantees or validated live-market pricing.",
+    "dataset": "Source notebook loads 1B.parquet containing 2,000 vehicle sales and 18 initial columns. Relevant fields include name, year, selling_price (USD), km_driven, region/state/city, fuel, seller_type, transmission, owner, mileage, engine, max_power, torque and seats. Some values were invalid (year 3011, max_power -100), and two sale prices were missing. After the recorded cleaning/feature-engineering stages, 1,648 records entered the modeling split.",
+    "datasetSize": "2,000 source rows · 18 original columns · 1,648 modeled rows",
     "preprocessing": [
-      "Prepared numerical model inputs for neural-network regression"
+      "Audited 2,000 × 18 data, including 2 missing selling_price targets, zero exact duplicate rows, mixed object/numeric fields, and right-skewed prices (mean about USD 6,501; median USD 4,500).",
+      "Checked out-of-domain values including year=3011 and max_power=-100. Examined potentially questionable km_driven values and high mileage rather than assuming every statistical outlier was wrong.",
+      "Parsed torque text with different units and RPM notation into torque_nm and torque_rpm numeric features. Converted object-formatted mileage to numeric input.",
+      "Reviewed categorical cardinality and location consistency; feature engineering combined age, usage intensity and technical ratios, while model features excluded record identifiers.",
+      "Transformed the strongly skewed selling_price target with log1p before fitting neural-network regression. Notebook's test MAE/RMSE/MSE are therefore in log-price units, not USD.",
+      "Final modeling matrix contained 1,648 records and 15 pre-encoding predictors; split randomly using SEED=42 into 1,153 training, 165 validation and 330 test observations (about 70:10:20).",
+      "Constructed state_high using mean training-set log price and a training-derived threshold, then removed State or Province as direct input. This prevents use of validation/test target values in the location encoding.",
+      "Used a train-fitted ColumnTransformer with StandardScaler on numeric features, OneHotEncoder(handle_unknown='ignore') on fuel, seller_type, transmission and brand, and ordinal mapping/passthrough for owner and state_high. Resulting ANN input dimension: 45.",
+      "Fitted numerical and categorical transformations on training data only, then transformed validation and test using the learned preprocessing objects."
     ],
-    "featureEngineering": [],
+    "featureEngineering": [
+      "Derived brand information from the vehicle name and encoded nominal manufacturer/fuel/seller/transmission categories with One-Hot Encoding.",
+      "Extracted torque_nm and torque_rpm from mixed string values with different separators, casing and torque units.",
+      "Created vehicle age (car_age), usage intensity (km_per_year) and engine-to-power ratio (power_to_engine) to summarize depreciation and technical characteristics.",
+      "Explored skewness correction including log1p of selling_price and transformations of usage variables.",
+      "Constructed a training-target-derived binary state_high representation to summarize local price-level context without fitting it on held-out labels."
+    ],
     "methodology": [
-      "Developed an ANN regression model in TensorFlow/Keras",
-      "Evaluated predictions using a regression workflow"
+      "Performed column-by-column EDA with descriptive statistics, category frequencies, geographic consistency checks, missingness, outlier inspection, correlation plots, and right-skewness diagnostics.",
+      "Prepared model-ready data using tabular domain cleaning, feature engineering, log target, leakage-aware splits and train-only numerical/categorical transforms.",
+      "Created a Keras Sequential baseline ANN with two 90-unit ReLU hidden layers, BatchNormalization, Dropout(0.30), L2 weight regularization, a linear output, Adam optimizer and MSE loss.",
+      "Monitored training and validation learning curves with EarlyStopping, ReduceLROnPlateau, ModelCheckpoint and CSVLogger; reported train/validation/test MAE, MSE, RMSE and R².",
+      "Developed a modified ANN using a 90-unit then 45-unit ReLU architecture, BatchNormalization, lighter Dropout(0.10), linear output and Adam; compared using the existing split.",
+      "Measured the modified model on the held-out 330-row test set: MAE 0.207360, MSE 0.068883, RMSE 0.262455 and R² 0.877696, all on the logarithmic target except dimensionless R².",
+      "Compared baseline versus modified test RMSE and observed approximately 12.1% lower error in log-price scale. Used saved actual-vs-predicted and residual plots to examine remaining error.",
+      "Did not translate error into USD or claim percentage accuracy because no original-price inverse-transform evaluation is provided."
     ],
     "models": [
-      "Artificial Neural Network"
+      "Baseline feedforward ANN (90–90 ReLU + regularization)",
+      "Modified feedforward ANN (90–45 ReLU + lower dropout)"
     ],
     "technologies": [
       "Python",
       "TensorFlow",
-      "Keras"
+      "Keras",
+      "Pandas",
+      "NumPy",
+      "Scikit-learn",
+      "Matplotlib",
+      "Seaborn"
     ],
     "evaluationMetrics": [
-      "Regression evaluation; precise reported metrics require notebook verification"
+      "MAE (log price)",
+      "MSE (log price)",
+      "RMSE (log price)",
+      "R²",
+      "Actual-vs-predicted / residual analysis"
     ],
-    "results": [],
+    "results": [
+      "Initial dataset: 2,000 rows and 18 original columns. Recorded final modeling cohort: 1,648 cases with 45 encoded/scaled input columns; training/validation/test splits: 1,153 / 165 / 330.",
+      "Price EDA: mean selling_price about USD 6,500.86, median USD 4,500; target skewness before log transform 4.4599. Two original rows had missing prices.",
+      "Baseline ANN held-out test: MAE 0.237316, RMSE 0.298535, MSE 0.089123, R² 0.841760, calculated on log1p(selling_price).",
+      "Modified ANN held-out test: MAE 0.207360, RMSE 0.262455, MSE 0.068883, R² 0.877696, calculated on log1p(selling_price).",
+      "Relative test RMSE improvement: approximately 12.1% over baseline in log-price space; this is not a claimed 12.1% reduction in dollar price error.",
+      "The fitted transforms were learned from train only. State-level target encoding was also derived only using training-set price labels before being applied to validation/test records.",
+      "The source notebook documents training curves and test residual charts. Raw parquet data and saved trained weights were not supplied; no independent recomputation or deployment is asserted."
+    ],
     "insights": [
-      "The project demonstrates neural-network regression for a continuous numeric target rather than classification."
+      "Missing target values, invalid production-year/power entries and mixed torque strings made domain-aware cleaning essential before any neural learning.",
+      "The mean selling price greatly exceeded median price because high-end examples extend the right tail; log1p compression reduced emphasis on extreme dollar magnitudes during MSE optimization.",
+      "Reducing hidden-layer size and dropout from the baseline lowered the measured held-out error, suggesting that a simpler regularization balance helped this particular dataset.",
+      "Train-only preprocessing and train-derived state_high avoid a common leakage mode where validation/test statistics influence fitted feature transformations.",
+      "With 1,648 modeling cases and 45 encoded inputs, interpretability and calibration remain practical challenges even when a neural model reaches R² near 0.878 on log prices.",
+      "Log-scale error cannot be read directly as price error in USD; to estimate dollar-level MAE or deployment utility, predictions must be inverse-transformed with expm1 before scoring."
     ],
-    "businessImpact": "",
-    "challenges": [],
+    "businessImpact": "Academic price-regression proof of concept using real-world-style vehicle attributes, with a documented improvement from R² 0.8418 to 0.8777 on held-out log-price targets. No deployment, realized pricing revenue or production dealership adoption is claimed.",
+    "challenges": [
+      "Parsing mixed-format torque descriptions into consistent physical units and usable numeric columns.",
+      "Balancing outlier treatment with retention of genuine high-mileage and premium vehicles.",
+      "Handling high-cardinality geography and manufacturer fields without creating spurious ordinal relationships.",
+      "Preventing leakage when encoding locations with target-derived training statistics.",
+      "Interpreting test error measured on transformed prices rather than raw dollar amounts."
+    ],
     "limitations": [
-      "Dataset source, architecture details, preprocessing decisions, and numerical performance are not yet verified."
+      "Original 1B.parquet source data and saved weights are not present in the uploaded notebook package, so raw data values and model outputs were not rerun independently.",
+      "All reported regression MAE/RMSE/MSE values are on log1p(selling_price), not USD. A separate inverse-transformed price evaluation was not recorded.",
+      "The reduction from 2,000 input records to 1,648 modeling rows reflects multiple cleaning steps, but a complete itemized removal ledger was not generated for the portfolio review.",
+      "Only two ANN configurations were compared; no traditional regression or tree-ensemble control model was documented for this particular final comparison.",
+      "Random split is suitable for this retrospective academic experiment but does not test temporal out-of-time pricing robustness.",
+      "Market conditions, regional price differences, unseen brands and possible target-encoding drift require additional evaluation before commercial usage."
     ],
-    "futureImprovements": [],
+    "futureImprovements": [
+      "Recover the original source parquet dataset and record all filtering steps in a reproducible Pipeline with a versioned data dictionary.",
+      "Evaluate inverse-transformed USD MAE/RMSE/MAPE and compare against median-price, Ridge, Random Forest and gradient boosting baselines.",
+      "Cross-validate feature engineering and training-target encodings with out-of-fold training representations to reduce overfitting in-sample.",
+      "Test temporal and geographic holdouts, monitor drift, and validate across price bands, manufacturers and usage types.",
+      "Package source notebook, environment and model serialization in a reproducible repository after verifying data sharing permission."
+    ],
     "githubUrl": "",
     "demoUrl": "",
     "reportUrl": "",
-    "image": "",
-    "gallery": []
+    "image": "/images/used-car-regression/ann-test-rmse-log.svg",
+    "gallery": [
+      "/images/used-car-regression/ann-dataset-split.svg",
+      "/images/used-car-regression/ann-test-rmse-log.svg"
+    ],
+    "highlights": [
+      {
+        "value": "2,000",
+        "label": "Source vehicle records",
+        "note": "1,648 modeled cases"
+      },
+      {
+        "value": "0.8777",
+        "label": "Modified test R²",
+        "note": "log1p price target"
+      },
+      {
+        "value": "-12.1%",
+        "label": "Test RMSE vs baseline",
+        "note": "log scale only"
+      },
+      {
+        "value": "Grade A",
+        "label": "Academic result",
+        "note": "Deep Learning midterm"
+      }
+    ]
   },
   {
     "id": "14",
