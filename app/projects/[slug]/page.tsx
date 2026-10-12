@@ -1020,7 +1020,20 @@ export default async function ProjectDetailPage({
           <TextSection title="Dataset" value={project.dataset} />
           <ListSection title="Data preprocessing" items={project.preprocessing} />
           <ListSection title="Feature engineering" items={project.featureEngineering} />
-          <ListSection title={project.slug === "customer-repeat-order" ? "EDA & preprocessing methodology" : "Methodology & experiments"} items={project.methodology} />
+          {project.slug === "uml-system-modeling" ? (
+            <section className="detail-section">
+              <h2>Coursework &amp; System Modeling Experience</h2>
+              <div style={{ display: "grid", gap: "20px" }}>
+                {project.methodology.map((paragraph, index) => (
+                  <p key={`uml-study-${index}`} style={{ lineHeight: 1.85 }}>
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
+            </section>
+          ) : (
+            <ListSection title={project.slug === "customer-repeat-order" ? "EDA & preprocessing methodology" : "Methodology & experiments"} items={project.methodology} />
+          )}
           <ListSection title="Models" items={project.models} />
           <ListSection title="Evaluation metrics" items={project.evaluationMetrics} />
           <ListSection title="Documented results" items={project.results} />
