@@ -885,6 +885,20 @@ const visualDescriptions: Record<string, GalleryDescription> = {
     originalScreenshot: false,
     sourceLabel: "Chart recreated from actual notebook evaluation outputs",
   },
+  "historical-workflow.svg": {
+    title: "Savings goal classification · Historical experiment workflow",
+    caption: "Reconstructed from December 2025 discussions: 3,000 personal-finance records, removal of actual_savings and nonpredictive identifiers, stratified 80:20 splitting, baseline classifier comparison and F1-oriented Random Forest tuning.",
+    details: ["The original CSV and executed notebook were not available for this portfolio review.", "The diagram summarizes recorded methodological steps, not a screenshot of an executed workflow."],
+    originalScreenshot: false,
+    sourceLabel: "Explanatory reconstruction from December 2025 coursework discussions",
+  },
+  "archived-confusion-matrix.svg": {
+    title: "Tuned Random Forest · Reconstructed confusion matrix",
+    caption: "Archived counts: TN 539, FP 6, FN 8 and TP 47 across 600 held-out observations. Derived positive-class F1 is 0.8704, precision 0.8868, recall 0.8545 and overall accuracy 0.9767.",
+    details: ["Positive-class support is 55 of 600 (9.17%), so a majority-only classifier would also achieve 90.83% accuracy while missing every positive.", "This graphic re-plots historical counts and derived calculations, not a new model evaluation or recovered original notebook screenshot."],
+    originalScreenshot: false,
+    sourceLabel: "Metrics calculated from archived tuned Random Forest confusion counts",
+  },
 };
 
 export default async function ProjectDetailPage({
