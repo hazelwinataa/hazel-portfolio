@@ -864,6 +864,27 @@ const visualDescriptions: Record<string, GalleryDescription> = {
     originalScreenshot: false,
     sourceLabel: "Comparison chart recreated from main.ipynb test metrics",
   },
+  "experiment-workflow.svg": {
+    title: "Waste material classification: data and modeling workflow",
+    caption: "Team workflow reconstructed from the two supplied notebooks: six-class image EDA, stratified 70:15:15 splitting, augmentation and class weighting, four model experiments, and Grad-CAM analysis.",
+    details: ["The original 2,527 images were split into 1,768 training, 379 validation and 380 test examples.", "The diagram is explanatory; source code was reviewed but the models were not retrained."],
+    originalScreenshot: false,
+    sourceLabel: "Reconstructed workflow from original team notebooks",
+  },
+  "class-distribution.svg": {
+    title: "Six waste categories and class imbalance",
+    caption: "Original class counts: paper 594, glass 501, plastic 482, metal 410, cardboard 403 and trash 137.",
+    details: ["The rare trash category has fewer than a quarter of the examples in the paper class.", "Class-weighted training and per-class recall matter when interpreting aggregate accuracy."],
+    originalScreenshot: false,
+    sourceLabel: "Replotted from original dataset class-count output",
+  },
+  "four-model-test-results.svg": {
+    title: "Four model experiments: accuracy and macro F1",
+    caption: "MobileNetV2 V1 produced the highest recorded test accuracy (81.32%), narrowly exceeding Improved CNN (80.26%) and MobileNetV2 V2 (79.74%). The baseline CNN reached 54.74%.",
+    details: ["Macro-averaged F1 scores differ from weighted F1 and from the raw Keras precision/recall outputs.", "Model candidates had different training budgets, and using test metrics for model choice may bias the reported winning test result."],
+    originalScreenshot: false,
+    sourceLabel: "Chart recreated from actual notebook evaluation outputs",
+  },
 };
 
 export default async function ProjectDetailPage({
