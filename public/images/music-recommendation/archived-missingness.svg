@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600">
+<rect width="1200" height="600" rx="22" fill="#f5f8fc"/>
+<g font-family="Arial,sans-serif">
+<text x="56" y="62" font-size="30" fill="#152c43" font-weight="700">Music metadata · archived missing-value inspection</text>
+<text x="56" y="95" font-size="17" fill="#537086">Original catalog: 4,999 tracks and 19 columns · reported counts from historical project discussions</text>
+<rect x="56" y="126" width="1088" height="333" rx="17" fill="#ffffff" stroke="#d4e1e9" stroke-width="2"/>
+<text x="70" y="167" font-size="15" fill="#617c90" font-weight="700">COLUMN</text>
+<text x="315" y="167" font-size="15" fill="#617c90" font-weight="700">MISSING-VALUE FREQUENCY</text>
+<text x="960" y="167" font-size="15" fill="#617c90" font-weight="700">COUNT</text>
+<text x="1033" y="167" font-size="15" fill="#617c90" font-weight="700">SHARE</text>
+<text x="70" y="205" font-size="18" fill="#25465e" font-weight="700">Artist Genres</text><rect x="315" y="188" width="620" height="32" rx="9" fill="#e2eaf1"/><rect x="315" y="188" width="575" height="32" rx="9" fill="#247f9e"/><text x="960" y="210" font-size="18" fill="#1b374e" font-weight="700">255</text><text x="1033" y="210" font-size="16" fill="#567488">5.10%</text><text x="70" y="305" font-size="18" fill="#25465e" font-weight="700">Danceability</text><rect x="315" y="288" width="620" height="32" rx="9" fill="#e2eaf1"/><rect x="315" y="288" width="568" height="32" rx="9" fill="#3c96a9"/><text x="960" y="310" font-size="18" fill="#1b374e" font-weight="700">252</text><text x="1033" y="310" font-size="16" fill="#567488">5.04%</text><text x="70" y="405" font-size="18" fill="#25465e" font-weight="700">Instrumentalness</text><rect x="315" y="388" width="620" height="32" rx="9" fill="#e2eaf1"/><rect x="315" y="388" width="230" height="32" rx="9" fill="#70aeb6"/><text x="960" y="410" font-size="18" fill="#1b374e" font-weight="700">102</text><text x="1033" y="410" font-size="16" fill="#567488">2.04%</text>
+<rect x="56" y="483" width="1088" height="60" rx="11" fill="#e8f0f6"/>
+<text x="74" y="509" font-size="16" fill="#294f62" font-weight="700">Interpretation</text>
+<text x="74" y="533" font-size="15" fill="#476477">Genre and danceability fields show the highest recorded missingness among these selected attributes.</text>
+<text x="56" y="578" font-size="13.5" fill="#6a8091">Recreated from saved data-quality counts. Not an original notebook chart; no missing-value imputation outcome is asserted.</text>
+</g></svg>
