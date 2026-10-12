@@ -322,10 +322,10 @@
   {
     "id": "4",
     "slug": "pbc-liver-disease",
-    "title": "PBC / Liver Disease Stage Classification",
-    "year": null,
-    "projectType": "",
-    "status": "",
+    "title": "PBC Liver Disease Stage Classification — Random Forest vs XGBoost",
+    "year": 2025,
+    "projectType": "Academic Machine Learning assignment — December 2025",
+    "status": "Documented academic experiment — source notebook unavailable",
     "grade": "",
     "featured": false,
     "roleTags": [
@@ -336,50 +336,128 @@
       "Machine Learning"
     ],
     "domainTags": [
-      "Classification"
+      "Machine Learning",
+      "Classification",
+      "Healthcare Analytics"
     ],
-    "description": "Multiclass classification of liver disease stage using clinical variables and tree-based machine learning.",
-    "problemStatement": "Predict disease-stage labels from clinical features, with attention to data quality and multiclass model performance.",
-    "businessContext": "The project explores classification methodology for clinical data and is not a validated diagnostic tool.",
-    "dataset": "PBC-style liver disease clinical dataset with the target variable Stage.",
-    "datasetSize": "",
+    "description": "Studied four-class liver disease stage prediction on the historical 1A.tsv clinical dataset, focusing on inconsistent Stage labels, missing clinical features, leakage-aware preprocessing, and Random Forest versus XGBoost. Archived evaluation reported XGBoost macro F1 of 0.427 and balanced accuracy of 0.424; results have not been rerun because original files are unavailable.",
+    "problemStatement": "Predict disease stage (1–4) from structured patient attributes in a multiclass supervised-learning task, and compare whether an ensemble bagging model or a boosted-tree model offers better class-balanced evaluation.",
+    "businessContext": "Medical records combine heterogeneous laboratory measurements and categorical clinical status fields. This coursework illustrates preprocessing and multiclass performance evaluation, not a clinical decision-support system, diagnosis, prognosis, or validated assessment of patient care.",
+    "dataset": "The coursework used an uploaded tab-separated file named 1A.tsv with target Stage and clinical/laboratory variables. Archived discussions name bilirubin, cholesterol, albumin, copper, alkaline phosphatase, SGOT, triglycerides, platelets and prothrombin, alongside categorical or clinical-status fields such as Drug, Gender, Ascites, Hepatomegaly and Edema. The Stage entries were discussed with inconsistent formats (e.g. 'Stage 1', 'stage_3', 'Stage4') and missing labels. Exact row count, class frequencies, data provenance and file version are not recoverable from the surviving records.",
+    "datasetSize": "Exact number of records unavailable · Four target stages (1–4)",
     "preprocessing": [
-      "Checked data quality and prepared clinical features",
-      "Applied preprocessing for Random Forest and XGBoost experiments"
+      "Reviewed the tabular schema, target Stage variations, missing values and potentially invalid numerical measurements. The archived conversation did not retain a complete executed EDA output, so exact missingness counts and abnormal-value frequencies are not claimed.",
+      "Identified inconsistent target strings such as 'Stage 1', 'stage_3' and 'Stage4'. Standardization into four consistent stage labels was required before supervised training and stratification; the final cleaned label counts are unavailable.",
+      "Distinguished missing target labels from missing predictor attributes: a supervised classifier cannot learn a known stage from an unlabeled target row, whereas missing predictor fields can be imputed from training-set statistics.",
+      "Archived preprocessing notes describe a stratified 80:20 train/test split created before fitting missing-value imputers or encoders, reducing the risk of information leaking from the independent test set.",
+      "Documented median imputation for numerical clinical variables and most-frequent (mode) imputation for categorical descriptors. The fitted imputers and exact post-imputation matrix were not saved in the accessible record.",
+      "Applied categorical One-Hot Encoding for nominal clinical descriptors so tree estimators received numeric inputs without arbitrarily ordering category labels.",
+      "Flagged possible domain-invalid values, including a discussion of negative triglycerides; without the source TSV, the count or even presence of that anomaly in the final dataset cannot be independently verified.",
+      "Kept class-distribution imbalance in view when comparing test metrics. Exact per-class sample sizes, class weights and any resampling choices were not preserved."
     ],
-    "featureEngineering": [],
+    "featureEngineering": [
+      "Converted inconsistent Stage labels into a consistent four-class target representation conceptually; no saved label-mapping artifact remains.",
+      "Created a combined numerical and one-hot-encoded representation of laboratory and categorical clinical attributes using train-derived preprocessing settings.",
+      "Used clinical status indicators and laboratory measurements as structured predictors, without claiming any particular feature was causal or clinically predictive in the absence of verified importance results."
+    ],
     "methodology": [
-      "Explored clinical predictor distributions",
-      "Compared Random Forest and XGBoost for multiclass Stage prediction"
+      "Framed the task as supervised multiclass classification of Stage 1–4, rather than survival analysis or binary detection of liver disease.",
+      "Reviewed laboratory and categorical features for missingness, category formatting and plausibility; emphasized the importance of target-label consistency before evaluation.",
+      "Followed the archived split-before-preprocessing approach with a stratified 80:20 train/test partition, numeric median imputation and categorical mode imputation/one-hot encoding.",
+      "Compared Random Forest bagging of multiple decision trees with XGBoost gradient-boosted trees, both appropriate for heterogeneous structured data.",
+      "The December 2025 assignment discussions mention hyperparameter experimentation/tuning for both models, but the final winning parameters, folds and search configuration were not recovered.",
+      "Assessed accuracy together with balanced accuracy and macro-averaged precision, recall and F1 rather than ranking models using accuracy alone.",
+      "Interpreted the reported metric trade-off: Random Forest had higher overall test accuracy, while XGBoost had higher balanced accuracy and macro F1, which is more informative when stage groups are uneven.",
+      "Documented that the numeric results are historical chat-reported test figures; no original notebook, confusion matrix, trained estimator or independent rerun was available for this review."
     ],
     "models": [
-      "Random Forest",
-      "XGBoost"
+      "Random Forest Classifier",
+      "XGBoost Classifier"
     ],
     "technologies": [
       "Python",
       "Pandas",
+      "NumPy",
       "Scikit-learn",
       "XGBoost"
     ],
-    "evaluationMetrics": [],
-    "results": [],
-    "insights": [
-      "Disease-stage classification requires careful attention to class distribution, missing data, and class-specific evaluation."
+    "evaluationMetrics": [
+      "Accuracy",
+      "Balanced Accuracy",
+      "Macro Precision",
+      "Macro Recall",
+      "Macro F1-score",
+      "Class-specific performance (recommended, original report unavailable)"
     ],
-    "businessImpact": "",
-    "challenges": [],
+    "results": [
+      "Archived December 2025 evaluation — Random Forest: accuracy 0.542, balanced accuracy 0.410, macro precision 0.403, macro recall 0.410 and macro F1 0.406.",
+      "Archived December 2025 evaluation — XGBoost: accuracy 0.518, balanced accuracy 0.424, macro precision 0.462, macro recall 0.424 and macro F1 0.427.",
+      "Random Forest exceeded XGBoost in overall accuracy by 0.024 (2.4 percentage points). XGBoost exceeded Random Forest in balanced accuracy by 0.014 and macro F1 by 0.021.",
+      "Both balanced-accuracy scores were around 0.41–0.42. They indicate substantial remaining room for improvement across the four stage classes; per-class errors cannot be diagnosed without the missing confusion matrices and label supports.",
+      "Archived input filename: 1A.tsv; the target was discussed as Stage 1–4. The number of observations and final class distribution were not recorded.",
+      "No original source-code repository, rerunnable notebook, exported model, true training curve or deployed clinical workflow is available. The two recreated explanatory graphics (if displayed) are not original notebook screenshots."
+    ],
+    "insights": [
+      "Accuracy and class-balanced metrics ranked the algorithms differently. The higher raw Random Forest accuracy might disproportionately reflect more common stages; exact imbalance effects are not verifiable without label support counts.",
+      "XGBoost's stronger macro F1 (0.427 versus 0.406) indicates a better arithmetic mean of class-wise F1 under the archived test setup, but does not prove it improved every individual stage.",
+      "Balanced accuracy approximately equals macro recall in ordinary multiclass classification, consistent with the recorded RF 0.410/0.410 and XGBoost 0.424/0.424. These metrics explicitly weight each target stage equally.",
+      "Missing and inconsistently formatted Stage labels can corrupt supervised targets and stratification if not standardized; clinical predictor missingness requires train-only handling for trustworthy test measurements.",
+      "Bagging and gradient boosting have different error-reduction strategies. Their relative merits in this single experiment are empirical and must not be overgeneralized to other clinical datasets.",
+      "Laboratory feature measurements may be important predictors, but the absence of saved feature-importance plots prevents responsible claims that any named biomarker drove model predictions.",
+      "A result around 0.42 balanced accuracy across four stages is not sufficient evidence for medical use; the project demonstrates a careful evaluation mindset, not a clinical diagnosis."
+    ],
+    "businessImpact": "Academic outcome: a multiclass clinical-data classification and model-comparison exercise contrasting accuracy with macro/class-balanced metrics. No independent medical validation, practice deployment, patient-level benefit or diagnostic claim is made.",
+    "challenges": [
+      "Standardizing nonuniform Stage labels and distinguishing unlabeled outcomes from features requiring imputation.",
+      "Working with incomplete numerical lab measurements and categorical medical status fields without leaking test-set information.",
+      "Using multiple metrics to compare minority and majority stage prediction rather than overrelying on conventional accuracy.",
+      "Explaining the conflict between higher Random Forest accuracy and stronger XGBoost macro-balanced scores.",
+      "Presenting historical academic work accurately after the original TSV, notebook and per-class results were lost."
+    ],
     "limitations": [
-      "Dataset counts, selected features, metric values, and clinical validation are not documented in the portfolio inventory."
+      "The original 1A.tsv and notebook are unavailable; exact dataset size, stage support, missingness counts, fitted preprocessing and model hyperparameters cannot be independently confirmed.",
+      "Numerical performance comes from archived assistant-provided evaluation results in the December 2025 discussion, not a current rerun or surviving model-output artifact.",
+      "Some anomaly/missing-value descriptions were discussed or proposed historically rather than independently verified from an executed EDA printout.",
+      "No confusion matrix, per-stage classification report, confidence intervals, cross-validation stability or out-of-time/clinical external test was recovered.",
+      "Balanced accuracy and macro F1 values remain modest and are not evidence of suitability for patient diagnosis or treatment.",
+      "No grade is displayed because the user's academic score for this specific assignment was not documented. No source-code URL is presented because authentic source files are unavailable."
     ],
     "futureImprovements": [
-      "Add verified class distributions, confusion matrix, and comparative model results."
+      "Recover or reobtain the original authorized TSV and preserve row counts, class distribution, data dictionary and target-label mapping.",
+      "Rebuild a versioned sklearn Pipeline/ColumnTransformer with split-safe imputation, one-hot encoding, stratified cross-validation and reproducible random seeds.",
+      "Audit class imbalance and test confusion matrices; report class-specific recall/F1, macro F1, balanced accuracy and uncertainty intervals.",
+      "Compare against a majority-class and class-balanced baseline, tune both ensembles using training folds only and perform one untouched final test evaluation.",
+      "Investigate clinically plausible ranges, missingness mechanisms and stability of model explanations, and seek domain-expert validation before any clinical interpretation."
     ],
     "githubUrl": "",
     "demoUrl": "",
     "reportUrl": "",
-    "image": "",
-    "gallery": []
+    "image": "/images/pbc-liver-disease/archived-test-comparison.svg",
+    "gallery": [
+      "/images/pbc-liver-disease/archived-test-comparison.svg"
+    ],
+    "highlights": [
+      {
+        "value": "4",
+        "label": "Target stages",
+        "note": "Structured clinical classification"
+      },
+      {
+        "value": "0.427",
+        "label": "XGBoost macro F1",
+        "note": "Archived evaluation"
+      },
+      {
+        "value": "0.424",
+        "label": "Balanced accuracy",
+        "note": "Archived XGBoost result"
+      },
+      {
+        "value": "80:20",
+        "label": "Recorded split",
+        "note": "Stratified train / test"
+      }
+    ]
   },
   {
     "id": "5",
