@@ -384,10 +384,10 @@
   {
     "id": "5",
     "slug": "bangladesh-crime-clustering",
-    "title": "Bangladesh Crime Clustering",
-    "year": null,
-    "projectType": "",
-    "status": "",
+    "title": "Bangladesh Crime Pattern Clustering — K-Means & PCA",
+    "year": 2026,
+    "projectType": "Academic final project — Machine Learning",
+    "status": "Completed academic project — Grade A",
     "grade": "A",
     "featured": false,
     "roleTags": [
@@ -400,50 +400,120 @@
     "domainTags": [
       "Clustering"
     ],
-    "description": "Unsupervised clustering of 6,574 Bangladesh crime records to explore group structure and patterns.",
-    "problemStatement": "Identify useful groupings among crime records without relying on predefined class labels.",
-    "businessContext": "Exploratory segmentation can help organize crime-related records for descriptive analysis; clusters should not be treated as causal explanations.",
-    "dataset": "Bangladesh crime dataset containing 6,574 records.",
-    "datasetSize": "6,574 records",
+    "description": "Explored 6,574 Bangladesh crime-related observations using data-quality assessment, mixed-type preprocessing, K-Means model selection, PCA visualization, and interpretable cluster profiling. Academic grade: A; historical experiment results are documented with reproducibility limitations.",
+    "problemStatement": "Discover structurally similar groups among Bangladesh crime-related records without treating crime classification labels as a supervised target. Assess whether combinations of time, locality, weather, demographic, and infrastructure indicators form interpretable clusters and describe the boundaries of what such segmentation can establish.",
+    "businessContext": "Crime-related data can be explored to compare observational patterns and prioritize further descriptive investigation. This coursework provides an exploratory segmentation workflow, not a validated crime-risk prediction system, causal explanation, geographic hotspot detector, or basis for operational policing decisions.",
+    "dataset": "The original coursework identified Bangladesh_Crime_Dataset_B.csv with 6,574 rows and 26 source columns. Project discussions describe a mix of temporal, locality, precipitation/weather, demographic, institutional/infrastructure, and crime-related attributes. Specifically reviewed columns included part_of_the_day, season, precip, literacy_rate, religious_institution, and police_station; an Unnamed: 0 index-like column was considered for removal. The original dataset and notebook are no longer available for rerunning or independently checking the final training matrix.",
+    "datasetSize": "6,574 source observations × 26 columns (historical project inventory)",
     "preprocessing": [
-      "Cleaned and encoded relevant variables",
-      "Scaled model inputs before distance-based clustering"
+      "Inspected the initial 6,574-row, 26-column table, checking column types, missingness, duplicated rows, temporal ranges, category distributions, and out-of-range numeric values before clustering.",
+      "Documented missing observations for part_of_the_day (117), precip (657), season (328), and literacy_rate (328). Coursework notes describe mode imputation for categorical variables and median imputation for numerical variables; the exact final fitted preprocessing artifacts are unavailable.",
+      "Reviewed suspicious negative values in count-like infrastructure fields, including religious_institution and police_station, as invalid observations requiring cleaning rather than meaningful negative facility counts.",
+      "Checked duplicate records. Earlier project snapshots report conflicting duplicate counts (including 291 and zero), so no unverified final deduplication count or cleaned-row total is claimed.",
+      "Removed non-informative indexing or label-like fields from the unsupervised feature representation, as described in archived preprocessing notes; the exact final included-column list cannot be reconstructed without the notebook.",
+      "Applied categorical encoding and numerical scaling for distance-based K-Means. Archived notes reference OneHotEncoder for nominal categories, RobustScaler for numerics, and log1p transformation for skewed precipitation values.",
+      "Reviewed the final numeric feature representation before clustering and used PCA separately for exploratory two-dimensional visualization rather than as a substitute for cluster validation."
     ],
-    "featureEngineering": [],
+    "featureEngineering": [
+      "Represented categorical context through one-hot indicators to avoid imposing an artificial numerical order on nominal categories.",
+      "Addressed differing numeric magnitudes through robust scaling so raw measurement units did not dominate Euclidean centroid distances.",
+      "Explored log1p(precip) to compress strongly right-skewed precipitation values while preserving zero precipitation, as described in the historical preprocessing discussion.",
+      "Kept cluster identifiers as derived analysis outputs, then compared groups using original contextual variables rather than interpreting cluster numbers as ordered severity levels."
+    ],
     "methodology": [
-      "Applied K-Means clustering",
-      "Explored cluster counts using the elbow method",
-      "Evaluated cohesion/separation using silhouette analysis and Davies–Bouldin analysis where applicable",
-      "Used PCA for low-dimensional visualization and inspected cluster profiles"
+      "Framed the task as unsupervised exploratory segmentation: patterns are learned from input feature similarity without a ground-truth cluster label.",
+      "Performed EDA and preprocessing to make mixed numeric/categorical contextual data suitable for a distance-based estimator; flagged data-quality caveats before interpreting group structure.",
+      "Fit K-Means candidates across multiple cluster counts (the archived tuning discussion references k=2 through k=10), and examined inertia/elbow behavior alongside silhouette and Davies–Bouldin scores.",
+      "Preferred a two-cluster K-Means solution in a documented tuning run because the reported silhouette was higher and Davies–Bouldin lower than for three clusters; lower inertia alone was not used to justify continually increasing k.",
+      "Used PCA to visualize the multidimensional data and examine apparent separation in a two-dimensional projection, recognizing that this projection may not preserve all original feature relationships.",
+      "Conducted cluster profiling to compare the contextual attributes represented by each segment; no verified final risk or crime-severity labels have been assigned to the groups.",
+      "Documented measurement uncertainty explicitly because the original source code, preprocessing pipeline, and exported experiment artifacts are no longer available to reproduce the reported tuning outcomes."
     ],
     "models": [
-      "K-Means"
+      "K-Means clustering",
+      "PCA (visualization only)"
     ],
     "technologies": [
       "Python",
+      "Pandas",
+      "NumPy",
       "Scikit-learn",
-      "Pandas"
+      "Matplotlib",
+      "Seaborn"
     ],
     "evaluationMetrics": [
-      "Silhouette score",
-      "Elbow analysis",
-      "Davies–Bouldin index (where applicable)"
+      "Silhouette coefficient",
+      "Davies–Bouldin Index",
+      "Inertia / elbow analysis",
+      "Cluster size distribution",
+      "Contextual cluster profiling"
     ],
-    "results": [],
+    "results": [
+      "Original dataset inventory: 6,574 observations and 26 columns, combining crime-related and contextual variables. Final cleaned sample size cannot be established consistently from surviving notes.",
+      "Archived tuning table for one K-Means run: k=2 inertia 68,502.716, silhouette 0.842381, and Davies–Bouldin 0.173755. These are previously reported results, not metrics recalculated for this portfolio.",
+      "The same archived table reports k=3 silhouette 0.690448 and Davies–Bouldin 0.378465, supporting k=2 within that particular experiment.",
+      "A separate earlier discussion reported a best silhouette closer to 0.36. Since run-specific feature matrices, preprocessing settings, and saved notebook outputs are missing, this discrepancy cannot be resolved and the 0.842381 score should not be represented as an independently verified final benchmark.",
+      "An archived label-mapping step listed 5,644 and 864 clustered observations plus one unassigned row. These totals do not reconcile to the original 6,574 records; they are not treated as a definitive distribution for the complete dataset.",
+      "Project awarded academic Grade A. The notebook, datasets, raw visualizations, and reusable source code are unavailable; no public GitHub source repository or live application is claimed."
+    ],
     "insights": [
-      "PCA visualization and cluster profiling supported interpretation of the unsupervised grouping workflow."
+      "In the documented two-versus-three-cluster comparison, higher silhouette and lower Davies–Bouldin for k=2 suggest stronger measured separation under the corresponding feature encoding and distance representation.",
+      "A high silhouette can also arise when a single feature or processing choice strongly partitions observations; cluster quality should be checked against feature distributions and domain interpretation before treating it as meaningful crime segmentation.",
+      "The original EDA identified nontrivial quality issues—missing weather/season/demographic values and invalid negative infrastructure counts—that can materially affect Euclidean clustering when left untreated.",
+      "Encoding strategy and robust scaling matter because K-Means minimizes squared Euclidean distances, which can overweight high-range numerics or unintentionally treat category IDs as ordered quantities.",
+      "PCA offers an interpretable visual summary but does not independently verify the real-world significance of two clusters; detailed profiles are needed before attaching substantive names or policy interpretations.",
+      "The recorded cluster membership appears uneven in an intermediate mapping, while missing rows and duplicate-check differences remain unresolved; these caveats prevent reliable statements about Bangladesh-wide prevalence or relative crime risk."
     ],
-    "businessImpact": "Potential application: organize records for further analysis by investigators or analysts; no operational use is claimed.",
-    "challenges": [],
+    "businessImpact": "Academic and exploratory outcome: a repeatable analytical framework was studied for organizing contextual crime-related observations into groups, evaluating separation, and describing candidate segment characteristics. No causal inference, citywide crime-risk prediction, intervention outcome, or real-world adoption is claimed.",
+    "challenges": [
+      "Preparing mixed numeric and categorical context for Euclidean distance clustering without artificial feature domination.",
+      "Handling missing precipitation, time-of-day, season, and literacy-rate entries while preserving interpretable feature profiles.",
+      "Recognizing impossible negative facility counts and inconsistent duplicate-count reports instead of silently treating every source value as valid.",
+      "Choosing a cluster count using multiple metrics and separating quantitative structure from unsupported real-world crime-risk narratives.",
+      "Reconstructing the analysis responsibly after loss of the original notebook and source dataset."
+    ],
     "limitations": [
-      "Final cluster count, quantitative scores, and group definitions are not documented in the available inventory."
+      "The original notebook and dataset were not recovered; historical metrics and decisions cannot be independently rerun or fully attributed to a single exact preprocessing configuration.",
+      "Different archived discussions record conflicting silhouette outcomes (approximately 0.36 and 0.842381); report the latter only as a specific archived experiment, not the validated definitive score.",
+      "Historical cluster-assignment counts do not reconcile to the raw dataset size. The final number of modeled rows, true duplicate removals, and individual cluster profiles remain unverified.",
+      "K-Means assumes similarity based on the transformed Euclidean feature space; arbitrary categories, skew, outliers, and feature weighting can change partitions substantially.",
+      "Principal-component visualization cannot establish causality, predict future crime, or validate that geographic or demographic group differences reflect true risk.",
+      "No original source-code repository, model artifact, deployed system, or authentic result chart is provided. The project is presented as an academic case study with Grade A."
     ],
-    "futureImprovements": [],
+    "futureImprovements": [
+      "Recover or re-collect the exact licensed dataset and store a versioned feature dictionary, missingness report, and explicit duplicate-resolution log.",
+      "Reproduce preprocessing and K-Means in a single Pipeline/ColumnTransformer, record random seeds, feature weights, fitted transforms, and row-to-cluster identity mapping.",
+      "Compare cluster stability across seeds and feature subsets, evaluate alternative algorithms where appropriate, and profile the results using genuine original-scale variable distributions.",
+      "Re-run multiple-k evaluation and resolve conflicting historical scores and row counts before publishing an official experiment comparison figure.",
+      "Review demographic and geographic fairness implications before proposing any real-world decision-support use."
+    ],
     "githubUrl": "",
     "demoUrl": "",
     "reportUrl": "",
     "image": "",
-    "gallery": []
+    "gallery": [],
+    "highlights": [
+      {
+        "value": "6,574",
+        "label": "Source observations",
+        "note": "26 original columns"
+      },
+      {
+        "value": "2",
+        "label": "Preferred cluster count",
+        "note": "Historical K-Means experiment"
+      },
+      {
+        "value": "Grade A",
+        "label": "Academic achievement",
+        "note": "Machine Learning coursework"
+      },
+      {
+        "value": "EDA → PCA",
+        "label": "Analysis workflow",
+        "note": "Preprocessing and cluster profiling"
+      }
+    ]
   },
   {
     "id": "6",
