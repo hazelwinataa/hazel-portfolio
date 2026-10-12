@@ -1332,7 +1332,7 @@
       "Repeat each same-topology ANN experiment over multiple seeds and report variance rather than attributing stochastic differences to the Keras API.",
       "Package the original notebook, dataset access instructions, requirements and verified outputs in a public source repository with UCI attribution."
     ],
-    "githubUrl": "",
+    "githubUrl": "https://github.com/hazelwinataa/bank-marketing-ann-sequential-functional",
     "demoUrl": "",
     "reportUrl": "",
     "image": "/images/bank-marketing-ann/sequential-functional-test-metrics.svg",
