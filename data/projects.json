@@ -779,10 +779,10 @@
   {
     "id": "9",
     "slug": "inklumap",
-    "title": "InkluMap — Inclusive School Decision Support System",
+    "title": "InkluMap — Inclusive Learning Support Analytics Platform",
     "year": null,
-    "projectType": "",
-    "status": "Passed campus selection",
+    "projectType": "End-to-end Data Science & Full-stack Web Application",
+    "status": "Completed local prototype — campus selection",
     "grade": "",
     "featured": true,
     "roleTags": [
@@ -795,67 +795,142 @@
       "Competition / Independent Project"
     ],
     "domainTags": [
-      "Clustering",
-      "API / Backend"
+      "Inclusive Education",
+      "Unsupervised Learning",
+      "Decision Support",
+      "API / Backend",
+      "Full-Stack Analytics"
     ],
-    "description": "Inclusive-school decision support using mixed-type student assessments, Gower distance, hierarchical clustering, and a web application.",
-    "problemStatement": "Group student accommodation needs into interpretable profiles to help staff review inclusive learning support requirements.",
-    "businessContext": "Designed to support structured review of accessibility and accommodation needs while retaining human oversight of individual recommendations.",
-    "dataset": "Completed special-needs student assessments; modeling used 18 features from 96 completed assessments.",
-    "datasetSize": "96 completed assessments; 18 modeling features",
+    "description": "Built an inclusive-school decision-support prototype that transforms 120 synthetic student assessments into interpretable accommodation groups, individual support recommendations, and school resource priorities. The system combines Python clustering experiments, a FastAPI/PostgreSQL backend, and a Next.js dashboard.",
+    "problemStatement": "Schools supporting diverse learning needs must work with incomplete assessments, mixed numerical and categorical accommodations, and competing resource priorities. InkluMap organizes these inputs into interpretable needs profiles while preserving teacher oversight instead of treating clustering outputs as diagnoses.",
+    "businessContext": "Designed as a local prototype for school administrators and educators: monitor assessment completion, explore five functional-needs groups, review student accommodations, flag high-priority cases, and plan resource allocation. The supplied records are synthetic demonstration data; real-school impact has not been established.",
+    "dataset": "120 synthetic student records were loaded from the project's CSV/Excel data source. 96 students with complete functional assessments were included in clustering, while the 18 incomplete and 6 not-started records remain visible in the management dashboard. The assessment includes eight ordinal need scores (0–3), material preferences, and assistive-tool categories.",
+    "datasetSize": "120 synthetic student records; 96 complete clustering cases; 18 encoded baseline features; 10 mixed-type Gower variables.",
     "preprocessing": [
-      "Prepared mixed numerical and categorical assessment features for distance-based clustering"
+      "Imported and checked student assessment data from CSV/Excel sources, standardizing field names and student identifiers before modeling. The dashboard retains complete, incomplete, and not-started assessment states.",
+      "Filtered records to Status Asesmen = Lengkap for the clustering cohort (96 of 120 records); records without complete scores were not force-assigned to a cluster.",
+      "Validated student-code uniqueness, score ranges, and permitted material-preference and assistive-tool categories, and checked that the encoded clustering matrix contains no missing values.",
+      "Produced two aligned modeling representations: 18 encoded ordinal/binary features for the K-Means baseline and 10 original mixed-type variables for Gower distance (eight functional scores plus material preference and assistive tool).",
+      "Excluded existing output or intervention columns (cluster, dominant need, priority, recommendations, follow-up status) from model inputs to avoid circular cluster definitions and information leakage."
     ],
     "featureEngineering": [
-      "Represented student accessibility and support-related attributes for mixed-type clustering"
+      "Created eight functional-need indicators: visual access, hearing, communication, instruction comprehension, attention, mobility, assistance, and assessment adjustment; higher scores represent higher accommodation needs.",
+      "Encoded five learning-material preferences and five assistive-tool options as binary indicators for the 18-feature K-Means baseline.",
+      "Preserved material preference and assistive tool as categorical variables for Gower distance; scaled ordinal pairwise differences by observed feature range and calculated 0/1 mismatches for categories.",
+      "Generated cluster profiles and medoid-based representative cases; added rule-based priority, critical-access, unique-case, and teacher-review flags as downstream decision-support metadata rather than clustering input labels."
     ],
     "methodology": [
-      "Compared K-Means, Hierarchical Agglomerative Clustering, and DBSCAN approaches",
-      "Applied Gower distance to mixed-type data",
-      "Selected hierarchical clustering with Gower distance",
-      "Produced cluster profiles, medoids, individual recommendations, priority rules, critical-access flags, and human-review metadata"
+      "Established a K-Means baseline on the 18-feature encoded dataset, exploring multiple cluster counts and recording silhouette, Davies–Bouldin index, and inertia.",
+      "Computed a symmetric Gower dissimilarity matrix over 96 complete assessments using eight ordinal domains and two categorical attributes.",
+      "Evaluated Agglomerative Hierarchical Clustering with precomputed Gower distance, comparing average and complete linkage across candidate cluster counts; selected five needs groups (average linkage, k=5) as the main interpretable segmentation.",
+      "Evaluated DBSCAN on Gower distances as a supporting unique-case detector; the best recorded candidate has silhouette 0.6869 but leaves four records classified as noise, so it is not substituted for the complete five-group segmentation.",
+      "Assigned a human-readable dominant need and group-level accommodation recommendations to each selected cluster using saved cluster catalog and risk-domain profiles.",
+      "Applied an explicit rule-based urgency framework to student profiles: high/medium/low priorities, critical-access review, and cases requiring educator verification.",
+      "Imported students, assessments, clustering outputs and recommended actions into a PostgreSQL-backed FastAPI service using SQLAlchemy models and Alembic migrations.",
+      "Built a responsive Next.js/TypeScript dashboard offering student records, assessment editing, group exploration, individual support suggestions, resource priority ranking, and print-to-PDF reports.",
+      "Documented local backend API tests, prototype usage, and installation. The repository is a functional local demonstration rather than a publicly hosted production instance."
     ],
     "models": [
-      "K-Means",
-      "Hierarchical Agglomerative Clustering",
-      "DBSCAN"
+      "K-Means (encoded-feature baseline)",
+      "Hierarchical Agglomerative Clustering — Gower Distance + Average Linkage (selected)",
+      "DBSCAN — Gower Distance (supporting outlier analysis)"
     ],
     "technologies": [
       "Python",
+      "Pandas",
+      "NumPy",
+      "Scikit-learn",
+      "SciPy",
       "Gower Distance",
       "FastAPI",
+      "SQLAlchemy",
+      "Alembic",
       "PostgreSQL",
-      "Next.js",
+      "Next.js 16",
       "React",
-      "TypeScript"
+      "TypeScript",
+      "Tailwind CSS",
+      "Pytest"
     ],
     "evaluationMetrics": [
-      "Silhouette score"
+      "Silhouette coefficient (method-specific distance representation)",
+      "Davies–Bouldin Index and inertia (K-Means baseline)",
+      "Cluster size distribution and interpretability",
+      "DBSCAN noise ratio and case review flags",
+      "Backend API test outcomes"
     ],
     "results": [
-      "Selected hierarchical clustering with Gower distance",
-      "Five clusters identified",
-      "Reported silhouette score: approximately 0.676",
-      "Passed campus selection"
+      "Modeled 96 complete synthetic assessments from 120 total student records. 18 assessments were incomplete and six not yet started in the dashboard dataset.",
+      "K-Means baseline (k=5): silhouette 0.612864; Davies–Bouldin 0.563091, calculated in the encoded feature space.",
+      "Selected Hierarchical + Gower (average linkage, k=5): silhouette 0.675731 using precomputed mixed-type dissimilarities; cluster sizes were 20, 22, 18, 10, and 26.",
+      "Supporting DBSCAN candidate: silhouette 0.686897 with four noise cases (4.17% of 96); these outliers were flagged for review rather than replacing hierarchical segmentation.",
+      "Five functional-needs groups were described as structured instruction (20), visual access with auditory materials (22), hearing access and written communication (18), mobility/accessibility (10), and adaptive assessment with intensive support (26).",
+      "Rule-based priority summary of the 96 complete cases: 16 high, 73 medium, seven low; 40 critical-access review flags and 58 records flagged for human review. Flag counts may overlap.",
+      "Archived backend test output confirms 15 passed tests and one deprecation warning; the project README separately reports a 46-pass baseline, which has not been rerun as part of this portfolio review.",
+      "Local interface screenshots demonstrate student search and filters, individual functional score profiles, accommodation suggestions, and handling of incomplete assessments."
     ],
     "insights": [
-      "Gower distance enabled analysis of mixed-type assessment features within an interpretable clustering workflow.",
-      "Cluster profiles and human-review metadata were developed to support review rather than automatic decisions."
+      "Gower dissimilarity allowed ordinal support scores and categorical accommodation preferences to influence clustering without treating category codes as meaningful numeric distances.",
+      "Hierarchical clustering produced five complete, human-readable groups, whereas the DBSCAN experiment identified rare/unique cases that may benefit from separate educator attention.",
+      "The largest group (26 of 96) centers on adaptive evaluation and intensive assistance; identifying dominant needs helps translate statistical clusters into support-planning categories.",
+      "Incomplete assessments were not forced through the clustering workflow; the interface keeps them in the data-management flow for follow-up and completion.",
+      "School budget ranking is rule-based prioritization, not a predicted cost estimate, and teacher validation is explicitly part of individual decision-making."
     ],
-    "businessImpact": "Designed to assist schools in organizing and reviewing accommodation needs; actual deployment impact is not yet measured.",
-    "challenges": [],
+    "businessImpact": "Demonstrated an end-to-end approach for organizing accommodation assessments, surfacing group and individual support needs, and prioritizing review workload. The dashboard is a prototype based on synthetic data; improvements to student outcomes, costs, and real-school operations have not been measured.",
+    "challenges": [
+      "Handling mixed ordinal and categorical data while keeping cluster profiles interpretable for non-technical educators.",
+      "Keeping incomplete assessments visible to staff without treating missing values as valid functional-need scores.",
+      "Translating unsupervised groups into explainable recommendations, priority rules, and manual verification instead of automated education decisions.",
+      "Maintaining consistent student identities across preprocessing, saved clustering outputs, PostgreSQL, FastAPI endpoints, and the Next.js frontend."
+    ],
     "limitations": [
-      "Small modeling sample (96 assessments) limits confidence in generalization.",
-      "Recommendations must be reviewed by appropriate people and should not be interpreted as diagnoses."
+      "The dataset is synthetic and small (96 clustering cases), so the reported cluster separation does not establish real-world generalization or clinical validity.",
+      "Silhouette scores across K-Means, hierarchical Gower and DBSCAN are not a direct controlled comparison because their feature/distance representations differ.",
+      "The five groups reflect patterns in functional-need inputs; cluster membership cannot diagnose disability, infer student ability, or replace educator judgment.",
+      "Priority rules are configurable heuristics; resource-priority points are not currency amounts, and no cost-reduction benefit is claimed.",
+      "Live demo availability is not claimed: provided screenshots show the application running locally, and updating assessments does not automatically retrain clustering models."
     ],
     "futureImprovements": [
-      "Validate profiles with domain experts and assess robustness on a larger, representative sample."
+      "Validate the five needs profiles with special-education educators using larger, consented, representative datasets and review fairness/accessibility impacts.",
+      "Add authentication, role-based access, audit logs, encrypted sensitive storage, backup and production-safe deployment before real-student use.",
+      "Introduce versioned dataset snapshots and controlled retraining so school changes can be reviewed before regenerated cluster recommendations.",
+      "Conduct usability studies with teachers and accessibility testing; replace fixed urgency weights with validated school-specific planning criteria."
     ],
     "githubUrl": "https://github.com/hazelwinataa/inklumap",
     "demoUrl": "",
     "reportUrl": "",
-    "image": "",
-    "gallery": []
+    "image": "/images/inklumap/students-overview.webp",
+    "gallery": [
+      "/images/inklumap/pipeline-overview.svg",
+      "/images/inklumap/model-experiment-comparison.svg",
+      "/images/inklumap/cluster-size-distribution.svg",
+      "/images/inklumap/student-functional-assessment.webp",
+      "/images/inklumap/student-accommodation-recommendations.webp",
+      "/images/inklumap/students-filtered-status.webp",
+      "/images/inklumap/student-incomplete-assessment.webp"
+    ],
+    "highlights": [
+      {
+        "value": "120",
+        "label": "Synthetic student records",
+        "note": "96 completed assessments"
+      },
+      {
+        "value": "5",
+        "label": "Interpretable needs clusters",
+        "note": "Hierarchical + Gower"
+      },
+      {
+        "value": "0.6757",
+        "label": "Selected silhouette score",
+        "note": "Precomputed Gower distance"
+      },
+      {
+        "value": "Full stack",
+        "label": "Analytics to dashboard",
+        "note": "FastAPI · PostgreSQL · Next.js"
+      }
+    ]
   },
   {
     "id": "10",

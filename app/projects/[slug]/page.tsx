@@ -127,6 +127,75 @@ type GalleryDescription = {
 };
 
 const visualDescriptions: Record<string, GalleryDescription> = {
+  "pipeline-overview.svg": {
+    title: "Project architecture — from assessments to human-reviewed support",
+    caption: "A source-backed diagram of the dataset, two clustering representations, five selected groups, priority rules, FastAPI/PostgreSQL, and the Next.js frontend.",
+    details: [
+      "The selected model generates group assignments; accommodations and budget-priority ranking use a downstream, human-reviewed decision-support layer.",
+      "Architecture diagram produced from the published code; not a screenshot of a cloud deployment.",
+    ],
+    originalScreenshot: false,
+    sourceLabel: "Source-backed architecture diagram",
+  },
+  "model-experiment-comparison.svg": {
+    title: "Clustering experiments — silhouette comparison",
+    caption: "Replotted from analytics/results/clustering_experiment_summary.json: K-Means 0.6129, selected Hierarchical + Gower 0.6757, and DBSCAN + Gower 0.6869.",
+    details: [
+      "DBSCAN identified four noise cases (4.17%); it was used as a supporting unique-case indicator rather than the main complete segmentation.",
+      "Silhouette scores across feature/distance representations should not be interpreted as a controlled head-to-head benchmark.",
+    ],
+    originalScreenshot: false,
+    sourceLabel: "Charts reconstructed from published experiment results",
+  },
+  "cluster-size-distribution.svg": {
+    title: "Five student accommodation-needs groups",
+    caption: "Replotted from the saved cluster_catalog.csv and recommendation_summary.json, with 96 complete synthetic assessments divided into clusters of 20, 22, 18, 10 and 26.",
+    details: [
+      "Needs include structured instruction, visual support, hearing and written communication, mobility, and adaptive assessment.",
+      "Cluster categories describe accommodation needs, not diagnoses or a student’s capability.",
+    ],
+    originalScreenshot: false,
+    sourceLabel: "Chart reconstructed from published clustering catalog",
+  },
+  "student-functional-assessment.webp": {
+    title: "Original dashboard — student functional assessment",
+    caption: "Screenshot of the local InkluMap application showing functional scores, assessment status, and non-identifying student-code presentation.",
+    details: [
+      "Eight domains are scored on a 0–3 scale; this illustrative student case shows hearing and communication needs.",
+      "All student data shown in this project are synthetic demonstration data.",
+    ],
+    originalScreenshot: true,
+    sourceLabel: "Original InkluMap screenshot — assessment detail",
+  },
+  "student-accommodation-recommendations.webp": {
+    title: "Original dashboard — support recommendations and human-review flag",
+    caption: "A local dashboard screenshot displaying the student’s needs group, group-level accommodations, tailored support suggestions, and a teacher validation notice.",
+    details: [
+      "The group recommends captions, transcripts and written communication; individual decisions remain subject to teacher review.",
+      "Shows an actual application interface, not a mock-up or claim of live hosting.",
+    ],
+    originalScreenshot: true,
+    sourceLabel: "Original InkluMap screenshot — recommendations",
+  },
+  "students-filtered-status.webp": {
+    title: "Original dashboard — managing assessment status",
+    caption: "Screenshot of the student management view with completion summary cards, filtering, and data-table navigation.",
+    details: [
+      "The dashboard separates 96 complete, 18 incomplete, and six not-started records, while model clustering uses only the complete subset.",
+    ],
+    originalScreenshot: true,
+    sourceLabel: "Original InkluMap screenshot — records and filters",
+  },
+  "student-incomplete-assessment.webp": {
+    title: "Original dashboard — incomplete assessment safeguard",
+    caption: "Screenshot of a student detail page with incomplete assessment status and a message that clustering results are not available.",
+    details: [
+      "Illustrates why partial records should not be silently assigned to a learned needs group.",
+      "The design directs staff to complete the assessment before data-driven grouping.",
+    ],
+    originalScreenshot: true,
+    sourceLabel: "Original InkluMap screenshot — data quality safeguard",
+  },
   "asa-clustering-slide.webp": {
     title: "ASA DataFest 2026 — Patient Clustering Analysis",
     caption: "Original final-team presentation, page 4. The slide compares the five interpreted patient segments through disease groups and a social-risk-versus-encounter-complexity map.",
