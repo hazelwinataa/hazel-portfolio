@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import ProjectCard from "@/components/ProjectCard";
 import {
@@ -6,6 +7,7 @@ import {
   roles,
 } from "@/lib/projects";
 import { site } from "@/lib/site";
+import styles from "./home-photo-layout.module.css";
 
 // SKILLS DATA
 const skillGroups = [
@@ -115,6 +117,8 @@ const skillGroups = [
   },
 ];
 
+const profilePhotoSrc = "/images/hazel-formal-portrait.png";
+
 // HOMEPAGE
 export default function HomePage() {
   return (
@@ -151,6 +155,17 @@ export default function HomePage() {
             >
               Get in touch
             </Link>
+
+            {site.resumeUrl && (
+              <a
+                className={`button button-outline ${styles.downloadButton}`}
+                href={site.resumeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Download CV
+              </a>
+            )}
           </div>
 
           <p className="hero-caption">
@@ -273,52 +288,63 @@ export default function HomePage() {
         className="section section-muted"
         id="about"
       >
-        <div className="container about-grid">
-          <div>
-            <p className="eyebrow">
-              01 / ABOUT ME
-            </p>
-
-            <h2>
-              Building data solutions that connect
-              technology and business.
-            </h2>
+        <div className={`container ${styles.aboutSectionLayout}`}>
+          <div className={styles.aboutPhotoCard}>
+            <Image
+              src={profilePhotoSrc}
+              alt={`${site.name} formal portrait`}
+              width={520}
+              height={650}
+              className={styles.aboutPhoto}
+            />
           </div>
 
-          <div>
-            <p>
-              I am a student at {site.university}{" "}
-              with hands-on experience in Data Science,
-              Data Analytics, Data Engineering, and
-              Business Analytics through academic
-              projects and data science competitions.
-            </p>
+          <div className="about-grid">
+            <div>
+              <p className="eyebrow">
+                01 / ABOUT ME
+              </p>
 
-            <p>
-              My work spans data preprocessing,
-              predictive modeling, data pipelines,
-              database systems, and machine learning
-              deployment, with a focus on transforming
-              complex information into practical,
-              data-driven solutions.
-            </p>
+              <h2>
+                Building data solutions that connect
+                technology and business.
+              </h2>
+            </div>
 
-            <p>
-              Selected projects include analyzing over
-              1.2 million healthcare records for patient
-              segmentation, developing customer
-              repeat-order prediction using more than
-              318,000 financing transactions, and
-              implementing weather and traffic streaming
-              analytics with Apache Spark and APIs.
-            </p>
+            <div>
+              <p>
+                I am a student at {site.university}{" "}
+                with strong interest and hands-on project
+                experience in machine learning, database
+                systems, deep learning, and exploratory
+                data analysis.
+              </p>
 
-            <Link
-              href="/projects"
-              className="text-link"
-            >
-              Explore my projects →
-            </Link>
+              <p>
+                I also work on structured system and data
+                design through UML, ERD, relational
+                database design, and data preprocessing,
+                with the goal of building well-organized
+                analytical solutions from the ground up.
+              </p>
+
+              <p>
+                In addition, I have experience in big data
+                processing and model deployment, including
+                building data pipelines, working with
+                Apache Spark, tracking experiments with
+                MLflow, and deploying machine learning
+                solutions through Streamlit, FastAPI, and
+                AWS-based workflows.
+              </p>
+
+              <Link
+                href="/projects"
+                className="text-link"
+              >
+                Explore my projects →
+              </Link>
+            </div>
           </div>
         </div>
       </section>
