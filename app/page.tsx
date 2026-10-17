@@ -119,6 +119,26 @@ const skillGroups = [
 
 const profilePhotoSrc = "/images/hazel-formal-portrait.png";
 
+function CvMenu({ label }: { label: string }) {
+  return (
+    <details className={styles.cvMenu}>
+      <summary className={`button button-outline ${styles.downloadButton} ${styles.cvMenuTrigger}`}>
+        {label}
+        <span aria-hidden="true">▾</span>
+      </summary>
+      <div className={styles.cvMenuPanel}>
+        <a href="/cv-binus.pdf" target="_blank" rel="noopener noreferrer">
+          CV BINUS University <span aria-hidden="true">↗</span>
+        </a>
+        <a href="/cv-sma.pdf" target="_blank" rel="noopener noreferrer">
+          CV Saat SMA <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </details>
+  );
+}
+
+
 // HOMEPAGE
 export default function HomePage() {
   return (
@@ -156,16 +176,7 @@ export default function HomePage() {
               Get in touch
             </Link>
 
-            {site.resumeUrl && (
-              <a
-                className={`button button-outline ${styles.downloadButton}`}
-                href={site.resumeUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Download CV
-              </a>
-            )}
+            <CvMenu label="Download CV" />
           </div>
 
           <p className="hero-caption">
@@ -283,6 +294,7 @@ export default function HomePage() {
         </div>
       </section>
 
+
       {/* ABOUT ME SECTION */}
       <section
         className="section section-muted"
@@ -299,52 +311,61 @@ export default function HomePage() {
             />
           </div>
 
-          <div className="about-grid">
-            <div>
-              <p className="eyebrow">
-                01 / ABOUT ME
+          <div className={styles.aboutContent}>
+            <p className="eyebrow">
+              01 / ABOUT ME
+            </p>
+
+            <h2>
+              Building data solutions that connect
+              technology and business.
+            </h2>
+
+            <div className={styles.aboutParagraphs}>
+              <p>
+                I am a Data Science undergraduate student at BINUS University with a strong foundation in data analytics, machine learning, deep learning, database management, data engineering, and business analytics. Throughout my academic journey, I have developed practical skills in Python, SQL, Pandas, NumPy, exploratory data analysis (EDA), data preprocessing, predictive modeling, and data visualization. I enjoy exploring complex datasets, identifying meaningful patterns, solving analytical problems, and transforming data into actionable insights that support data-driven decision-making.
               </p>
 
-              <h2>
-                Building data solutions that connect
-                technology and business.
-              </h2>
+              <p>
+                Beyond data analysis and machine learning, I have experience in structured system and database design using Unified Modeling Language (UML), Entity Relationship Diagrams (ERD), relational database design, and data modeling. These experiences have helped me understand how data systems are designed, organized, and managed to support efficient data processing and reliable analytical solutions.
+              </p>
+
+              <p>
+                I have also gained hands-on experience in big data processing, data pipeline development, and machine learning deployment through various academic projects. My technical experience includes working with Apache Spark for large-scale data processing, MLflow for experiment tracking and model management, and Streamlit, FastAPI, and AWS-based workflows for developing and deploying machine learning solutions. Through these projects, I have developed an understanding of end-to-end data workflows, from data collection and preprocessing to model development, evaluation, and deployment.
+              </p>
+
+              <p>
+                Throughout my studies, I have actively participated in several academic and data analytics competitions, successfully reaching the finalist stage in two competitions, <strong>ASA and SPARC</strong>. These competitions have strengthened my analytical thinking, problem-solving abilities, teamwork, and ability to approach complex challenges through data-driven solutions. They have also given me valuable experience in working under deadlines, developing analytical approaches, and communicating findings effectively.
+              </p>
+
+              <p>
+                Beyond academics, I have approximately two years of part-time experience as a <strong>Promotion Team BULC member at BINUS University Learning Community</strong>. During this time, I have been actively involved in marketing, promotional activities, and educational outreach programs, including delivering presentations at approximately 30 schools across multiple provinces in Indonesia. These experiences have allowed me to interact with students, teachers, and various stakeholders while developing my public speaking, communication, interpersonal, teamwork, and adaptability skills.
+              </p>
+
+              <p>
+                One of the most meaningful aspects of my professional experience was being <strong>entrusted to represent BINUS University during visits to selected high-priority schools with strong prospective student recruitment potential</strong>. On certain occasions, I was the <strong>only student representative assigned to accompany BINUS University staff members</strong> during these visits. These opportunities gave me valuable experience in representing an institution professionally, communicating with different audiences, and building confidence in handling important responsibilities.
+              </p>
+
+              <p>
+                Additionally, I was given the opportunity to <strong>serve as a team leader during an outreach program lasting approximately two weeks</strong>. This experience further developed my leadership, team coordination, communication, adaptability, and problem-solving skills. Working in different environments and collaborating with various individuals taught me the importance of taking initiative, being responsible, and maintaining effective teamwork.
+              </p>
+
+              <p>
+                I have also actively participated in student organizations and event committees, including <strong>Data Science Club, Futsal, and HIMTI</strong> at BINUS University. Through these activities, I have gained experience in event coordination, organizational responsibilities, time management, leadership, and collaboration with individuals from different backgrounds.
+              </p>
+
+              <p>
+                <strong>What I would like to emphasize is that my strengths extend beyond technical and analytical capabilities.</strong> I believe that analyzing data, developing models, and generating meaningful insights are only part of the process. Equally important is the ability to communicate those findings clearly, confidently, and effectively to both technical and non-technical audiences. My combination of technical knowledge, analytical thinking, marketing experience, public speaking, and interpersonal skills allows me to connect data-driven solutions with practical business needs and communicate complex information in an understandable and meaningful way.
+              </p>
+
+              <p>
+                I am particularly interested in pursuing career opportunities in <strong>Data Science, Data Analyst, Data Engineer, and Business Analytics</strong>. I aim to apply my technical and interpersonal skills to solve real-world problems, develop impactful data-driven solutions, contribute to meaningful projects, and support strategic business decision-making. I am committed to continuously expanding my knowledge, gaining practical industry experience, and growing professionally in the data and technology fields.
+              </p>
             </div>
 
-            <div>
-              <p>
-                I am a student at {site.university}{" "}
-                with strong interest and hands-on project
-                experience in machine learning, database
-                systems, deep learning, and exploratory
-                data analysis.
-              </p>
-
-              <p>
-                I also work on structured system and data
-                design through UML, ERD, relational
-                database design, and data preprocessing,
-                with the goal of building well-organized
-                analytical solutions from the ground up.
-              </p>
-
-              <p>
-                In addition, I have experience in big data
-                processing and model deployment, including
-                building data pipelines, working with
-                Apache Spark, tracking experiments with
-                MLflow, and deploying machine learning
-                solutions through Streamlit, FastAPI, and
-                AWS-based workflows.
-              </p>
-
-              <Link
-                href="/projects"
-                className="text-link"
-              >
-                Explore my projects →
-              </Link>
-            </div>
+            <Link href="/projects" className="text-link">
+              Explore my projects →
+            </Link>
           </div>
         </div>
       </section>
@@ -501,16 +522,7 @@ export default function HomePage() {
               </a>
             )}
 
-            {site.resumeUrl && (
-              <a
-                className="button button-outline"
-                href={site.resumeUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                View CV ↗
-              </a>
-            )}
+            <CvMenu label="View CV ↗" />
 
             {!site.email &&
               !site.linkedinUrl &&
